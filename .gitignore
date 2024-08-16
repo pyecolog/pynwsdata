@@ -1,3 +1,14 @@
+# misc
+*~
+*#
+.#*
+*.bak
+*.log
+*.gz
+*.zip
+/tmp
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
