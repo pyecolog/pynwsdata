@@ -1,0 +1,61 @@
+
+import unittest
+
+from pynwsdata.models.sigmet_geo_json import SigmetGeoJson
+
+class TestSigmetGeoJson(unittest.TestCase):
+    """SigmetGeoJson unit test stubs"""
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+    def make_instance(self, include_optional) -> SigmetGeoJson:
+        """Test SigmetGeoJson
+            include_optional is a boolean, when False only required
+            params are included, when True both required and
+            optional params are included """
+        # uncomment below to create an instance of `SigmetGeoJson`
+        """
+        model = SigmetGeoJson()
+        if include_optional:
+            return SigmetGeoJson(
+                context = None,
+                id = '',
+                type = 'Feature',
+                geometry = None,
+                properties = pynwsdata.models.sigmet.Sigmet(
+                    id = '', 
+                    issue_time = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                    fir = '', 
+                    atsu = 'EIOT', 
+                    sequence = '', 
+                    phenomenon = '', 
+                    start = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                    end = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), )
+            )
+        else:
+            return SigmetGeoJson(
+                type = 'Feature',
+                geometry = None,
+                properties = pynwsdata.models.sigmet.Sigmet(
+                    id = '', 
+                    issue_time = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                    fir = '', 
+                    atsu = 'EIOT', 
+                    sequence = '', 
+                    phenomenon = '', 
+                    start = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                    end = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), ),
+        )
+        """
+
+    def testSigmetGeoJson(self):
+        """Test SigmetGeoJson"""
+        # inst_req_only = self.make_instance(include_optional=False)
+        # inst_req_and_optional = self.make_instance(include_optional=True)
+
+if __name__ == '__main__':
+    unittest.main()

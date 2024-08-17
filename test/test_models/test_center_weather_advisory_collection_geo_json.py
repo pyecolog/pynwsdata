@@ -1,0 +1,64 @@
+
+import unittest
+
+from pynwsdata.models.center_weather_advisory_collection_geo_json import CenterWeatherAdvisoryCollectionGeoJson
+
+class TestCenterWeatherAdvisoryCollectionGeoJson(unittest.TestCase):
+    """CenterWeatherAdvisoryCollectionGeoJson unit test stubs"""
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+    def make_instance(self, include_optional) -> CenterWeatherAdvisoryCollectionGeoJson:
+        """Test CenterWeatherAdvisoryCollectionGeoJson
+            include_optional is a boolean, when False only required
+            params are included, when True both required and
+            optional params are included """
+        # uncomment below to create an instance of `CenterWeatherAdvisoryCollectionGeoJson`
+        """
+        model = CenterWeatherAdvisoryCollectionGeoJson()
+        if include_optional:
+            return CenterWeatherAdvisoryCollectionGeoJson(
+                context = None,
+                type = 'FeatureCollection',
+                features = [
+                    pynwsdata.models.center_weather_advisory_collection_geo_json_all_of_features.CenterWeatherAdvisoryCollectionGeoJson_allOf_features(
+                        properties = pynwsdata.models.center_weather_advisory.CenterWeatherAdvisory(
+                            id = '', 
+                            issue_time = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                            cwsu = 'ZAB', 
+                            sequence = 101, 
+                            start = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                            end = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                            observed_property = '', 
+                            text = '', ), )
+                    ]
+            )
+        else:
+            return CenterWeatherAdvisoryCollectionGeoJson(
+                type = 'FeatureCollection',
+                features = [
+                    pynwsdata.models.center_weather_advisory_collection_geo_json_all_of_features.CenterWeatherAdvisoryCollectionGeoJson_allOf_features(
+                        properties = pynwsdata.models.center_weather_advisory.CenterWeatherAdvisory(
+                            id = '', 
+                            issue_time = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                            cwsu = 'ZAB', 
+                            sequence = 101, 
+                            start = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                            end = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                            observed_property = '', 
+                            text = '', ), )
+                    ],
+        )
+        """
+
+    def testCenterWeatherAdvisoryCollectionGeoJson(self):
+        """Test CenterWeatherAdvisoryCollectionGeoJson"""
+        # inst_req_only = self.make_instance(include_optional=False)
+        # inst_req_and_optional = self.make_instance(include_optional=True)
+
+if __name__ == '__main__':
+    unittest.main()

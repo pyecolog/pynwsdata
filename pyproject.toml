@@ -4,20 +4,26 @@ build-backend = "setuptools.build_meta"
 
 [project]
 authors = [
-    {name = "Sean Champ", email = "spchamp@users.noreply.github.com"},
+    { name = "Sean Champ", email = "spchamp@users.noreply.github.com" },
 ]
-license = {text = "MIT"}
+license = { text = "MIT" }
 requires-python = ">=3.10"
 dependencies = [
+    "aenum",
     "urllib3>=1.25.3",
     "python-dateutil>=2.8.2",
     "aiohttp>=3.8.4",
     "aiohttp-retry>=2.8.3",
-    "pydantic>=2",
+    "ujson",
+    "pyfields>=1.7.2",
     "typing-extensions>=4.7.1",
+    "geopy",
+    "numpy",
+    "xarray",
+    "NetCDF4",
 ]
 name = "pynwsdata"
-version = "0.0.1"
+version = "0.0.2"
 description = "Client interface for the weather.gov Web API"
 readme = "README.md"
 
@@ -26,7 +32,9 @@ readme = "README.md"
 
 [project.optional-dependencies]
 dev = [
+    "packaging",
     "pdm",
+    "deptry",
     "pytest>=7.2.1",
     "tox>=3.9.0",
     "flake8>=4.0.0",
@@ -38,9 +46,7 @@ dev = [
 where = ["src"]
 
 [tool.pdm.build]
-includes = ["src/pynwsdata/py.typed"]
+includes = ["src/pynwsdata/py.typed", "src/pynwsdata/version"]
 
 [tool.mypy]
-files = [
-  "src", "test"
-]
+files = ["src", "test"]

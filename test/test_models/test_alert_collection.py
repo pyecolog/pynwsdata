@@ -1,0 +1,41 @@
+
+import unittest
+
+from pynwsdata.models.alert_collection import AlertCollection
+
+class TestAlertCollection(unittest.TestCase):
+    """AlertCollection unit test stubs"""
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+    def make_instance(self, include_optional) -> AlertCollection:
+        """Test AlertCollection
+            include_optional is a boolean, when False only required
+            params are included, when True both required and
+            optional params are included """
+        # uncomment below to create an instance of `AlertCollection`
+        """
+        model = AlertCollection()
+        if include_optional:
+            return AlertCollection(
+                title = '',
+                updated = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
+                pagination = pynwsdata.models.pagination_info.PaginationInfo(
+                    next = '', )
+            )
+        else:
+            return AlertCollection(
+        )
+        """
+
+    def testAlertCollection(self):
+        """Test AlertCollection"""
+        # inst_req_only = self.make_instance(include_optional=False)
+        # inst_req_and_optional = self.make_instance(include_optional=True)
+
+if __name__ == '__main__':
+    unittest.main()

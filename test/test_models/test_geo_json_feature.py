@@ -1,0 +1,45 @@
+
+import unittest
+
+from pynwsdata.models.geo_json_feature import GeoJsonFeature
+
+class TestGeoJsonFeature(unittest.TestCase):
+    """GeoJsonFeature unit test stubs"""
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+    def make_instance(self, include_optional) -> GeoJsonFeature:
+        """Test GeoJsonFeature
+            include_optional is a boolean, when False only required
+            params are included, when True both required and
+            optional params are included """
+        # uncomment below to create an instance of `GeoJsonFeature`
+        """
+        model = GeoJsonFeature()
+        if include_optional:
+            return GeoJsonFeature(
+                context = None,
+                id = '',
+                type = 'Feature',
+                geometry = None,
+                properties = pynwsdata.models.properties.properties()
+            )
+        else:
+            return GeoJsonFeature(
+                type = 'Feature',
+                geometry = None,
+                properties = pynwsdata.models.properties.properties(),
+        )
+        """
+
+    def testGeoJsonFeature(self):
+        """Test GeoJsonFeature"""
+        # inst_req_only = self.make_instance(include_optional=False)
+        # inst_req_and_optional = self.make_instance(include_optional=True)
+
+if __name__ == '__main__':
+    unittest.main()
