@@ -1,14 +1,11 @@
 
-from aenum import Enum
+from pynwsdata.models.nws_office_id import NWSOfficeId
 
-class NWSRegionalHQId(str, Enum):
+class NWSRegionalHQId(NWSOfficeId):
     """
     Three-letter identifier for a NWS Regional HQ.
     """
 
-    """
-    allowed enum values
-    """
     ARH = 'ARH'
     CRH = 'CRH'
     ERH = 'ERH'

@@ -1,11 +1,10 @@
 
-from pynwsdata.api_object import ApiObject
-from pynwsdata.models.state_territory_code import StateTerritoryCode
-from typing import Union, Optional
+from pynwsdata.api_enum import CategoricalEnum
 
-class ZoneState(ApiObject):
+class ZoneState(CategoricalEnum):
     """
     ZoneState
+
+    Implemented By
+    - StateTerritoryCode
     """
-    actual_instance: Optional[Union[StateTerritoryCode, str]] = None
-    one_of_schemas: frozenset[str] = frozenset(map(ApiObject.intern, [ "StateTerritoryCode", "str" ]))

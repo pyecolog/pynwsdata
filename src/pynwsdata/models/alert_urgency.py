@@ -1,14 +1,11 @@
 
-from aenum import Enum
+from pynwsdata.api_enum import ApiEnum
 
-class AlertUrgency(str, Enum):
+class AlertUrgency(ApiEnum):
     """
     AlertUrgency
     """
 
-    """
-    allowed enum values
-    """
     IMMEDIATE = 'Immediate'
     EXPECTED = 'Expected'
     FUTURE = 'Future'

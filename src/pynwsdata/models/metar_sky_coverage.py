@@ -1,14 +1,11 @@
 
-from aenum import Enum
+from pynwsdata.api_enum import ApiEnum
 
-class MetarSkyCoverage(str, Enum):
+class MetarSkyCoverage(ApiEnum):
     """
     MetarSkyCoverage
     """
 
-    """
-    allowed enum values
-    """
     OVC = 'OVC'
     BKN = 'BKN'
     SCT = 'SCT'

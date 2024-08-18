@@ -1,13 +1,10 @@
 
-from aenum import Enum
+from pynwsdata.api_enum import ApiEnum
 
-class GridpointForecastUnits(str, Enum):
+class GridpointForecastUnits(ApiEnum):
     """
     Denotes the units used in the textual portions of the forecast.
     """
 
-    """
-    allowed enum values
-    """
     US = 'us'
     SI = 'si'

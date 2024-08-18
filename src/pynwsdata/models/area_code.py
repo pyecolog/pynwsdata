@@ -1,17 +1,11 @@
 
-from typing import Any, Optional
-from pynwsdata.api_object import ApiObject, ApiField
-from pynwsdata.models.marine_area_code import MarineAreaCode
-from pynwsdata.models.state_territory_code import StateTerritoryCode
-from typing import Union, Optional
-from pynwsdata.api_object import ApiObject, ApiField
+from pynwsdata.api_enum import CategoricalEnum
 
-class AreaCode(ApiObject):
+class AreaCode(CategoricalEnum):
     """
     State/territory codes and marine area codes
+
+    Implemented By
+    - StateTerritoryCode
+    - MarineRegionCode
     """
-
-    actual_instance: Optional[Union[MarineAreaCode, StateTerritoryCode]] = None#
-
-
-

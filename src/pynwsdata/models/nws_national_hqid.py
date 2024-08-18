@@ -1,12 +1,9 @@
 
-from aenum import Enum
+from pynwsdata.models.nws_office_id import NWSOfficeId
 
-class NWSNationalHQId(str, Enum):
+class NWSNationalHQId(NWSOfficeId):
     """
     Three-letter identifier for NWS National HQ.
     """
 
-    """
-    allowed enum values
-    """
     NWS = 'NWS'

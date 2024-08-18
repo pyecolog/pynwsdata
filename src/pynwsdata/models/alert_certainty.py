@@ -1,14 +1,11 @@
 
-from aenum import Enum
+from pynwsdata.api_enum import ApiEnum
 
-class AlertCertainty(str, Enum):
+class AlertCertainty(ApiEnum):
     """
     AlertCertainty
     """
 
-    """
-    allowed enum values
-    """
     OBSERVED = 'Observed'
     LIKELY = 'Likely'
     POSSIBLE = 'Possible'

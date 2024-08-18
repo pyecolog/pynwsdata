@@ -1,14 +1,11 @@
 
-from aenum import Enum
+from pynwsdata.models.nws_office_id import NWSOfficeId
 
-class NWSForecastOfficeId(str, Enum):
+class NWSForecastOfficeId(NWSOfficeId):
     """
     Three-letter identifier for a NWS office.
     """
 
-    """
-    allowed enum values
-    """
     AKQ = 'AKQ'
     ALY = 'ALY'
     BGM = 'BGM'

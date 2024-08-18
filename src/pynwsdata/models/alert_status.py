@@ -1,14 +1,11 @@
 
-from aenum import Enum
+from pynwsdata.api_enum import ApiEnum
 
-class AlertStatus(str, Enum):
+class AlertStatus(ApiEnum):
     """
     AlertStatus
     """
 
-    """
-    allowed enum values
-    """
     ACTUAL = 'Actual'
     EXERCISE = 'Exercise'
     SYSTEM = 'System'

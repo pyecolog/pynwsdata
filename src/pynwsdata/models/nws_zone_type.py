@@ -1,14 +1,11 @@
 
-from aenum import Enum
+from pynwsdata.api_enum import ApiEnum
 
-class NWSZoneType(str, Enum):
+class NWSZoneType(ApiEnum):
     """
     NWSZoneType
     """
 
-    """
-    allowed enum values
-    """
     LAND = 'land'
     MARINE = 'marine'
     FORECAST = 'forecast'

@@ -1,14 +1,11 @@
 
-from aenum import Enum
+from pynwsdata.api_enum import ApiEnum
 
-class AlertMessageType(str, Enum):
+class AlertMessageType(ApiEnum):
     """
     AlertMessageType
     """
 
-    """
-    allowed enum values
-    """
     ALERT = 'Alert'
     UPDATE = 'Update'
     CANCEL = 'Cancel'

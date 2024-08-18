@@ -1,14 +1,11 @@
 
-from aenum import Enum
+from pynwsdata.api_enum import ApiEnum
 
-class NWSCenterWeatherServiceUnitId(str, Enum):
+class NWSCenterWeatherServiceUnitId(ApiEnum):
     """
     Three-letter identifier for a Center Weather Service Unit (CWSU).
     """
 
-    """
-    allowed enum values
-    """
     ZAB = 'ZAB'
     ZAN = 'ZAN'
     ZAU = 'ZAU'

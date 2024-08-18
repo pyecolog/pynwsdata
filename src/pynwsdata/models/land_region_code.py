@@ -1,14 +1,11 @@
 
-from aenum import Enum
+from pynwsdata.models.region_code import RegionCode
 
-class LandRegionCode(str, Enum):
+class LandRegionCode(RegionCode):
     """
     Land region code. These correspond to the six NWS regional headquarters: * AR: Alaska Region * CR: Central Region * ER: Eastern Region * PR: Pacific Region * SR: Southern Region * WR: Western Region 
     """
 
-    """
-    allowed enum values
-    """
     AR = 'AR'
     CR = 'CR'
     ER = 'ER'

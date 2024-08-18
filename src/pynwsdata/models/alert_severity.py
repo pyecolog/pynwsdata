@@ -1,14 +1,11 @@
 
-from aenum import Enum
+from pynwsdata.api_enum import ApiEnum
 
-class AlertSeverity(str, Enum):
+class AlertSeverity(ApiEnum):
     """
     AlertSeverity
     """
 
-    """
-    allowed enum values
-    """
     EXTREME = 'Extreme'
     SEVERE = 'Severe'
     MODERATE = 'Moderate'

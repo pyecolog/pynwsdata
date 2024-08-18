@@ -1,14 +1,11 @@
 
-from aenum import Enum
+from pynwsdata.models.zone_state import ZoneState
 
-class StateTerritoryCode(str, Enum):
+class StateTerritoryCode(ZoneState):
     """
     StateTerritoryCode
     """
 
-    """
-    allowed enum values
-    """
     AL = 'AL'
     AK = 'AK'
     AS = 'AS'
