@@ -7,10 +7,9 @@ import mimetypes
 import os
 import re
 import sys
-import tempfile
 
 from urllib.parse import quote
-from typing import cast, Any, Optional, Union, Never
+from typing import cast, Any, Optional, Union
 
 from pynwsdata.configuration import Configuration
 from pynwsdata.api_object import (
@@ -20,16 +19,10 @@ from pynwsdata.api_transport.transport_base import (
     ValueType, SeriesType
 )
 from pynwsdata.api_response import ApiResponse, T as ApiResponseT
-import pynwsdata.models
 from pynwsdata import rest
 from pynwsdata.exceptions import (
     ApiValueError,
     ApiException,
-    BadRequestException,
-    UnauthorizedException,
-    ForbiddenException,
-    NotFoundException,
-    ServiceException
 )
 
 RequestSerialized = tuple[str, str, dict[str, str], Optional[str], list[str]]
@@ -37,6 +30,7 @@ RequestSerialized = tuple[str, str, dict[str, str], Optional[str], list[str]]
 from pynwsdata.version import VERSION
 
 APPLICATION: str = __package__ or __name__
+USER_AGENT: str = "/".join((APPLICATION, VERSION, sys.implementation.name, sys.version.split()[0]))
 
 class ApiClient:
     """Generic API client for OpenAPI client library builds.
@@ -71,18 +65,16 @@ class ApiClient:
         if header_name is not None:
             self.default_headers[header_name] = header_value
         self.cookie = cookie
-        # Set default User-Agent.
-        self.user_agent = "/".join((APPLICATION, VERSION, "python", sys.version.split()[0]))
-        self.client_side_validation = configuration.client_side_validation
+        self.user_agent = USER_AGENT
 
-    async def __aenter__(self):
+    def __enter__(self):
         return self
 
-    async def __aexit__(self, exc_type, exc_value, traceback):
-        await self.close()
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.close()
 
-    async def close(self):
-        await self.rest_client.close()
+    def close(self):
+        self.rest_client.close()
 
     @property
     def user_agent(self):
@@ -232,13 +224,12 @@ class ApiClient:
         return method, url, header_params, body, post_params
 
 
-    async def call_api(
+    def call_api(
         self,
         method,
         url,
         header_params=None,
         body=None,
-        post_params=None,
         _request_timeout=None
     ) -> rest.RESTResponse:
         """Makes the HTTP request (synchronous)
@@ -255,12 +246,11 @@ class ApiClient:
 
         try:
             # perform request and return response
-            response_data = await self.rest_client.request(
+            response_data = self.rest_client.request(
                 method, url,
                 headers=header_params,
-                body=body, post_params=post_params,
-                _request_timeout=_request_timeout
-            )
+                body=body,
+                )
 
         except ApiException as e:
             raise e
@@ -270,7 +260,7 @@ class ApiClient:
     def response_deserialize(
         self,
         response_data: rest.RESTResponse,
-        response_types_map: Optional[dict[str, ApiResponseT]]=None
+        response_types_map: dict[int, type[ApiResponseT]]
     ) -> ApiResponse[ApiResponseT]:
         """Deserializes response into an object.
         :param response_data: RESTResponse object to be deserialized.
@@ -278,27 +268,28 @@ class ApiClient:
         :return: ApiResponse
         """
 
-        msg = "RESTResponse.read() must be called before passing it to response_deserialize()"
-        assert response_data.data is not None, msg
+        response_type: Optional[type[ApiObject]] = response_types_map.get(response_data.status, None)
 
-        response_type = response_types_map.get(response_data.status, None)
+        data = response_data.read()
+
         if response_type is None:
-            raise ApiException(status = response_data.status, reason="Internal Error: Response status not supported" )
+            # assuming an error response
+            raise ApiException.from_response(
+                http_resp=response_data,
+                body=data.decode()
+                )
 
         # deserialize response data
         response_text = None
         return_data = None
         try:
-            if response_type == "bytearray":
-                return_data = response_data.data
-            elif response_type is not None:
-                match = None
-                content_type = response_data.getheader('content-type')
-                if content_type is not None:
-                    match = re.search(r"charset=([a-zA-Z\-\d]+)[\s;]?", content_type)
-                encoding = match.group(1) if match else "utf-8"
-                response_text = response_data.data.decode(encoding)
-                return_data = self.deserialize(response_text, response_type, content_type)
+            match = None
+            content_type = response_data.getheader(b'content-type').decode()
+            if content_type is not None:
+                match = re.search(r"charset=([a-zA-Z\-\d]+)[\s;]?", content_type)
+            encoding = match.group(1) if match else "utf-8"
+            response_text = data.decode(encoding)
+            return_data = self.deserialize(response_text, response_type, content_type)
         finally:
             if not 200 <= response_data.status <= 299:
                 raise ApiException.from_response(

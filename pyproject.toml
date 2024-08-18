@@ -10,11 +10,12 @@ license = { text = "MIT" }
 requires-python = ">=3.10"
 dependencies = [
     "aenum",
-    "urllib3>=1.25.3",
+    "httpcore[http2]",
     "python-dateutil>=2.8.2",
     "aiohttp>=3.8.4",
     "aiohttp-retry>=2.8.3",
     "ujson",
+    "pint",
     "pyfields>=1.7.2",
     "typing-extensions>=4.7.1",
     "geopy",
@@ -23,8 +24,8 @@ dependencies = [
     "NetCDF4",
 ]
 name = "pynwsdata"
-version = "0.0.2"
-description = "Client interface for the weather.gov Web API"
+version = "0.0.3"
+description = "Client interface for the weather.gov Web API (unofficial)"
 readme = "README.md"
 
 # [project.urls]
@@ -46,7 +47,12 @@ dev = [
 where = ["src"]
 
 [tool.pdm.build]
-includes = ["src/pynwsdata/py.typed", "src/pynwsdata/version"]
+includes = [
+    "src/pynwsdata/py.typed",
+    "src/pynwsdata/version",
+    "src/pynwsdata/units/README.md",
+    "src/pynwsdata/units/wmo.csv",
+]
 
 [tool.mypy]
 files = ["src", "test"]

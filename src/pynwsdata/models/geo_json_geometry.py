@@ -66,17 +66,6 @@ class GeoJsonGeometry(ApiObject):
         return scls
 
     @classmethod
-    def from_json_map(cls, mapping: Mapping[str, Any]) -> Self:
-        try:
-            tc: str = mapping[ApiConst.TYPE]
-        except KeyError:
-            raise ValueError("Type code not provided",
-                             mapping, cls) from None
-
-        subcls = cls.get_subtype(tc)
-        return subcls.from_json_map(mapping)
-
-    @classmethod
     def from_json_parsed(cls, mapping: dict[str, Any]) -> Self:
         if cls is GeoJsonGeometry:
             try:

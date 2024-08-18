@@ -1,0 +1,159 @@
+<http://codes.wmo.int/def/common/code_figure>,<http://codes.wmo.int/def/common/wmoAbbreviation>,<http://codes.wmo.int/def/common/wmoAbbreviationIA2>,<http://codes.wmo.int/def/common/wmoAbbreviationIA5>,@id,dct:definition,rdf:type,rdfs:label,skos:altLabel,skos:notation,skos:prefLabel
+'111',',',MNT,<http://codes.wmo.int/common/unit/'>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,minute (angle),',',minute (angle)
+'112','','',SEC,<http://codes.wmo.int/common/unit/''>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,second (angle),'','',second (angle)
+no,(Y),(Y),(Y),<http://codes.wmo.int/common/unit/(Y)_pref>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,(yotta),(Y),(Y),(yotta)
+no,(Z),(Z),(Z),<http://codes.wmo.int/common/unit/(Z)_pref>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,(zetta),(Z),(Z),(zetta)
+no,(y),(y),"",<http://codes.wmo.int/common/unit/(y)_pref>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,(yocto),(y),(y),(yocto)
+no,(z),(z),"",<http://codes.wmo.int/common/unit/(z)_pref>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,(zepto),(z),(z),(zepto)
+'301',‰,0/00,PERTHOU,<http://codes.wmo.int/common/unit/0.001>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,parts per thousand,‰,0/00,parts per thousand
+'000','1','1','1',<http://codes.wmo.int/common/unit/1>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,Dimensionless,'1','1',Dimensionless
+'004',A,A,A,<http://codes.wmo.int/common/unit/A>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,ampere,A,A,ampere
+'170',AU,AU,ASU,<http://codes.wmo.int/common/unit/AU>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,astronomic unit,AU,AU,astronomic unit
+'080',Bq,Bq,BQ,<http://codes.wmo.int/common/unit/Bq>,s^-1,skos:Concept|<http://codes.wmo.int/def/common/Unit>,becquerel,Bq,Bq,becquerel
+'750',Bq l^-1,Bq/l,BQ/L,<http://codes.wmo.int/common/unit/Bq_l-1>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,becquerels per litre,Bq l^-1,Bq/l,becquerels per litre
+'751',Bq m^-2,Bq m-2,BQ/M2,<http://codes.wmo.int/common/unit/Bq_m-2>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,becquerels per square metre,Bq m^-2,Bq m-2,becquerels per square metre
+'752',Bq m^-3,Bq m-3,BQ/M3,<http://codes.wmo.int/common/unit/Bq_m-3>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,becquerels per cubic metre,Bq m^-3,Bq m-3,becquerels per cubic metre
+'830',Bq s m^-3,Bq s m-3,"",<http://codes.wmo.int/common/unit/Bq_s_m-3>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,becquerel seconds per cubic metre,Bq s m^-3,Bq s m-3,becquerel seconds per cubic metre
+'035',C,C,C,<http://codes.wmo.int/common/unit/C>,A s,skos:Concept|<http://codes.wmo.int/def/common/Unit>,coulomb,C,C,coulomb
+'352',˚ C/100 m,C/100 m,C/100 M,<http://codes.wmo.int/common/unit/C_-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,degrees Celsius per 100 metres,˚ C/100 m,C/100 m,degrees Celsius per 100 metres
+'351',˚ C/m,C/m,C/M,<http://codes.wmo.int/common/unit/C_m-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,degrees Celsius per metre,˚ C/m,C/m,degrees Celsius per metre
+'060',˚C,Cel,CEL,<http://codes.wmo.int/common/unit/Cel>,K+273.15,<http://codes.wmo.int/def/common/Unit>|skos:Concept,degree Celsius,˚C,Cel,degree Celsius
+'360',DU,DU,DU,<http://codes.wmo.int/common/unit/DU>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,Dobson Unit (9),DU,DU,Dobson Unit (9)
+no,E,E,E,<http://codes.wmo.int/common/unit/E_pref>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,exa,E,E,exa
+'037',F,F,F,<http://codes.wmo.int/common/unit/F>,kg^-1 m^-2 s^4 A^2,skos:Concept|<http://codes.wmo.int/def/common/Unit>,farad,F,F,farad
+no,G,G,G,<http://codes.wmo.int/common/unit/G_pref>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,giga,G,G,giga
+'081',Gy,Gy,GY,<http://codes.wmo.int/common/unit/Gy>,m^2 s^-2,<http://codes.wmo.int/def/common/Unit>|skos:Concept,gray,Gy,Gy,gray
+'042',H,H,H,<http://codes.wmo.int/common/unit/H>,kg m^2 s^-2 A^-2,skos:Concept|<http://codes.wmo.int/def/common/Unit>,henry,H,H,henry
+'030',Hz,Hz,HZ,<http://codes.wmo.int/common/unit/Hz>,s-^1,skos:Concept|<http://codes.wmo.int/def/common/Unit>,hertz,Hz,Hz,hertz
+'033',J,J,J,<http://codes.wmo.int/common/unit/J>,kg m^2 s^-2,skos:Concept|<http://codes.wmo.int/def/common/Unit>,joule,J,J,joule
+'806',J kg^-1,J/kg,"",<http://codes.wmo.int/common/unit/J_kg-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,joules per kilogram,J kg^-1,J/kg,joules per kilogram
+'805',J m^-2,J m-2,"",<http://codes.wmo.int/common/unit/J_m-2>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,joules per square metre,J m^-2,J m-2,joules per square metre
+'005',K,K,K,<http://codes.wmo.int/common/unit/K>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,kelvin,K,K,kelvin
+'786',K m^-1,K/m,"",<http://codes.wmo.int/common/unit/K_m-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,kelvins per metre,K m^-1,K/m,kelvins per metre
+'787',K m^2 kg^-1 s^-1,K m2 kg-1 s-1,"",<http://codes.wmo.int/common/unit/K_m2_kg-1_s-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,kelvin square metres per kilogram per second,K m^2 kg^-1 s^-1,K m2 kg-1 s-1,kelvin square metres per kilogram per second
+'785',K m s^-1,K m s-1,"",<http://codes.wmo.int/common/unit/K_m_s-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,kelvin metres per second,K m s^-1,K m s-1,kelvin metres per second
+no,M,M,MA,<http://codes.wmo.int/common/unit/M_pref>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,mega,M,M,mega
+'031',N,N,N,<http://codes.wmo.int/common/unit/N>,kg m s^-2,<http://codes.wmo.int/def/common/Unit>|skos:Concept,newton,N,N,newton
+'795',N m^-2,N m-2,"",<http://codes.wmo.int/common/unit/N_m-2>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,newtons per square metre,N m^-2,N m-2,newtons per square metre
+'842',N units,N units,"",<http://codes.wmo.int/common/unit/N_units>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,N units,N units,N units,N units
+'038',Ω,Ohm,OHM,<http://codes.wmo.int/common/unit/Ohm>,kg m^2 s^-3 A^-2,skos:Concept|<http://codes.wmo.int/def/common/Unit>,ohm,Ω,Ohm,ohm
+no,P,P,PE,<http://codes.wmo.int/common/unit/P_pref>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,peta,P,P,peta
+'032',Pa,Pa,PAL,<http://codes.wmo.int/common/unit/Pa>,kg m^-1 s^-2,skos:Concept|<http://codes.wmo.int/def/common/Unit>,pascal,Pa,Pa,pascal
+'800',Pa s^-1,Pa/s,"",<http://codes.wmo.int/common/unit/Pa_s-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,pascals per second,Pa s^-1,Pa/s,pascals per second
+'039',S,S,SIE,<http://codes.wmo.int/common/unit/S>,kg^-1 m^-2 s^3 A^2,skos:Concept|<http://codes.wmo.int/def/common/Unit>,siemens,S,S,siemens
+'820',S m^-1,S/m,"",<http://codes.wmo.int/common/unit/S_m-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,siemens per metre,S m^-1,S/m,siemens per metre
+'082',Sv,Sv,SV,<http://codes.wmo.int/common/unit/Sv>,m^2 s^-2,<http://codes.wmo.int/def/common/Unit>|skos:Concept,sievert,Sv,Sv,sievert
+'041',T,T,T,<http://codes.wmo.int/common/unit/T>,kg s^-2 A^-1,<http://codes.wmo.int/def/common/Unit>|skos:Concept,tesla,T,T,tesla
+no,T,T,T,<http://codes.wmo.int/common/unit/T_pref>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,tera,T,T,tera
+'036',V,V,V,<http://codes.wmo.int/common/unit/V>,kg m^2 s^-3 A^-1,<http://codes.wmo.int/def/common/Unit>|skos:Concept,volt,V,V,volt
+'034',W,W,W,<http://codes.wmo.int/common/unit/W>,kg m^2 s^-3,skos:Concept|<http://codes.wmo.int/def/common/Unit>,watt,W,W,watt
+'810',W m^-1 sr^-1,W m-1 sr-1,"",<http://codes.wmo.int/common/unit/W_m-1_sr-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,watts per metre per steradian,W m^-1 sr^-1,W m-1 sr-1,watts per metre per steradian
+'811',W m^-2,W m-2,"",<http://codes.wmo.int/common/unit/W_m-2>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,watts per square metre,W m^-2,W m-2,watts per square metre
+'812',W m^-2 sr^-1,W m-2 sr-1,"",<http://codes.wmo.int/common/unit/W_m-2_sr-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,watts per square metre per steradian,W m^-2 sr^-1,W m-2 sr-1,watts per square metre per steradian
+'813',W m^-2 sr^-1 cm,W m-2 sr-1 cm,"",<http://codes.wmo.int/common/unit/W_m-2_sr-1_cm>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,watts per square metre per steradian centimetre,W m^-2 sr^-1 cm,W m-2 sr-1 cm,watts per square metre per steradian centimetre
+'814',W m^-2 sr^-1 m,W m-2 sr-1 m,"",<http://codes.wmo.int/common/unit/W_m-2_sr-1_m>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,watts per square metre per steradian metre,W m^-2 sr^-1 m,W m-2 sr-1 m,watts per square metre per steradian metre
+'815',W m^-3 sr^-1,W m-3 sr-1,"",<http://codes.wmo.int/common/unit/W_m-3_sr-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,watts per cubic metre per steradian,W m^-3 sr^-1,W m-3 sr-1,watts per cubic metre per steradian
+'040',Wb,Wb,WB,<http://codes.wmo.int/common/unit/Wb>,kg m^2 s^-2 A^-1,skos:Concept|<http://codes.wmo.int/def/common/Unit>,weber,Wb,Wb,weber
+'231',a,a,A,<http://codes.wmo.int/common/unit/a>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,year,a,a,year
+no,a,a,A,<http://codes.wmo.int/common/unit/a_pref>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,atto,a,a,atto
+no,c,c,C,<http://codes.wmo.int/common/unit/c_pref>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,centi,c,c,centi
+'522',cb/12 h,cb/12 h,CB/12 HR,<http://codes.wmo.int/common/unit/cb_-1>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,centibars per 12 hours,cb/12 h,cb/12 h,centibars per 12 hours
+'521',cb s^-1,cb/s,CB/S,<http://codes.wmo.int/common/unit/cb_s-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,centibars per second,cb s^-1,cb/s,centibars per second
+'007',cd,cd,CD,<http://codes.wmo.int/common/unit/cd>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,candela,cd,cd,candela
+'715',cm,cm,CM,<http://codes.wmo.int/common/unit/cm>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,centimetre,cm,cm,centimetre
+'717',cm h^-1,cm/h,CM/HR,<http://codes.wmo.int/common/unit/cm_h-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,centimetres per hour,cm h^-1,cm/h,centimetres per hour
+'716',cm s^-1,cm/s,CM/S,<http://codes.wmo.int/common/unit/cm_s-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,centimetres per second,cm s^-1,cm/s,centimetres per second
+'132',d,d,D,<http://codes.wmo.int/common/unit/d>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,day,d,d,day
+'210',dB,dB,DB,<http://codes.wmo.int/common/unit/dB>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,decibel (6),dB,dB,decibel (6)
+'836',dB degree^-1,dB/deg,"",<http://codes.wmo.int/common/unit/dB_deg-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,decibels per degree,dB degree^-1,dB/deg,decibels per degree
+'835',dB m^-1,dB/m,"",<http://codes.wmo.int/common/unit/dB_m-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,decibels per metre,dB m^-1,dB/m,decibels per metre
+'520',dPa s^-1,dPa/s,DPAL/S,<http://codes.wmo.int/common/unit/dPa_s-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,decipascals per second (microbar per second),dPa s^-1,dPa/s,decipascals per second (microbar per second)
+no,d,d,D,<http://codes.wmo.int/common/unit/d_pref>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,deci,d,d,deci
+'523',daPa,daPa,DAPAL,<http://codes.wmo.int/common/unit/daPa>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,dekapascal,daPa,daPa,dekapascal
+no,da,da,D,<http://codes.wmo.int/common/unit/da_pref>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,deca,da,da,deca
+'825',degrees^2,deg^2,"",<http://codes.wmo.int/common/unit/deg2>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,square degrees,degrees^2,deg^2,square degrees
+'350',˚ C,C,C,<http://codes.wmo.int/common/unit/degC>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,degrees Celsius (8),˚ C,degC,degrees Celsius (8)
+'321',degree/s,deg/s,DEG/S,<http://codes.wmo.int/common/unit/deg_s-1>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,degrees per second,degree/s,deg/s,degrees per second
+'110',˚,deg,DEG,<http://codes.wmo.int/common/unit/degree_(angle)>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,degree (angle),˚,deg,degree (angle)
+'320',˚,deg,DEG,<http://codes.wmo.int/common/unit/degrees_true>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,degrees true,˚,deg,degrees true
+'720',dm,dm,DM,<http://codes.wmo.int/common/unit/dm>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,decimetre,dm,dm,decimetre
+'160',eV,eV,EV,<http://codes.wmo.int/common/unit/eV>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,electron volt,eV,eV,electron volt
+no,f,f,F,<http://codes.wmo.int/common/unit/f_pref>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,femto,f,f,femto
+'510',ft,ft,FT,<http://codes.wmo.int/common/unit/ft>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,foot,ft,ft,foot
+'630',g,g,"",<http://codes.wmo.int/common/unit/g>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,acceleration due to gravity,g,g,acceleration due to gravity
+'620',g kg^-1,g/kg,G/KG,<http://codes.wmo.int/common/unit/g_kg-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,grams per kilogram,g kg^-1,g/kg,grams per kilogram
+'621',g kg^-1 s^-1,g kg-1 s-1,"",<http://codes.wmo.int/common/unit/g_kg-1_s-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,grams per kilogram per second,g kg^-1 s^-1,g kg-1 s-1,grams per kilogram per second
+'631',gpm,gpm,"",<http://codes.wmo.int/common/unit/gpm>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,geopotential metre,gpm,gpm,geopotential metre
+'131',h,h,HR,<http://codes.wmo.int/common/unit/h>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,hour,h,h,hour
+'530',hPa,hPa,HPAL,<http://codes.wmo.int/common/unit/hPa>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,hectopascal,hPa,hPa,hectopascal
+'533',hPa/3 h,hPa/3 h,HPAL/3 HR,<http://codes.wmo.int/common/unit/hPa_-1>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,hectopascals per 3 hours,hPa/3 h,hPa/3 h,hectopascals per 3 hours
+'532',hPa h^-1,hPa/h,HPAL/HR,<http://codes.wmo.int/common/unit/hPa_h-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,hectopascals per hour,hPa h^-1,hPa/h,hectopascals per hour
+'531',hPa s^-1,hPa/s,HPAL/S,<http://codes.wmo.int/common/unit/hPa_s-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,hectopascals per second,hPa s^-1,hPa/s,hectopascals per second
+no,h,h,H,<http://codes.wmo.int/common/unit/h_pref>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,hecto,h,h,hecto
+'220',ha,ha,HAR,<http://codes.wmo.int/common/unit/ha>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,hectare,ha,ha,hectare
+'801',kPa,kPa,"",<http://codes.wmo.int/common/unit/kPa>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,kilopascal,kPa,kPa,kilopascal
+no,k,k,K,<http://codes.wmo.int/common/unit/k_pref>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,kilo,k,k,kilo
+'002',kg,kg,KG,<http://codes.wmo.int/common/unit/kg>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,kilogram,kg,kg,kilogram
+'778',kg^-2 s^-1,kg-2 s-1,"",<http://codes.wmo.int/common/unit/kg-2_s-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,per square kilogram per second,kg^-2 s^-1,kg-2 s-1,per square kilogram per second
+'622',kg kg^-1,kg/kg,"",<http://codes.wmo.int/common/unit/kg_kg-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,kilograms per kilogram,kg kg^-1,kg/kg,kilograms per kilogram
+'623',kg kg^-1 s^-1,kg kg-1 s-1,"",<http://codes.wmo.int/common/unit/kg_kg-1_s-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,kilograms per kilogram per second,kg kg^-1 s^-1,kg kg-1 s-1,kilograms per kilogram per second
+'775',km m^-1,kg/m,"",<http://codes.wmo.int/common/unit/kg_m-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,kilograms per metre,km m^-1,kg/m,kilograms per metre
+'624',kg m^-2,kg m-2,"",<http://codes.wmo.int/common/unit/kg_m-2>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,kilograms per square metre,kg m^-2,kg m-2,kilograms per square metre
+'776',kg m^-2 s^-1,kg m-2 s-1,"",<http://codes.wmo.int/common/unit/kg_m-2_s-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,kilograms per square metre per second,kg m^-2 s^-1,kg m-2 s-1,kilograms per square metre per second
+'777',kg m^-3,kg m-3,"",<http://codes.wmo.int/common/unit/kg_m-3>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,kilograms per cubic metre,kg m^-3,kg m-3,kilograms per cubic metre
+'740',km,km,KM,<http://codes.wmo.int/common/unit/km>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,kilometre,km,km,kilometre
+'742',km/d,km/d,KM/D,<http://codes.wmo.int/common/unit/km_d-1>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,kilometres per day,km/d,km/d,kilometres per day
+'741',km h^-1,km/h,KM/HR,<http://codes.wmo.int/common/unit/km_h-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,kilometres per hour,km h^-1,km/h,kilometres per hour
+'201',kt,kt,KT,<http://codes.wmo.int/common/unit/kt>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,knot,kt,kt,knot
+'501',kt/1000 m,kt/km,KT/KM,<http://codes.wmo.int/common/unit/kt_km-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,knots per 1000 metres,kt/1000 m,kt/km,knots per 1000 metres
+'120',l,l,L,<http://codes.wmo.int/common/unit/l>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,litre,l,l,litre
+'070',lm,lm,LM,<http://codes.wmo.int/common/unit/lm>,cd sr,skos:Concept|<http://codes.wmo.int/def/common/Unit>,lumen,lm,lm,lumen
+'772',log (m^-1),log (m-1),"",<http://codes.wmo.int/common/unit/log_(m-1)>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,logarithm per metre,log (m^-1),log (m-1),logarithm per metre
+'773',log (m^-2),log (m-2),"",<http://codes.wmo.int/common/unit/log_(m-2)>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,logarithm per square metre,log (m^-2),log (m-2),logarithm per square metre
+'071',lx,lx,LX,<http://codes.wmo.int/common/unit/lx>,cd sr m^-2,<http://codes.wmo.int/def/common/Unit>|skos:Concept,lux,lx,lx,lux
+'001',m,m,M,<http://codes.wmo.int/common/unit/m>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,metre,m,m,metre
+'743',m^-1,m-1,/M,<http://codes.wmo.int/common/unit/m-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,per metre,m^-1,m-1,per metre
+'734',m^2,m2,M2,<http://codes.wmo.int/common/unit/m2>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,square metres,m^2,m2,square metres
+'769',m^2/3 s^-1,m2/3 s-1,"",<http://codes.wmo.int/common/unit/m2_-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,metres to the two thirds power per second,m^2/3 s^-1,m2/3 s-1,metres to the two thirds power per second
+'764',m^2 Hz^-1,m2/Hz,"",<http://codes.wmo.int/common/unit/m2_Hz-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,square metres per hertz,m^2 Hz^-1,m2/Hz,square metres per hertz
+'763',m^2 rad^-1 s,m2 rad-1 s,"",<http://codes.wmo.int/common/unit/m2_rad-1_s>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,square metres per radian squared,m^2 rad^-1 s,m2 rad-1 s,square metres per radian squared
+'761',m^2 s,m2 s,"",<http://codes.wmo.int/common/unit/m2_s>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,square metres second,m^2 s,m2 s,square metres second
+'735',m^2 s^-1,m2/s,M2/S,<http://codes.wmo.int/common/unit/m2_s-1>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,square metres per second,m^2 s^-1,m2/s,square metres per second
+'762',m^2 s^-2,m2 s-2,"",<http://codes.wmo.int/common/unit/m2_s-2>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,square metres per second squared,m^2 s^-2,m2 s-2,square metres per second squared
+'765',m^3,m3,"",<http://codes.wmo.int/common/unit/m3>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,cubic metres,m^3,m3,cubic metres
+'767',m^3 m^-3,m3 m-3,"",<http://codes.wmo.int/common/unit/m3_m-3>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,cubic metres per cubic metre,m^3 m^-3,m3 m-3,cubic metres per cubic metre
+'766',m^3 s^-1,m3/s,"",<http://codes.wmo.int/common/unit/m3_s-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,cubic metres per second,m^3 s^-1,m3/s,cubic metres per second
+'768',m^4,m4,"",<http://codes.wmo.int/common/unit/m4>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,metres to the fourth power,m^4,m4,metres to the fourth power
+'753',mSv,mSv,MSV,<http://codes.wmo.int/common/unit/mSv>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,millisievert,mSv,mSv,millisievert
+no,m,m,M,<http://codes.wmo.int/common/unit/m_pref>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,milli,m,m,milli
+'731',m s^-1,m/s,M/S,<http://codes.wmo.int/common/unit/m_s-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,metres per second,m s^-1,m/s,metres per second
+'733',m s^-1/1000 m,m s-1/km,"",<http://codes.wmo.int/common/unit/m_s-1_km-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,metres per second per 1000 metres,m s^-1/1000 m,m s-1/km,metres per second per 1000 metres
+'732',m s^-1/m,m s-1/m,"",<http://codes.wmo.int/common/unit/m_s-1_m-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,metres per second per metre,m s^-1/m,m s-1/m,metres per second per metre
+'760',m s^-2,m s-2,"",<http://codes.wmo.int/common/unit/m_s-2>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,metres per second squared,m s^-2,m s-2,metres per second squared
+'130',min,min,MIN,<http://codes.wmo.int/common/unit/min>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,minute (time),min,min,minute (time)
+'710',mm,mm,MM,<http://codes.wmo.int/common/unit/mm>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,millimetre,mm,mm,millimetre
+'713',mm^6 m^-3,mm6 m-3,"",<http://codes.wmo.int/common/unit/mm6_m-3>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,millimetres per the sixth power per cubic metre,mm^6 m^-3,mm6 m-3,millimetres per the sixth power per cubic metre
+'712',mm h^-1,mm/h,MM/HR,<http://codes.wmo.int/common/unit/mm_h-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,millimetres per hour,mm h^-1,mm/h,millimetres per hour
+'711',mm s^-1,mm/s,MM/S,<http://codes.wmo.int/common/unit/mm_s-1>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,millimetres per seconds,mm s^-1,mm/s,millimetres per seconds
+'006',mol,mol,MOL,<http://codes.wmo.int/common/unit/mol>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,mole,mol,mol,mole
+'788', mol mol^-1,mol/mol,"",<http://codes.wmo.int/common/unit/mol_mol-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,moles per mole, mol mol^-1,mol/mol,moles per mole
+'430',mon,mon,MON,<http://codes.wmo.int/common/unit/mon>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,month,mon,mon,month
+no,n,n,N,<http://codes.wmo.int/common/unit/n_pref>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,nano,n,n,nano
+'200', ,"","",<http://codes.wmo.int/common/unit/nautical_mile>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,nautical mile, , ,nautical mile
+'535',nbar,nbar,NBAR,<http://codes.wmo.int/common/unit/nbar>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,nanobar = hPa 10^-6,nbar,nbar,nanobar = hPa 10^-6
+'310',okta,okta,OKTA,<http://codes.wmo.int/common/unit/okta>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,eighths of cloud,okta,okta,eighths of cloud
+'841',pH unit,pH unit,"",<http://codes.wmo.int/common/unit/pH_unit>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,pH unit,pH unit,pH unit,pH unit
+no,p,p,P,<http://codes.wmo.int/common/unit/p_pref>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,pico,p,p,pico
+'171',pc,pc,PRS,<http://codes.wmo.int/common/unit/pc>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,parsec,pc,pc,parsec
+'300',%,%,PERCENT,<http://codes.wmo.int/common/unit/percent>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,per cent,%,%,per cent
+'021',rad,rad,RAD,<http://codes.wmo.int/common/unit/rad>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,radian,rad,rad,radian
+'790',rad m^-1,rad/m,"",<http://codes.wmo.int/common/unit/rad_m-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,radians per metre,rad m^-1,rad/m,radians per metre
+'003',s,s,S,<http://codes.wmo.int/common/unit/s>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,second,s,s,second
+'441',s^-1,/s,/S,<http://codes.wmo.int/common/unit/s-1>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,per second (same as hertz),s^-1,/s,per second (same as hertz)
+'442',s^-2,s-2,"",<http://codes.wmo.int/common/unit/s-2>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,per second squared,s^-2,s-2,per second squared
+'779',s m^-1,s/m,"",<http://codes.wmo.int/common/unit/s_m-1>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,seconds per metre,s m^-1,s/m,seconds per metre
+'022',sr,sr,SR,<http://codes.wmo.int/common/unit/sr>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,steradian,sr,sr,steradian
+'150',t,t,TNE,<http://codes.wmo.int/common/unit/t>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,tonne,t,t,tonne
+'161',u,u,U,<http://codes.wmo.int/common/unit/u>,"",<http://codes.wmo.int/def/common/Unit>|skos:Concept,atomic mass unit,u,u,atomic mass unit
+no,µ,u,U,<http://codes.wmo.int/common/unit/u_pref>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,micro,µ,u,micro
+'230', ,"","",<http://codes.wmo.int/common/unit/week>,"",skos:Concept|<http://codes.wmo.int/def/common/Unit>,week, , ,week

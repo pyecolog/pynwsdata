@@ -15,22 +15,21 @@ from typing import (
     TypeVar, TypeVarTuple
 )
 from typing_extensions import (
-    ClassVar, TypeVar, get_args, get_origin
+    get_args, get_origin
 )
-
-# from pynwsdata.api_object import NONETYPE, ApiObject, ModelInterface, UnknownTypeClass
-
 
 if TYPE_CHECKING:
     # type alias declaration for aenum Enum
-    Enum: TypeAlias = EnumType
+    Enum: TypeAlias = EnumType  # noqa: F811
 
 NONETYPE: type = type(None)
 UNIONTYPE: type = type(Union)
 
+
 def is_union_type(spec: "TypeSpec") -> bool:
     origin = get_origin(spec)
     return origin is Union
+
 
 def get_optional_type(type_hint: "TypeSpec") -> Optional["TypeSpec"]:
     if is_union_type(type_hint):
@@ -60,6 +59,7 @@ TypeSpec: TypeAlias = Union[type, UnionType, Literal.__class__, None]
 Ti = TypeVar("Ti")
 To = TypeVar("To")
 
+
 class DeferredBase:
     # singleton type
     #
@@ -70,7 +70,9 @@ class DeferredBase:
         API_OBJECT = ApiObject
         MODEL_INTERFACE = ModelInterface
 
+
 DEFERRED = DeferredBase()
+
 
 class TransportInterface(Generic[Ti, To], ABC):
     __slots__ = "__weakref__", "interface_type", "value_type", "interface_class", "interface_field"
@@ -117,23 +119,19 @@ class TransportInterface(Generic[Ti, To], ABC):
 
 
 ValueType: TypeAlias = Union[str, int, float, bool, bytes, datetime]
-# note: applications may extend ValueTypeInterfaces for custom JSON encoding (excl. direct mapping values)
-VALUE_TYPES: dict[type, type[TransportInterface]] = dict()
+ValueTypeMap: TypeAlias = dict[type, type[TransportInterface]]
+VALUE_TYPES: ValueTypeMap = dict()
 
 SeriesTypeSet: set[type] = {list, tuple, set, frozenset}
 SeriesType: TypeAlias = Union[list, tuple, set, frozenset]
 
 JsonObject: TypeAlias = Union[int, float, bool, str, dict[str, Any], None]
 
-# InterfaceObject: TypeAlias = Union[type["ApiObject"], ValueType, SeriesInterface]
-
-
 Tse = TypeVar("Tse")
 Tv = TypeVar("Tv", bound=ValueType)
 Ts = TypeVar("Ts", bound=SeriesType)
 Te = TypeVar("Te", bound=Enum)
 Tes = TypeVarTuple("Tes")  # ?? for the sinle enum union type in the server API
-
 
 
 def get_type_class(type_hint: Union[TypeAlias, type], label: str = "Unknown"):
@@ -176,7 +174,7 @@ def get_type_class(type_hint: Union[TypeAlias, type], label: str = "Unknown"):
 
 def get_type_interface(type_hint: Any,
                        label: str = "Unknown",
-                       values_map: Optional[dict[type, type["ValueInterface"]]] = None,
+                       value_type_map: Optional[ValueTypeMap] = None,
                        **kw) -> TransportInterface[Ti, To]:
     # ApiField utility function
 
@@ -196,10 +194,10 @@ def get_type_interface(type_hint: Any,
     elif issubclass(tc, Enum):
         return EnumInterface(tc, **kw)
 
-    if values_map is None:
-        values_map = VALUE_TYPES
+    if value_type_map is None:
+        value_type_map = VALUE_TYPES
     try:
-        vtype = values_map[tc]
+        vtype = value_type_map[tc]
     except KeyError:
         pass
     else:
@@ -218,13 +216,15 @@ def get_type_interface(type_hint: Any,
         first, *rest = get_args(type_hint)
         if rest:
             warn(UserWarning("%s: Ambigous series element type" %
-                label, type_hint), stacklevel=3)
+                             label, type_hint), stacklevel=3)
             return UnknownInterface(type_hint, tc, tc, **kw)
         else:
             elt_impl = get_type_interface(first, label, **kw)
         return SeriesInterface(tc, elt_impl, **kw)
     elif tc is dict:
         return ValueInterface(type_hint, tc, tc, **kw)
+    elif isinstance(tc, type):
+        return tc
     else:
         warn(UserWarning("%s: Unrecognized type hint" %
              label, type_hint), stacklevel=3)
@@ -278,6 +278,7 @@ class ValueInterface(TransportInterface[Ti, Ti], Generic[Ti]):
     def to_json_parsed(self, instance: Ti) -> Ti:
         return instance
 
+
 class StrInterface(ValueInterface[str]):
     def from_json_parsed(self, value: str) -> str:
         return value
@@ -285,6 +286,7 @@ class StrInterface(ValueInterface[str]):
     def to_json_parsed(self, instance: str) -> str:
         return instance
 
+##  unused in this API
 # class BytesInterface(TransportInterface[str, bytes]):
 #     def from_json_parsed(self, value: str) -> bytes:
 #         return value.encode()
@@ -296,20 +298,25 @@ class StrInterface(ValueInterface[str]):
 class IntInterface(ValueInterface[int]):
     def from_json_parsed(self, value: int) -> int:
         return value
+
     def to_json_parsed(self, instance: int) -> int:
         return instance
+
 
 class FloatInterface(TransportInterface[float, float]):
     # note: using ujson
     # see https://github.com/ultrajson/ultrajson/issues/371
     def from_json_parsed(self, value: float) -> Decimal:
         return value
+
     def to_json_parsed(self, instance: float) -> float:
         return instance
+
 
 class BoolInterface(ValueInterface[bool]):
     def from_json_parsed(self, value: Union[bool, str]) -> bool:
         return bool(value)
+
     def to_json_parsed(self, instance: bool) -> str:
         return str(instance)
 
@@ -328,7 +335,6 @@ class DatetimeInterface(TransportInterface[str, datetime]):
         dt = np.datetime64(value, "ns")
         return datetime.fromtimestamp(dt.astype("int64"))
 
-
     def to_json_parsed(self, instance: datetime) -> str:
         return instance.isoformat()
 
@@ -340,7 +346,6 @@ VALUE_TYPES.update({
     bool: BoolInterface,
     datetime: DatetimeInterface
 })
-
 
 
 class SeriesInterface(TransportInterface[Ts, Ts], Generic[Ts]):

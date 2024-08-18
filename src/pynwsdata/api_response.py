@@ -19,10 +19,10 @@ class ApiResponse(ApiObject, Generic[T]):
     raw_data: bytes = ApiField(description="""Raw data (HTTP response body)""")
 
     @classmethod
-    def from_json_map(cls, data: dict[str, Any]) -> Never:
+    def from_json_parsed(cls, data: dict[str, Any]) -> Never:
         raise ValueError(
-            "dictionary transform not supported for this type", cls)
+            "json transform not supported for this type", cls)
 
-    def to_json_map(self) -> Never:
+    def to_json_parsed(self) -> Never:
         raise ValueError(
-            "dictionary transform not supported for this type", self.__class__)
+            "json transform not supported for this type", self.__class__)

@@ -19,29 +19,31 @@ from typing_extensions import (
 from warnings import warn
 
 from pynwsdata.api_transport.transport_base import (
-    Ti, To, DEFERRED, TransportInterface
-)
-
-from pynwsdata.api_transport.transport_base import (
+    Ti, To, DEFERRED, TransportInterface, NONETYPE,
     get_type_interface
 )
+
 
 EMPTY_MAP: Mapping[str, Any] = MappingProxyType(dict())
 
 Tm = TypeVar("Tm", bound="ApiObject")
 
+
 class UnboundField(FieldError):
     pass
+
 
 class ApiConst(StrEnum):
     NULL = "null"
     TYPE = "type"
+
 
 class Constraint(StrEnum):
     GE = "ge"
     LE = "le"
     GT = "gt"
     MIN_LENGTH = "min_length"
+
 
 class ApiField(NativeField, Generic[Tm, Ti, To]):
     # pyfields.Field subclass for ApiObject
@@ -65,7 +67,7 @@ class ApiField(NativeField, Generic[Tm, Ti, To]):
     # - field constraints from the generated sources have been retained,
     #   where present in the original generated sources
 
-    __slots__ = "alias", "constraints", "interface"
+    __slots__ = "alias", "constraints", "interface", "can_encode"
 
     if TYPE_CHECKING:
         alias: str
@@ -73,8 +75,8 @@ class ApiField(NativeField, Generic[Tm, Ti, To]):
         interface: TransportInterface[Ti, To]
 
     def get_field_interface(self, type_hint: Any,
-                           label: Optional[str] = None,
-                           field: Union[Self, Symbols.UNKNOWN] = UNKNOWN) -> TransportInterface[Ti, To]:
+                            label: Optional[str] = None,
+                            field: Union[Self, Symbols.UNKNOWN] = UNKNOWN) -> TransportInterface[Ti, To]:
         # ApiField utility function
         label = self.field_id if label is None else label
         if field is UNKNOWN:
@@ -82,8 +84,7 @@ class ApiField(NativeField, Generic[Tm, Ti, To]):
         elif field is EMPTY:
             field = None
 
-        return get_type_interface(type_hint, label, field=field )
-
+        return get_type_interface(type_hint, label, field=field)
 
     def bind_interface(self) -> TransportInterface[Ti, To]:
         try:
@@ -97,20 +98,31 @@ class ApiField(NativeField, Generic[Tm, Ti, To]):
         self.interface = impl
         return impl
 
-    def __init__(self, default: Union[To, Symbols.EMPTY] = EMPTY,
+    def field_is_set(self, instance: To) -> bool:
+        try:
+            return instance.__dict__[self.name]
+        except KeyError:
+            return False
+        else:
+            return True
+
+    def field_can_encode(self, instance: To) -> bool:
+        return self.can_encode
+
+    def __init__(self, default: Union[To, Symbols.EMPTY] = EMPTY, *,
                  default_factory: Optional[Callable[[Tm], To]] = None,
                  type_hint: Any = EMPTY,
                  interface: Optional[TransportInterface[Ti, To]] = None,
-                 # nonable ? TBD
-                 nonable: Union[bool, Symbols] = UNKNOWN,  # ?
+                 can_encode: bool = True,
                  description: Optional[str] = None,
                  alias: Optional[str] = None,
                  ge: Optional[int] = None,
                  gt: Optional[int] = None,
                  le: Optional[int] = None,
-                 min_length: Optional[int] = None
+                 min_length: Optional[int] = None,
                  ):
-        super().__init__(default, default_factory, type_hint, nonable, description)
+        super().__init__(default, default_factory, type_hint, UNKNOWN, description)
+        self.can_encode = can_encode
         if interface is not None:
             self.interface = interface
         if alias is not None:
@@ -149,28 +161,37 @@ class ApiField(NativeField, Generic[Tm, Ti, To]):
     def __set_name__(self, scope: type[To], name: str):
         name = sys.intern(name)
         super().__set_name__(scope, name)
+        # set nonable, assuming self.type hint
+        # will now be avaialble
+        th = self.type_hint
+        if self.nonable is Symbols.UNKNOWN:
+            th_origin = get_origin(th)
+            self.nonable = th_origin is Union and NONETYPE in get_args(th)
+        # set alias if not initialized
         try:
             self.alias
         except AttributeError:
             self.alias = self.name
+        # update name and scope attrs
+        if self.name is None:
+            self.name = name
+        if self.owner_cls is None:
+            self.owner_cls = scope
+        # ensure self.interface is initialized
         try:
             self.interface
         except AttributeError:
             pass
         else:
             return
-        if self.name is None:
-            self.name = name
-        if self.owner_cls is None:
-            self.owner_cls = scope
-        th = self.type_hint
         if th is None or th is EMPTY:
             warn(UserWarning("%s: No type hint" % self.field_id), stacklevel=3)
         else:
             if __debug__:
                 origin = get_origin(th)
                 if origin is ClassVar:
-                    warn(UserWarning("%s: Field initialized for ClassVar" % self.field_id, th))
+                    warn(UserWarning("%s: Field initialized for ClassVar" %
+                         self.field_id, th))
             self.bind_interface()
 
     def __set__(self, instance: Tm, value: To):
@@ -258,7 +279,7 @@ class ApiObject(ABC, metaclass=ApiType):
     if TYPE_CHECKING:
         fields: ClassVar[dict[str, ApiField]]
         alias_fields: ClassVar[dict[str, ApiField]]
-        model_interface: ClassVar["ModelInterface[Self]"] # NOTE: ClassVar
+        model_interface: ClassVar["ModelInterface[Self]"]
         # overflow for field names without a representation in cls.fields or cls.alias_fields
         unmapped_fields: set[str]
 
@@ -309,10 +330,49 @@ class ApiObject(ABC, metaclass=ApiType):
 
     @classmethod
     def from_json_parsed(cls, values: dict[str, Any]) -> Self:
-        return cls.model_interface.from_json_parsed(values)
+        fields = cls.alias_fields
+        inst = cls()
+        if isinstance(values, list):
+            if __debug__:
+                n_elts = len(values)
+            values = dict([values])
+            if __debug__:
+                # a precaution for the shortcut:
+                # ensure the dict parse of the list
+                # provides all of the values from the
+                # original list
+                assert n_elts / 2 == len(values)
 
-    def to_json_parsed(self):
-        return self.model_interface.to_json_parsed(self)
+        for name, value in values.items():
+            try:
+                field = fields[name]
+            except KeyError:
+                if __debug__:
+                    warn(UserWarning("Unknown field: %s.%s" %
+                         (cls.__name__, name)), stacklevel=2)
+                setattr(inst, name, value)
+                inst.get_unmapped_fields().add(name)
+            else:
+                as_value = field.interface.from_json_parsed(value)
+                field.__set__(inst, as_value)
+        return inst
+
+    def to_json_parsed(self) -> dict[str, Any]:
+        fields = self.fields
+        out = dict()
+        cls = self.__class__
+        for name, field in fields.items():
+            if field.field_is_set(self) and field.field_can_encode(self):
+                out[name] = field.__get__(self, cls)
+
+        try:
+            unmapped = self.unmapped_fields
+        except AttributeError:
+            unmapped = None
+        if unmapped:
+            out.update(unmapped)
+        return out
+
 
     def __repr__(self):
         clsname = self.__class__.__name__
@@ -334,7 +394,6 @@ class ApiObject(ABC, metaclass=ApiType):
                 continue
         return "%s(%s)" % (clsname, ", ".join(map(lambda elt: "%s=%r" % elt, vals.keys())))
 
-
     @classmethod
     def from_json_str(cls, json_str: str) -> Self:
         # overridden in JsonLdcontext
@@ -344,52 +403,16 @@ class ApiObject(ABC, metaclass=ApiType):
         # overridden in JsonLdcontext
         return self.model_interface.to_json_str(self)
 
-    @classmethod
-    # @abstractmethod
-    def from_json_map(cls, mapping: Mapping[str, Any]) -> Self:
-        return cls.model_interface.from_json_parsed(mapping)
-
-    # @abstractmethod
-    def to_json_map(self) -> Mapping[str, Any]:
-        return self.model_interface.to_json_parsed(self)
-
 
 class ModelInterface(TransportInterface[dict, Tm], Generic[Tm]):
     def __init__(self, model_type: type[Tm], field: Optional[ApiField] = None):
         super().__init__(dict[str, Any], model_type, model_type, field)
 
     def from_json_parsed(self, values: Union[list, dict[str, Any]]) -> Tm:
-        cls = self.interface_class
-        # print("-- DBG PARSE @ %r" % cls.__name__ )
-        fields = cls.alias_fields
-        inst = cls()
-        if isinstance(values, list):
-            if __debug__:
-                n_elts = len(values)
-            values = dict([values])
-            if __debug__:
-                # a precaution for the shortcut:
-                # ensure the dict parse of the list
-                # provides all of the values from the
-                # original list
-                assert n_elts / 2 == len(values)
-
-        for name, value in values.items():
-            try:
-                field = fields[name]
-            except KeyError:
-                if __debug__:
-                    warn(UserWarning("Unknown field: %s.%s" % (cls.__name__, name)), stacklevel=2)
-                setattr(inst, name, value)
-                inst.get_unmapped_fields().add(name)
-            else:
-                as_value = field.interface.from_json_parsed(value)
-                field.__set__(inst, as_value)
-        return inst
+        return self.interface_class.from_json_parsed(values)
 
     def to_json_parsed(self, inst: Tm) -> dict:
-        return inst.to_json_map()
-
+        return inst.to_json_parsed()
 
 
 class AbstractModelInterface(ModelInterface[Tm]):

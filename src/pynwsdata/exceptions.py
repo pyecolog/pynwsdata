@@ -1,6 +1,12 @@
 
-from typing import Any, Optional
-from typing_extensions import Self
+from typing import (
+    TYPE_CHECKING, Any, Optional, Self, Union, TypeAlias,
+)
+
+if TYPE_CHECKING:
+    from pynwsdata.rest import RESTResponse
+else:
+    RESTResponse: TypeAlias = object
 
 class OpenApiException(Exception):
     """The base exception class for all OpenAPIExceptions"""
@@ -92,9 +98,9 @@ class ApiKeyError(OpenApiException, KeyError):
 class ApiException(OpenApiException):
 
     def __init__(
-        self, 
-        status=None, 
-        reason=None, 
+        self,
+        status=None,
+        reason=None,
         http_resp=None,
         *,
         body: Optional[str] = None,
@@ -109,8 +115,6 @@ class ApiException(OpenApiException):
         if http_resp:
             if self.status is None:
                 self.status = http_resp.status
-            if self.reason is None:
-                self.reason = http_resp.reason
             if self.body is None:
                 try:
                     self.body = http_resp.data.decode('utf-8')
@@ -120,27 +124,15 @@ class ApiException(OpenApiException):
 
     @classmethod
     def from_response(
-        cls, 
-        *, 
-        http_resp, 
-        body: Optional[str], 
-        data: Optional[Any],
+        cls,
+        *,
+        http_resp: RESTResponse,
+        body: Optional[str] = None,
+        data: Optional[Any] = None
     ) -> Self:
-        if http_resp.status == 400:
-            raise BadRequestException(http_resp=http_resp, body=body, data=data)
-
-        if http_resp.status == 401:
-            raise UnauthorizedException(http_resp=http_resp, body=body, data=data)
-
-        if http_resp.status == 403:
-            raise ForbiddenException(http_resp=http_resp, body=body, data=data)
-
-        if http_resp.status == 404:
-            raise NotFoundException(http_resp=http_resp, body=body, data=data)
-
-        if 500 <= http_resp.status <= 599:
-            raise ServiceException(http_resp=http_resp, body=body, data=data)
-        raise ApiException(http_resp=http_resp, body=body, data=data)
+        status = http_resp.status
+        cls = get_response_error_type(status)
+        return cls(http_resp=http_resp, body=body, data=data)
 
     def __str__(self):
         """Custom error messages for exception"""
@@ -185,3 +177,24 @@ def render_path(path_to_item):
         else:
             result += "['{0}']".format(pth)
     return result
+
+
+RESPONSE_ERROR_TYPES: dict[Union[int, tuple[int, int]], type[ApiException]] = {
+        400: BadRequestException,
+        401: UnauthorizedException,
+        403: ForbiddenException,
+        404: NotFoundException,
+        (500, 599): ServiceException
+
+}
+
+def get_response_error_type(status: int) -> type[ApiException]:
+    for strng, typ in RESPONSE_ERROR_TYPES.items():
+        if isinstance(strng, int):
+            if status == strng:
+                return typ
+        elif isinstance(strng, tuple):
+            lh, rh = strng
+            if lh <= status <= rh:
+                return typ
+    return ApiException

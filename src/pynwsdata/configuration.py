@@ -1,9 +1,11 @@
 
 import copy
+import httpcore
 import logging
 from logging import FileHandler
+import ssl
 import sys
-from typing import Optional
+from typing import TYPE_CHECKING, Optional, Union
 import urllib3
 
 import http.client as httplib
@@ -67,6 +69,9 @@ conf = pynwsdata.Configuration(
        Cookie: JSESSIONID abc123
     """
 
+    if TYPE_CHECKING:
+        ssl_context: ssl.SSLContext
+
     _default = None
 
     def __init__(self, host=None,
@@ -77,7 +82,8 @@ conf = pynwsdata.Configuration(
                  server_operation_index=None, server_operation_variables=None,
                  ignore_operation_servers=False,
                  ssl_ca_cert=None,
-                 retries=None,
+                 retries: Optional[int]=None,
+                 timeout: int = 120,
                  *,
                  debug: Optional[bool] = None
                  ) -> None:
@@ -147,11 +153,6 @@ conf = pynwsdata.Configuration(
         """Debug switch
         """
 
-        self.verify_ssl = True
-        """SSL/TLS verification
-           Set this to false to skip verifying SSL certificate when calling API
-           from https server.
-        """
         self.ssl_ca_cert = ssl_ca_cert
         """Set this to customize the certificate file to verify the peer.
         """
@@ -161,36 +162,23 @@ conf = pynwsdata.Configuration(
         self.key_file = None
         """client key file
         """
-        self.assert_hostname = None
-        """Set this to True/False to enable/disable SSL hostname verification.
-        """
-        self.tls_server_name = None
-        """SSL/TLS Server Name Indication (SNI)
-           Set this to the SNI value expected by the server.
-        """
 
         self.connection_pool_maxsize = 100
-        """This value is passed to the aiohttp to limit simultaneous connections.
+        """This value is passed to httpcore to limit simultaneous connections.
            Default values is 100, None means no-limit.
         """
 
-        self.proxy: Optional[str] = None
+        self.proxy: Union[str, httpcore.HTTPProxy, None] = None
         """Proxy URL
-        """
-        self.proxy_headers = None
-        """Proxy headers
         """
         self.safe_chars_for_path_param = ''
         """Safe chars for path_param
         """
-        self.retries = retries
-        """Adding retries to override urllib3 default value 3
-        """
-        # Enable client side validation
-        self.client_side_validation = True
 
-        self.socket_options = None
-        """Options to pass down to the underlying urllib3 socket
+        self.timeout: int = timeout
+
+        self.retries: int = 3 if retries is None else retries
+        """Upper limit for connection retry
         """
 
         self.datetime_format = "%Y-%m-%dT%H:%M:%S.%f%z"
@@ -200,6 +188,22 @@ conf = pynwsdata.Configuration(
         self.date_format = "%Y-%m-%d"
         """date format
         """
+
+    def get_ssl_context(self) -> ssl.SSLContext:
+        try:
+            return self.ssl_context
+        except AttributeError:
+            pass
+
+        ssl_context = ssl.create_default_context(
+            cafile=self.ssl_ca_cert
+        )
+        if self.cert_file:
+            ssl_context.load_cert_chain(
+                self.cert_file, keyfile=self.key_file
+            )
+        self.ssl_context = ssl_context
+        return ssl_context
 
     def __deepcopy__(self, memo):
         cls = self.__class__

@@ -63,7 +63,7 @@ class DefaultApi:
             api_client = ApiClient.get_default()
         self.api_client = api_client
 
-    async def alerts_active(
+    def alerts_active(
         self,
         status: Annotated[Optional[list[str]], ApiField(
             description="""Status (actual, exercise, system, test, draft)""")] = None,
@@ -91,14 +91,6 @@ class DefaultApi:
             description="""Certainty (observed, likely, possible, unlikely, unknown)""")] = None,
         limit: Annotated[Optional[Annotated[int, ApiField(
             le=500, ge=1)]], ApiField(description="""Limit""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -184,17 +176,15 @@ class DefaultApi:
             200: AlertCollectionGeoJson,
             301: RESPONSE_ERROR,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def alerts_active_with_http_info(
+    def alerts_active_with_http_info(
         self,
         status: Annotated[Optional[list[str]], ApiField(
             description="""Status (actual, exercise, system, test, draft)""")] = None,
@@ -222,14 +212,6 @@ class DefaultApi:
             description="""Certainty (observed, likely, possible, unlikely, unknown)""")] = None,
         limit: Annotated[Optional[Annotated[int, ApiField(
             le=500, ge=1)]], ApiField(description="""Limit""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -315,17 +297,15 @@ class DefaultApi:
             200: AlertCollectionGeoJson,
             301: RESPONSE_ERROR,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def alerts_active_without_preload_content(
+    def alerts_active_without_preload_content(
         self,
         status: Annotated[Optional[list[str]], ApiField(
             description="""Status (actual, exercise, system, test, draft)""")] = None,
@@ -353,14 +333,6 @@ class DefaultApi:
             description="""Certainty (observed, likely, possible, unlikely, unknown)""")] = None,
         limit: Annotated[Optional[Annotated[int, ApiField(
             le=500, ge=1)]], ApiField(description="""Limit""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -446,9 +418,8 @@ class DefaultApi:
             200: AlertCollectionGeoJson,
             301: RESPONSE_ERROR,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -584,17 +555,9 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def alerts_active_area(
+    def alerts_active_area(
         self,
         area: Annotated[Any, ApiField(description="""State/area ID""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -640,27 +603,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: AlertCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def alerts_active_area_with_http_info(
+    def alerts_active_area_with_http_info(
         self,
         area: Annotated[Any, ApiField(description="""State/area ID""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -706,27 +659,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: AlertCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def alerts_active_area_without_preload_content(
+    def alerts_active_area_without_preload_content(
         self,
         area: Annotated[Any, ApiField(description="""State/area ID""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -772,9 +715,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: AlertCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -838,16 +780,8 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def alerts_active_count(
+    def alerts_active_count(
         self,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -890,26 +824,16 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: AlertsActiveCount200Response,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def alerts_active_count_with_http_info(
+    def alerts_active_count_with_http_info(
         self,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -952,26 +876,16 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: AlertsActiveCount200Response,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def alerts_active_count_without_preload_content(
+    def alerts_active_count_without_preload_content(
         self,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -1014,9 +928,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: AlertsActiveCount200Response,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -1075,17 +988,9 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def alerts_active_region(
+    def alerts_active_region(
         self,
         region: Annotated[MarineRegionCode, ApiField(description="""Marine region ID""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -1131,27 +1036,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: AlertCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def alerts_active_region_with_http_info(
+    def alerts_active_region_with_http_info(
         self,
         region: Annotated[MarineRegionCode, ApiField(description="""Marine region ID""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -1197,27 +1092,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: AlertCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def alerts_active_region_without_preload_content(
+    def alerts_active_region_without_preload_content(
         self,
         region: Annotated[MarineRegionCode, ApiField(description="""Marine region ID""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -1263,9 +1148,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: AlertCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -1329,17 +1213,9 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def alerts_active_zone(
+    def alerts_active_zone(
         self,
         zone_id: Annotated[str, ApiField( description="""NWS public zone/county identifier""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -1385,27 +1261,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: AlertCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def alerts_active_zone_with_http_info(
+    def alerts_active_zone_with_http_info(
         self,
         zone_id: Annotated[str, ApiField( description="""NWS public zone/county identifier""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -1451,27 +1317,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: AlertCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def alerts_active_zone_without_preload_content(
+    def alerts_active_zone_without_preload_content(
         self,
         zone_id: Annotated[str, ApiField( description="""NWS public zone/county identifier""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -1517,9 +1373,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: AlertCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -1583,7 +1438,7 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def alerts_query(
+    def alerts_query(
         self,
         active: Annotated[Optional[bool], ApiField(
             description="""list only active alerts (use /alerts/active endpoints instead)""")] = None,
@@ -1619,14 +1474,6 @@ class DefaultApi:
             le=500, ge=1)]], ApiField(description="""Limit""")] = None,
         cursor: Annotated[Optional[str], ApiField(
             description="""Pagination cursor""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -1724,17 +1571,15 @@ class DefaultApi:
             200: AlertCollectionGeoJson,
             301: RESPONSE_ERROR,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def alerts_query_with_http_info(
+    def alerts_query_with_http_info(
         self,
         active: Annotated[Optional[bool], ApiField(
             description="""list only active alerts (use /alerts/active endpoints instead)""")] = None,
@@ -1770,14 +1615,6 @@ class DefaultApi:
             le=500, ge=1)]], ApiField(description="""Limit""")] = None,
         cursor: Annotated[Optional[str], ApiField(
             description="""Pagination cursor""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -1875,17 +1712,15 @@ class DefaultApi:
             200: AlertCollectionGeoJson,
             301: RESPONSE_ERROR,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def alerts_query_without_preload_content(
+    def alerts_query_without_preload_content(
         self,
         active: Annotated[Optional[bool], ApiField(
             description="""list only active alerts (use /alerts/active endpoints instead)""")] = None,
@@ -1921,14 +1756,6 @@ class DefaultApi:
             le=500, ge=1)]], ApiField(description="""Limit""")] = None,
         cursor: Annotated[Optional[str], ApiField(
             description="""Pagination cursor""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -2026,9 +1853,8 @@ class DefaultApi:
             200: AlertCollectionGeoJson,
             301: RESPONSE_ERROR,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -2202,17 +2028,9 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def alerts_single(
+    def alerts_single(
         self,
         id: Annotated[str, ApiField(description="""Alert identifier""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -2258,27 +2076,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: AlertGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def alerts_single_with_http_info(
+    def alerts_single_with_http_info(
         self,
         id: Annotated[str, ApiField(description="""Alert identifier""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -2324,27 +2132,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: AlertGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def alerts_single_without_preload_content(
+    def alerts_single_without_preload_content(
         self,
         id: Annotated[str, ApiField(description="""Alert identifier""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -2390,9 +2188,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: AlertGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -2456,16 +2253,8 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def alerts_types(
+    def alerts_types(
         self,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -2508,26 +2297,16 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: AlertsTypes200Response,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def alerts_types_with_http_info(
+    def alerts_types_with_http_info(
         self,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -2570,26 +2349,16 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: AlertsTypes200Response,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def alerts_types_without_preload_content(
+    def alerts_types_without_preload_content(
         self,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -2632,9 +2401,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: AlertsTypes200Response,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -2693,19 +2461,11 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def cwa(
+    def cwa(
         self,
         cwsu_id: Annotated[NWSCenterWeatherServiceUnitId, ApiField(description="""NWS CWSU ID""")],
         var_date: Annotated[date, ApiField(description="""Date (YYYY-MM-DD format)""")],
         sequence: Annotated[int, ApiField( ge=100, description="""Sequence number""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -2757,29 +2517,19 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: CenterWeatherAdvisoryGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def cwa_with_http_info(
+    def cwa_with_http_info(
         self,
         cwsu_id: Annotated[NWSCenterWeatherServiceUnitId, ApiField(description="""NWS CWSU ID""")],
         var_date: Annotated[date, ApiField(description="""Date (YYYY-MM-DD format)""")],
         sequence: Annotated[int, ApiField( ge=100, description="""Sequence number""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -2831,29 +2581,19 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: CenterWeatherAdvisoryGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def cwa_without_preload_content(
+    def cwa_without_preload_content(
         self,
         cwsu_id: Annotated[NWSCenterWeatherServiceUnitId, ApiField(description="""NWS CWSU ID""")],
         var_date: Annotated[date, ApiField(description="""Date (YYYY-MM-DD format)""")],
         sequence: Annotated[int, ApiField( ge=100, description="""Sequence number""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -2905,9 +2645,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: CenterWeatherAdvisoryGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -2976,17 +2715,9 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def cwas(
+    def cwas(
         self,
         cwsu_id: Annotated[NWSCenterWeatherServiceUnitId, ApiField(description="""NWS CWSU ID""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -3032,27 +2763,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: CenterWeatherAdvisoryCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def cwas_with_http_info(
+    def cwas_with_http_info(
         self,
         cwsu_id: Annotated[NWSCenterWeatherServiceUnitId, ApiField(description="""NWS CWSU ID""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -3098,27 +2819,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: CenterWeatherAdvisoryCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def cwas_without_preload_content(
+    def cwas_without_preload_content(
         self,
         cwsu_id: Annotated[NWSCenterWeatherServiceUnitId, ApiField(description="""NWS CWSU ID""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -3164,9 +2875,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: CenterWeatherAdvisoryCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -3228,17 +2938,9 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def cwsu(
+    def cwsu(
         self,
         cwsu_id: Annotated[NWSCenterWeatherServiceUnitId, ApiField(description="""NWS CWSU ID""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -3284,27 +2986,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: Office,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def cwsu_with_http_info(
+    def cwsu_with_http_info(
         self,
         cwsu_id: Annotated[NWSCenterWeatherServiceUnitId, ApiField(description="""NWS CWSU ID""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -3350,27 +3042,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: Office,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def cwsu_without_preload_content(
+    def cwsu_without_preload_content(
         self,
         cwsu_id: Annotated[NWSCenterWeatherServiceUnitId, ApiField(description="""NWS CWSU ID""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -3416,9 +3098,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: Office,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -3480,16 +3161,8 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def glossary(
+    def glossary(
         self,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -3532,26 +3205,16 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: Glossary200Response,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def glossary_with_http_info(
+    def glossary_with_http_info(
         self,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -3594,26 +3257,16 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: Glossary200Response,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def glossary_without_preload_content(
+    def glossary_without_preload_content(
         self,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -3656,9 +3309,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: Glossary200Response,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -3717,19 +3369,11 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def gridpoint(
+    def gridpoint(
         self,
         wfo: Annotated[NWSForecastOfficeId, ApiField(description="""Forecast office ID""")],
         x: Annotated[int, ApiField( ge=0, description="""Forecast grid X coordinate""")],
         y: Annotated[int, ApiField( ge=0, description="""Forecast grid Y coordinate""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -3781,29 +3425,19 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: GridpointGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def gridpoint_with_http_info(
+    def gridpoint_with_http_info(
         self,
         wfo: Annotated[NWSForecastOfficeId, ApiField(description="""Forecast office ID""")],
         x: Annotated[int, ApiField( ge=0, description="""Forecast grid X coordinate""")],
         y: Annotated[int, ApiField( ge=0, description="""Forecast grid Y coordinate""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -3855,29 +3489,19 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: GridpointGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def gridpoint_without_preload_content(
+    def gridpoint_without_preload_content(
         self,
         wfo: Annotated[NWSForecastOfficeId, ApiField(description="""Forecast office ID""")],
         x: Annotated[int, ApiField( ge=0, description="""Forecast grid X coordinate""")],
         y: Annotated[int, ApiField( ge=0, description="""Forecast grid Y coordinate""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -3929,9 +3553,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: GridpointGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -4000,23 +3623,17 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def gridpoint_forecast(
+    def gridpoint_forecast(
         self,
         wfo: Annotated[NWSForecastOfficeId, ApiField(description="""Forecast office ID""")],
         x: Annotated[int, ApiField( ge=0, description="""Forecast grid X coordinate""")],
         y: Annotated[int, ApiField( ge=0, description="""Forecast grid Y coordinate""")],
         feature_flags: Annotated[Optional[list[str]], ApiField(
-            description="""Enable future and experimental features (see documentation for more info): * forecast_temperature_qv: Represent temperature as QuantitativeValue * forecast_wind_speed_qv: Represent wind speed as QuantitativeValue """)] = None,
+            description="""Enable future and experimental features (see documentation for more info): 
+            * forecast_temperature_qv: Represent temperature as QuantitativeValue 
+            * forecast_wind_speed_qv: Represent wind speed as QuantitativeValue """)] = None,
         units: Annotated[Optional[GridpointForecastUnits], ApiField(
             description="""Use US customary or SI (metric) units in textual output""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -4074,17 +3691,15 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: GridpointForecastGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def gridpoint_forecast_with_http_info(
+    def gridpoint_forecast_with_http_info(
         self,
         wfo: Annotated[NWSForecastOfficeId, ApiField(description="""Forecast office ID""")],
         x: Annotated[int, ApiField( ge=0, description="""Forecast grid X coordinate""")],
@@ -4093,14 +3708,6 @@ class DefaultApi:
             description="""Enable future and experimental features (see documentation for more info): * forecast_temperature_qv: Represent temperature as QuantitativeValue * forecast_wind_speed_qv: Represent wind speed as QuantitativeValue """)] = None,
         units: Annotated[Optional[GridpointForecastUnits], ApiField(
             description="""Use US customary or SI (metric) units in textual output""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -4158,17 +3765,15 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: GridpointForecastGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def gridpoint_forecast_without_preload_content(
+    def gridpoint_forecast_without_preload_content(
         self,
         wfo: Annotated[NWSForecastOfficeId, ApiField(description="""Forecast office ID""")],
         x: Annotated[int, ApiField( ge=0, description="""Forecast grid X coordinate""")],
@@ -4177,14 +3782,6 @@ class DefaultApi:
             description="""Enable future and experimental features (see documentation for more info): * forecast_temperature_qv: Represent temperature as QuantitativeValue * forecast_wind_speed_qv: Represent wind speed as QuantitativeValue """)] = None,
         units: Annotated[Optional[GridpointForecastUnits], ApiField(
             description="""Use US customary or SI (metric) units in textual output""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -4242,9 +3839,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: GridpointForecastGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -4323,23 +3919,17 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def gridpoint_forecast_hourly(
+    def gridpoint_forecast_hourly(
         self,
         wfo: Annotated[NWSForecastOfficeId, ApiField(description="""Forecast office ID""")],
         x: Annotated[int, ApiField( ge=0, description="""Forecast grid X coordinate""")],
         y: Annotated[int, ApiField( ge=0, description="""Forecast grid Y coordinate""")],
         feature_flags: Annotated[Optional[list[str]], ApiField(
-            description="""Enable future and experimental features (see documentation for more info): * forecast_temperature_qv: Represent temperature as QuantitativeValue * forecast_wind_speed_qv: Represent wind speed as QuantitativeValue """)] = None,
+            description="""Enable future and experimental features (see documentation for more info): 
+            * forecast_temperature_qv: Represent temperature as QuantitativeValue 
+            * forecast_wind_speed_qv: Represent wind speed as QuantitativeValue """)] = None,
         units: Annotated[Optional[GridpointForecastUnits], ApiField(
             description="""Use US customary or SI (metric) units in textual output""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -4397,17 +3987,15 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: GridpointForecastGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def gridpoint_forecast_hourly_with_http_info(
+    def gridpoint_forecast_hourly_with_http_info(
         self,
         wfo: Annotated[NWSForecastOfficeId, ApiField(description="""Forecast office ID""")],
         x: Annotated[int, ApiField( ge=0, description="""Forecast grid X coordinate""")],
@@ -4416,14 +4004,6 @@ class DefaultApi:
             description="""Enable future and experimental features (see documentation for more info): * forecast_temperature_qv: Represent temperature as QuantitativeValue * forecast_wind_speed_qv: Represent wind speed as QuantitativeValue """)] = None,
         units: Annotated[Optional[GridpointForecastUnits], ApiField(
             description="""Use US customary or SI (metric) units in textual output""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -4481,17 +4061,15 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: GridpointForecastGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def gridpoint_forecast_hourly_without_preload_content(
+    def gridpoint_forecast_hourly_without_preload_content(
         self,
         wfo: Annotated[NWSForecastOfficeId, ApiField(description="""Forecast office ID""")],
         x: Annotated[int, ApiField( ge=0, description="""Forecast grid X coordinate""")],
@@ -4500,14 +4078,6 @@ class DefaultApi:
             description="""Enable future and experimental features (see documentation for more info): * forecast_temperature_qv: Represent temperature as QuantitativeValue * forecast_wind_speed_qv: Represent wind speed as QuantitativeValue """)] = None,
         units: Annotated[Optional[GridpointForecastUnits], ApiField(
             description="""Use US customary or SI (metric) units in textual output""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -4565,9 +4135,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: GridpointForecastGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -4646,7 +4215,7 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def gridpoint_stations(
+    def gridpoint_stations(
         self,
         wfo: Annotated[NWSForecastOfficeId, ApiField(description="""Forecast office ID""")],
         x: Annotated[int, ApiField( ge=0, description="""Forecast grid X coordinate""")],
@@ -4655,14 +4224,6 @@ class DefaultApi:
             le=500, ge=1)]], ApiField(description="""Limit""")] = None,
         cursor: Annotated[Optional[str], ApiField(
             description="""Pagination cursor""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -4720,17 +4281,15 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ObservationStationCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def gridpoint_stations_with_http_info(
+    def gridpoint_stations_with_http_info(
         self,
         wfo: Annotated[NWSForecastOfficeId, ApiField(description="""Forecast office ID""")],
         x: Annotated[int, ApiField( ge=0, description="""Forecast grid X coordinate""")],
@@ -4739,14 +4298,6 @@ class DefaultApi:
             le=500, ge=1)]], ApiField(description="""Limit""")] = None,
         cursor: Annotated[Optional[str], ApiField(
             description="""Pagination cursor""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -4804,17 +4355,15 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ObservationStationCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def gridpoint_stations_without_preload_content(
+    def gridpoint_stations_without_preload_content(
         self,
         wfo: Annotated[NWSForecastOfficeId, ApiField(description="""Forecast office ID""")],
         x: Annotated[int, ApiField( ge=0, description="""Forecast grid X coordinate""")],
@@ -4823,14 +4372,6 @@ class DefaultApi:
             le=500, ge=1)]], ApiField(description="""Limit""")] = None,
         cursor: Annotated[Optional[str], ApiField(
             description="""Pagination cursor""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -4888,9 +4429,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ObservationStationCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -4969,7 +4509,7 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def icons(
+    def icons(
         self,
         set: Annotated[str, ApiField(description=""".""")],
         time_of_day: Annotated[str, ApiField(description=""".""")],
@@ -4978,14 +4518,6 @@ class DefaultApi:
             description="""Font size""")] = None,
         fontsize: Annotated[Optional[Annotated[int, ApiField(
             le=24, ge=2)]], ApiField(description="""Font size""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -5045,17 +4577,15 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: bytearray,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def icons_with_http_info(
+    def icons_with_http_info(
         self,
         set: Annotated[str, ApiField(description=""".""")],
         time_of_day: Annotated[str, ApiField(description=""".""")],
@@ -5064,14 +4594,6 @@ class DefaultApi:
             description="""Font size""")] = None,
         fontsize: Annotated[Optional[Annotated[int, ApiField(
             le=24, ge=2)]], ApiField(description="""Font size""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -5131,17 +4653,15 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: bytearray,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def icons_without_preload_content(
+    def icons_without_preload_content(
         self,
         set: Annotated[str, ApiField(description=""".""")],
         time_of_day: Annotated[str, ApiField(description=""".""")],
@@ -5150,14 +4670,6 @@ class DefaultApi:
             description="""Font size""")] = None,
         fontsize: Annotated[Optional[Annotated[int, ApiField(
             le=24, ge=2)]], ApiField(description="""Font size""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -5217,9 +4729,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: bytearray,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -5297,7 +4808,7 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def icons_dual_condition(
+    def icons_dual_condition(
         self,
         set: Annotated[str, ApiField(description=""".""")],
         time_of_day: Annotated[str, ApiField(description=""".""")],
@@ -5307,14 +4818,6 @@ class DefaultApi:
             description="""Font size""")] = None,
         fontsize: Annotated[Optional[Annotated[int, ApiField(
             le=24, ge=2)]], ApiField(description="""Font size""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -5377,17 +4880,15 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: bytearray,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def icons_dual_condition_with_http_info(
+    def icons_dual_condition_with_http_info(
         self,
         set: Annotated[str, ApiField(description=""".""")],
         time_of_day: Annotated[str, ApiField(description=""".""")],
@@ -5397,14 +4898,6 @@ class DefaultApi:
             description="""Font size""")] = None,
         fontsize: Annotated[Optional[Annotated[int, ApiField(
             le=24, ge=2)]], ApiField(description="""Font size""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -5467,17 +4960,15 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: bytearray,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def icons_dual_condition_without_preload_content(
+    def icons_dual_condition_without_preload_content(
         self,
         set: Annotated[str, ApiField(description=""".""")],
         time_of_day: Annotated[str, ApiField(description=""".""")],
@@ -5487,14 +4978,6 @@ class DefaultApi:
             description="""Font size""")] = None,
         fontsize: Annotated[Optional[Annotated[int, ApiField(
             le=24, ge=2)]], ApiField(description="""Font size""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -5557,9 +5040,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: bytearray,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -5640,17 +5122,9 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def location_products(
+    def location_products(
         self,
         location_id: Annotated[str, ApiField(description=""".""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -5696,27 +5170,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: TextProductTypeCollection,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def location_products_with_http_info(
+    def location_products_with_http_info(
         self,
         location_id: Annotated[str, ApiField(description=""".""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -5762,27 +5226,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: TextProductTypeCollection,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def location_products_without_preload_content(
+    def location_products_without_preload_content(
         self,
         location_id: Annotated[str, ApiField(description=""".""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -5828,9 +5282,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: TextProductTypeCollection,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -5892,17 +5345,9 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def obs_station(
+    def obs_station(
         self,
         station_id: Annotated[str, ApiField(description="""Observation station ID""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -5948,27 +5393,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ObservationStationGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def obs_station_with_http_info(
+    def obs_station_with_http_info(
         self,
         station_id: Annotated[str, ApiField(description="""Observation station ID""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -6014,27 +5449,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ObservationStationGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def obs_station_without_preload_content(
+    def obs_station_without_preload_content(
         self,
         station_id: Annotated[str, ApiField(description="""Observation station ID""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -6080,9 +5505,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ObservationStationGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -6145,7 +5569,7 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def obs_stations(
+    def obs_stations(
         self,
         id: Annotated[Optional[list[str]], ApiField(
             description="""Filter by observation station ID""")] = None,
@@ -6155,14 +5579,6 @@ class DefaultApi:
             le=500, ge=1)]], ApiField(description="""Limit""")] = None,
         cursor: Annotated[Optional[str], ApiField(
             description="""Pagination cursor""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -6217,17 +5633,15 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ObservationStationCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def obs_stations_with_http_info(
+    def obs_stations_with_http_info(
         self,
         id: Annotated[Optional[list[str]], ApiField(
             description="""Filter by observation station ID""")] = None,
@@ -6237,14 +5651,6 @@ class DefaultApi:
             le=500, ge=1)]], ApiField(description="""Limit""")] = None,
         cursor: Annotated[Optional[str], ApiField(
             description="""Pagination cursor""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -6299,17 +5705,15 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ObservationStationCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def obs_stations_without_preload_content(
+    def obs_stations_without_preload_content(
         self,
         id: Annotated[Optional[list[str]], ApiField(
             description="""Filter by observation station ID""")] = None,
@@ -6319,14 +5723,6 @@ class DefaultApi:
             le=500, ge=1)]], ApiField(description="""Limit""")] = None,
         cursor: Annotated[Optional[str], ApiField(
             description="""Pagination cursor""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -6381,9 +5777,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ObservationStationCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -6465,17 +5860,9 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def office(
+    def office(
         self,
         office_id: Annotated[Any, ApiField(description="""NWS office ID""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -6521,27 +5908,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: Office,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def office_with_http_info(
+    def office_with_http_info(
         self,
         office_id: Annotated[Any, ApiField(description="""NWS office ID""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -6587,27 +5964,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: Office,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def office_without_preload_content(
+    def office_without_preload_content(
         self,
         office_id: Annotated[Any, ApiField(description="""NWS office ID""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -6653,9 +6020,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: Office,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -6717,18 +6083,10 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def office_headline(
+    def office_headline(
         self,
         office_id: Annotated[Any, ApiField(description="""NWS office ID""")],
         headline_id: Annotated[str, ApiField(description="""Headline record ID""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -6777,28 +6135,18 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: OfficeHeadline,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def office_headline_with_http_info(
+    def office_headline_with_http_info(
         self,
         office_id: Annotated[Any, ApiField(description="""NWS office ID""")],
         headline_id: Annotated[str, ApiField(description="""Headline record ID""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -6847,28 +6195,18 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: OfficeHeadline,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def office_headline_without_preload_content(
+    def office_headline_without_preload_content(
         self,
         office_id: Annotated[Any, ApiField(description="""NWS office ID""")],
         headline_id: Annotated[str, ApiField(description="""Headline record ID""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -6917,9 +6255,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: OfficeHeadline,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -6984,17 +6321,9 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def office_headlines(
+    def office_headlines(
         self,
         office_id: Annotated[Any, ApiField(description="""NWS office ID""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -7040,27 +6369,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: OfficeHeadlineCollection,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def office_headlines_with_http_info(
+    def office_headlines_with_http_info(
         self,
         office_id: Annotated[Any, ApiField(description="""NWS office ID""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -7106,27 +6425,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: OfficeHeadlineCollection,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def office_headlines_without_preload_content(
+    def office_headlines_without_preload_content(
         self,
         office_id: Annotated[Any, ApiField(description="""NWS office ID""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -7172,9 +6481,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: OfficeHeadlineCollection,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -7236,17 +6544,9 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def point(
+    def point(
         self,
         point: Annotated[str, ApiField( description="""Point (latitude, longitude)""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -7292,27 +6592,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: PointGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def point_with_http_info(
+    def point_with_http_info(
         self,
         point: Annotated[str, ApiField( description="""Point (latitude, longitude)""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -7358,27 +6648,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: PointGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def point_without_preload_content(
+    def point_without_preload_content(
         self,
         point: Annotated[str, ApiField( description="""Point (latitude, longitude)""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -7424,9 +6704,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: PointGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -7489,17 +6768,9 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def point_stations(
+    def point_stations(
         self,
         point: Annotated[str, ApiField( description="""Point (latitude, longitude)""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -7547,27 +6818,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             301: RESPONSE_ERROR,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def point_stations_with_http_info(
+    def point_stations_with_http_info(
         self,
         point: Annotated[str, ApiField( description="""Point (latitude, longitude)""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -7615,27 +6876,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             301: RESPONSE_ERROR,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def point_stations_without_preload_content(
+    def point_stations_without_preload_content(
         self,
         point: Annotated[str, ApiField( description="""Point (latitude, longitude)""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -7683,9 +6934,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             301: RESPONSE_ERROR,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -7746,17 +6996,9 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def product(
+    def product(
         self,
         product_id: Annotated[str, ApiField(description=""".""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -7802,27 +7044,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: TextProduct,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def product_with_http_info(
+    def product_with_http_info(
         self,
         product_id: Annotated[str, ApiField(description=""".""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -7868,27 +7100,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: TextProduct,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def product_without_preload_content(
+    def product_without_preload_content(
         self,
         product_id: Annotated[str, ApiField(description=""".""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -7934,9 +7156,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: TextProduct,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -7998,16 +7219,8 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def product_locations(
+    def product_locations(
         self,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -8050,26 +7263,16 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: TextProductLocationCollection,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def product_locations_with_http_info(
+    def product_locations_with_http_info(
         self,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -8112,26 +7315,16 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: TextProductLocationCollection,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def product_locations_without_preload_content(
+    def product_locations_without_preload_content(
         self,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -8174,9 +7367,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: TextProductLocationCollection,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -8235,16 +7427,8 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def product_types(
+    def product_types(
         self,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -8287,26 +7471,16 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: TextProductTypeCollection,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def product_types_with_http_info(
+    def product_types_with_http_info(
         self,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -8349,26 +7523,16 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: TextProductTypeCollection,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def product_types_without_preload_content(
+    def product_types_without_preload_content(
         self,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -8411,9 +7575,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: TextProductTypeCollection,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -8472,7 +7635,7 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def products_query(
+    def products_query(
         self,
         location: Annotated[Optional[list[str]],
                             ApiField(description="""Location id""")] = None,
@@ -8488,14 +7651,6 @@ class DefaultApi:
             description="""Product code""")] = None,
         limit: Annotated[Optional[Annotated[int, ApiField(
             le=500, ge=1)]], ApiField(description="""Limit""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -8559,17 +7714,15 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: TextProductCollection,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def products_query_with_http_info(
+    def products_query_with_http_info(
         self,
         location: Annotated[Optional[list[str]],
                             ApiField(description="""Location id""")] = None,
@@ -8585,14 +7738,6 @@ class DefaultApi:
             description="""Product code""")] = None,
         limit: Annotated[Optional[Annotated[int, ApiField(
             le=500, ge=1)]], ApiField(description="""Limit""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -8656,17 +7801,15 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: TextProductCollection,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def products_query_without_preload_content(
+    def products_query_without_preload_content(
         self,
         location: Annotated[Optional[list[str]],
                             ApiField(description="""Location id""")] = None,
@@ -8682,14 +7825,6 @@ class DefaultApi:
             description="""Product code""")] = None,
         limit: Annotated[Optional[Annotated[int, ApiField(
             le=500, ge=1)]], ApiField(description="""Limit""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -8753,9 +7888,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: TextProductCollection,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -8871,17 +8005,9 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def products_type(
+    def products_type(
         self,
         type_id: Annotated[str, ApiField(description=""".""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -8927,27 +8053,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: TextProductCollection,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def products_type_with_http_info(
+    def products_type_with_http_info(
         self,
         type_id: Annotated[str, ApiField(description=""".""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -8993,27 +8109,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: TextProductCollection,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def products_type_without_preload_content(
+    def products_type_without_preload_content(
         self,
         type_id: Annotated[str, ApiField(description=""".""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -9059,9 +8165,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: TextProductCollection,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -9123,18 +8228,10 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def products_type_location(
+    def products_type_location(
         self,
         type_id: Annotated[str, ApiField(description=""".""")],
         location_id: Annotated[str, ApiField(description=""".""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -9183,28 +8280,18 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: TextProductCollection,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def products_type_location_with_http_info(
+    def products_type_location_with_http_info(
         self,
         type_id: Annotated[str, ApiField(description=""".""")],
         location_id: Annotated[str, ApiField(description=""".""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -9253,28 +8340,18 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: TextProductCollection,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def products_type_location_without_preload_content(
+    def products_type_location_without_preload_content(
         self,
         type_id: Annotated[str, ApiField(description=""".""")],
         location_id: Annotated[str, ApiField(description=""".""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -9323,9 +8400,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: TextProductCollection,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -9390,17 +8466,9 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def products_type_locations(
+    def products_type_locations(
         self,
         type_id: Annotated[str, ApiField(description=""".""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -9446,27 +8514,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: TextProductLocationCollection,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def products_type_locations_with_http_info(
+    def products_type_locations_with_http_info(
         self,
         type_id: Annotated[str, ApiField(description=""".""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -9512,27 +8570,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: TextProductLocationCollection,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def products_type_locations_without_preload_content(
+    def products_type_locations_without_preload_content(
         self,
         type_id: Annotated[str, ApiField(description=""".""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -9578,9 +8626,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: TextProductLocationCollection,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -9642,21 +8689,13 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def radar_profiler(
+    def radar_profiler(
         self,
         station_id: Annotated[str, ApiField(description="""Profiler station ID""")],
         time: Annotated[Optional[Any], ApiField(
             description="""Time interval""")] = None,
         interval: Annotated[Optional[str], ApiField(
             description="""Averaging interval""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -9708,31 +8747,21 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: object,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def radar_profiler_with_http_info(
+    def radar_profiler_with_http_info(
         self,
         station_id: Annotated[str, ApiField(description="""Profiler station ID""")],
         time: Annotated[Optional[Any], ApiField(
             description="""Time interval""")] = None,
         interval: Annotated[Optional[str], ApiField(
             description="""Averaging interval""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -9784,31 +8813,21 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: object,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def radar_profiler_without_preload_content(
+    def radar_profiler_without_preload_content(
         self,
         station_id: Annotated[str, ApiField(description="""Profiler station ID""")],
         time: Annotated[Optional[Any], ApiField(
             description="""Time interval""")] = None,
         interval: Annotated[Optional[str], ApiField(
             description="""Averaging interval""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -9860,9 +8879,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: object,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -9934,7 +8952,7 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def radar_queue(
+    def radar_queue(
         self,
         host: Annotated[str, ApiField(description="""LDM host""")],
         limit: Annotated[Optional[Annotated[int, ApiField(
@@ -9952,14 +8970,6 @@ class DefaultApi:
         feed: Annotated[Optional[str], ApiField(
             description="""Originating product feed""")] = None,
         resolution: Annotated[Optional[Annotated[int, ApiField( ge=1)]], ApiField(description="""Resolution version""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -10029,17 +9039,15 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: object,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def radar_queue_with_http_info(
+    def radar_queue_with_http_info(
         self,
         host: Annotated[str, ApiField(description="""LDM host""")],
         limit: Annotated[Optional[Annotated[int, ApiField(
@@ -10057,14 +9065,6 @@ class DefaultApi:
         feed: Annotated[Optional[str], ApiField(
             description="""Originating product feed""")] = None,
         resolution: Annotated[Optional[Annotated[int, ApiField( ge=1)]], ApiField(description="""Resolution version""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -10134,17 +9134,15 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: object,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def radar_queue_without_preload_content(
+    def radar_queue_without_preload_content(
         self,
         host: Annotated[str, ApiField(description="""LDM host""")],
         limit: Annotated[Optional[Annotated[int, ApiField(
@@ -10162,14 +9160,6 @@ class DefaultApi:
         feed: Annotated[Optional[str], ApiField(
             description="""Originating product feed""")] = None,
         resolution: Annotated[Optional[Annotated[int, ApiField( ge=1)]], ApiField(description="""Resolution version""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -10239,9 +9229,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: object,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -10343,19 +9332,11 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def radar_server(
+    def radar_server(
         self,
         id: Annotated[str, ApiField(description="""Server ID""")],
         reporting_host: Annotated[Optional[str], ApiField(
             description="""Show records from specific reporting host""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -10404,29 +9385,19 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: object,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def radar_server_with_http_info(
+    def radar_server_with_http_info(
         self,
         id: Annotated[str, ApiField(description="""Server ID""")],
         reporting_host: Annotated[Optional[str], ApiField(
             description="""Show records from specific reporting host""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -10475,29 +9446,19 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: object,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def radar_server_without_preload_content(
+    def radar_server_without_preload_content(
         self,
         id: Annotated[str, ApiField(description="""Server ID""")],
         reporting_host: Annotated[Optional[str], ApiField(
             description="""Show records from specific reporting host""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -10546,9 +9507,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: object,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -10615,18 +9575,10 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def radar_servers(
+    def radar_servers(
         self,
         reporting_host: Annotated[Optional[str], ApiField(
             description="""Show records from specific reporting host""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -10672,28 +9624,18 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: object,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def radar_servers_with_http_info(
+    def radar_servers_with_http_info(
         self,
         reporting_host: Annotated[Optional[str], ApiField(
             description="""Show records from specific reporting host""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -10739,28 +9681,18 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: object,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def radar_servers_without_preload_content(
+    def radar_servers_without_preload_content(
         self,
         reporting_host: Annotated[Optional[str], ApiField(
             description="""Show records from specific reporting host""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -10806,9 +9738,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: object,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -10872,21 +9803,13 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def radar_station(
+    def radar_station(
         self,
         station_id: Annotated[str, ApiField(description="""Radar station ID""")],
         reporting_host: Annotated[Optional[str], ApiField(
             description="""Show RDA and latency info from specific reporting host""")] = None,
         host: Annotated[Optional[str], ApiField(
             description="""Show latency info from specific LDM host""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -10938,31 +9861,21 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: object,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def radar_station_with_http_info(
+    def radar_station_with_http_info(
         self,
         station_id: Annotated[str, ApiField(description="""Radar station ID""")],
         reporting_host: Annotated[Optional[str], ApiField(
             description="""Show RDA and latency info from specific reporting host""")] = None,
         host: Annotated[Optional[str], ApiField(
             description="""Show latency info from specific LDM host""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -11014,31 +9927,21 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: object,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def radar_station_without_preload_content(
+    def radar_station_without_preload_content(
         self,
         station_id: Annotated[str, ApiField(description="""Radar station ID""")],
         reporting_host: Annotated[Optional[str], ApiField(
             description="""Show RDA and latency info from specific reporting host""")] = None,
         host: Annotated[Optional[str], ApiField(
             description="""Show latency info from specific LDM host""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -11090,9 +9993,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: object,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -11165,17 +10067,9 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def radar_station_alarms(
+    def radar_station_alarms(
         self,
         station_id: Annotated[str, ApiField(description="""Radar station ID""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -11221,27 +10115,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: object,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def radar_station_alarms_with_http_info(
+    def radar_station_alarms_with_http_info(
         self,
         station_id: Annotated[str, ApiField(description="""Radar station ID""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -11287,27 +10171,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: object,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def radar_station_alarms_without_preload_content(
+    def radar_station_alarms_without_preload_content(
         self,
         station_id: Annotated[str, ApiField(description="""Radar station ID""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -11353,9 +10227,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: object,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -11417,7 +10290,7 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def radar_stations(
+    def radar_stations(
         self,
         station_type: Annotated[Optional[list[str]], ApiField(
             description="""Limit results to a specific station type or types""")] = None,
@@ -11425,14 +10298,6 @@ class DefaultApi:
             description="""Show RDA and latency info from specific reporting host""")] = None,
         host: Annotated[Optional[str], ApiField(
             description="""Show latency info from specific LDM host""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -11484,17 +10349,15 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: object,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def radar_stations_with_http_info(
+    def radar_stations_with_http_info(
         self,
         station_type: Annotated[Optional[list[str]], ApiField(
             description="""Limit results to a specific station type or types""")] = None,
@@ -11502,14 +10365,6 @@ class DefaultApi:
             description="""Show RDA and latency info from specific reporting host""")] = None,
         host: Annotated[Optional[str], ApiField(
             description="""Show latency info from specific LDM host""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -11561,17 +10416,15 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: object,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def radar_stations_without_preload_content(
+    def radar_stations_without_preload_content(
         self,
         station_type: Annotated[Optional[list[str]], ApiField(
             description="""Limit results to a specific station type or types""")] = None,
@@ -11579,14 +10432,6 @@ class DefaultApi:
             description="""Show RDA and latency info from specific reporting host""")] = None,
         host: Annotated[Optional[str], ApiField(
             description="""Show latency info from specific LDM host""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -11638,9 +10483,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: object,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -11716,17 +10560,9 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def satellite_thumbnails(
+    def satellite_thumbnails(
         self,
         area: Annotated[str, ApiField(description=""".""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -11774,27 +10610,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: bytearray,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def satellite_thumbnails_with_http_info(
+    def satellite_thumbnails_with_http_info(
         self,
         area: Annotated[str, ApiField(description=""".""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -11842,27 +10668,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: bytearray,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def satellite_thumbnails_without_preload_content(
+    def satellite_thumbnails_without_preload_content(
         self,
         area: Annotated[str, ApiField(description=""".""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -11910,9 +10726,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: bytearray,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -11974,19 +10789,11 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def sigmet(
+    def sigmet(
         self,
         atsu: Annotated[str, ApiField( description="""ATSU identifier""")],
         var_date: Annotated[date, ApiField(description="""Date (YYYY-MM-DD format)""")],
         time: Annotated[str, ApiField( description="""Time (HHMM format). This time is always specified in UTC (Zulu) time.""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -12038,29 +10845,19 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: SigmetGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def sigmet_with_http_info(
+    def sigmet_with_http_info(
         self,
         atsu: Annotated[str, ApiField( description="""ATSU identifier""")],
         var_date: Annotated[date, ApiField(description="""Date (YYYY-MM-DD format)""")],
         time: Annotated[str, ApiField( description="""Time (HHMM format). This time is always specified in UTC (Zulu) time.""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -12112,29 +10909,19 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: SigmetGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def sigmet_without_preload_content(
+    def sigmet_without_preload_content(
         self,
         atsu: Annotated[str, ApiField( description="""ATSU identifier""")],
         var_date: Annotated[date, ApiField(description="""Date (YYYY-MM-DD format)""")],
         time: Annotated[str, ApiField( description="""Time (HHMM format). This time is always specified in UTC (Zulu) time.""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -12186,9 +10973,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: SigmetGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -12257,7 +11043,7 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def sigmet_query(
+    def sigmet_query(
         self,
         start: Annotated[Optional[datetime], ApiField(
             description="""Start time""")] = None,
@@ -12269,14 +11055,6 @@ class DefaultApi:
             description="""ATSU identifier""")] = None,
         sequence: Annotated[Optional[str], ApiField(
             description="""SIGMET sequence number""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -12334,17 +11112,15 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: SigmetCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def sigmet_query_with_http_info(
+    def sigmet_query_with_http_info(
         self,
         start: Annotated[Optional[datetime], ApiField(
             description="""Start time""")] = None,
@@ -12356,14 +11132,6 @@ class DefaultApi:
             description="""ATSU identifier""")] = None,
         sequence: Annotated[Optional[str], ApiField(
             description="""SIGMET sequence number""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -12421,17 +11189,15 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: SigmetCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def sigmet_query_without_preload_content(
+    def sigmet_query_without_preload_content(
         self,
         start: Annotated[Optional[datetime], ApiField(
             description="""Start time""")] = None,
@@ -12443,14 +11209,6 @@ class DefaultApi:
             description="""ATSU identifier""")] = None,
         sequence: Annotated[Optional[str], ApiField(
             description="""SIGMET sequence number""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -12508,9 +11266,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: SigmetCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -12621,17 +11378,9 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def sigmets_by_atsu(
+    def sigmets_by_atsu(
         self,
         atsu: Annotated[str, ApiField( description="""ATSU identifier""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -12677,27 +11426,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: SigmetCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def sigmets_by_atsu_with_http_info(
+    def sigmets_by_atsu_with_http_info(
         self,
         atsu: Annotated[str, ApiField( description="""ATSU identifier""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -12743,27 +11482,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: SigmetCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def sigmets_by_atsu_without_preload_content(
+    def sigmets_by_atsu_without_preload_content(
         self,
         atsu: Annotated[str, ApiField( description="""ATSU identifier""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -12809,9 +11538,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: SigmetCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -12873,18 +11601,10 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def sigmets_by_atsuby_date(
+    def sigmets_by_atsuby_date(
         self,
         atsu: Annotated[str, ApiField( description="""ATSU identifier""")],
         var_date: Annotated[date, ApiField(description="""Date (YYYY-MM-DD format)""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -12933,28 +11653,18 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: SigmetCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def sigmets_by_atsuby_date_with_http_info(
+    def sigmets_by_atsuby_date_with_http_info(
         self,
         atsu: Annotated[str, ApiField( description="""ATSU identifier""")],
         var_date: Annotated[date, ApiField(description="""Date (YYYY-MM-DD format)""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -13003,28 +11713,18 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: SigmetCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def sigmets_by_atsuby_date_without_preload_content(
+    def sigmets_by_atsuby_date_without_preload_content(
         self,
         atsu: Annotated[str, ApiField( description="""ATSU identifier""")],
         var_date: Annotated[date, ApiField(description="""Date (YYYY-MM-DD format)""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -13073,9 +11773,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: SigmetCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -13140,19 +11839,11 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def station_observation_latest(
+    def station_observation_latest(
         self,
         station_id: Annotated[str, ApiField(description="""Observation station ID""")],
         require_qc: Annotated[Optional[bool],
                               ApiField(description="""Require QC""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -13201,29 +11892,19 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ObservationGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def station_observation_latest_with_http_info(
+    def station_observation_latest_with_http_info(
         self,
         station_id: Annotated[str, ApiField(description="""Observation station ID""")],
         require_qc: Annotated[Optional[bool],
                               ApiField(description="""Require QC""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -13272,29 +11953,19 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ObservationGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def station_observation_latest_without_preload_content(
+    def station_observation_latest_without_preload_content(
         self,
         station_id: Annotated[str, ApiField(description="""Observation station ID""")],
         require_qc: Annotated[Optional[bool],
                               ApiField(description="""Require QC""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -13343,9 +12014,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ObservationGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -13415,7 +12085,7 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def station_observation_list(
+    def station_observation_list(
         self,
         station_id: Annotated[str, ApiField(description="""Observation station ID""")],
         start: Annotated[Optional[datetime], ApiField(
@@ -13424,14 +12094,6 @@ class DefaultApi:
             description="""End time""")] = None,
         limit: Annotated[Optional[Annotated[int, ApiField(
             le=500, ge=1)]], ApiField(description="""Limit""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -13486,17 +12148,15 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ObservationCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def station_observation_list_with_http_info(
+    def station_observation_list_with_http_info(
         self,
         station_id: Annotated[str, ApiField(description="""Observation station ID""")],
         start: Annotated[Optional[datetime], ApiField(
@@ -13505,14 +12165,6 @@ class DefaultApi:
             description="""End time""")] = None,
         limit: Annotated[Optional[Annotated[int, ApiField(
             le=500, ge=1)]], ApiField(description="""Limit""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -13567,17 +12219,15 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ObservationCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def station_observation_list_without_preload_content(
+    def station_observation_list_without_preload_content(
         self,
         station_id: Annotated[str, ApiField(description="""Observation station ID""")],
         start: Annotated[Optional[datetime], ApiField(
@@ -13586,14 +12236,6 @@ class DefaultApi:
             description="""End time""")] = None,
         limit: Annotated[Optional[Annotated[int, ApiField(
             le=500, ge=1)]], ApiField(description="""Limit""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -13648,9 +12290,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ObservationCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -13746,18 +12387,10 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def station_observation_time(
+    def station_observation_time(
         self,
         station_id: Annotated[str, ApiField(description="""Observation station ID""")],
         time: Annotated[datetime, ApiField(description="""Timestamp of requested observation""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -13806,28 +12439,18 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ObservationGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def station_observation_time_with_http_info(
+    def station_observation_time_with_http_info(
         self,
         station_id: Annotated[str, ApiField(description="""Observation station ID""")],
         time: Annotated[datetime, ApiField(description="""Timestamp of requested observation""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -13876,28 +12499,18 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ObservationGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def station_observation_time_without_preload_content(
+    def station_observation_time_without_preload_content(
         self,
         station_id: Annotated[str, ApiField(description="""Observation station ID""")],
         time: Annotated[datetime, ApiField(description="""Timestamp of requested observation""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -13946,9 +12559,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ObservationGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -14016,19 +12628,11 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def taf(
+    def taf(
         self,
         station_id: Annotated[str, ApiField(description="""Observation station ID""")],
         var_date: Annotated[date, ApiField(description="""Date (YYYY-MM-DD format)""")],
         time: Annotated[str, ApiField( description="""Time (HHMM format). This time is always specified in UTC (Zulu) time.""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -14080,29 +12684,19 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: object,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def taf_with_http_info(
+    def taf_with_http_info(
         self,
         station_id: Annotated[str, ApiField(description="""Observation station ID""")],
         var_date: Annotated[date, ApiField(description="""Date (YYYY-MM-DD format)""")],
         time: Annotated[str, ApiField( description="""Time (HHMM format). This time is always specified in UTC (Zulu) time.""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -14154,29 +12748,19 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: object,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def taf_without_preload_content(
+    def taf_without_preload_content(
         self,
         station_id: Annotated[str, ApiField(description="""Observation station ID""")],
         var_date: Annotated[date, ApiField(description="""Date (YYYY-MM-DD format)""")],
         time: Annotated[str, ApiField( description="""Time (HHMM format). This time is always specified in UTC (Zulu) time.""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -14228,9 +12812,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: object,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -14298,17 +12881,9 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def tafs(
+    def tafs(
         self,
         station_id: Annotated[str, ApiField(description="""Observation station ID""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -14354,27 +12929,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: object,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def tafs_with_http_info(
+    def tafs_with_http_info(
         self,
         station_id: Annotated[str, ApiField(description="""Observation station ID""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -14420,27 +12985,17 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: object,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def tafs_without_preload_content(
+    def tafs_without_preload_content(
         self,
         station_id: Annotated[str, ApiField(description="""Observation station ID""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -14486,9 +13041,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: object,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -14550,20 +13104,12 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def zone(
+    def zone(
         self,
         type: Annotated[NWSZoneType, ApiField(description="""Zone type""")],
         zone_id: Annotated[str, ApiField( description="""NWS public zone/county identifier""")],
         effective: Annotated[Optional[datetime], ApiField(
             description="""Effective date/time""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -14615,30 +13161,20 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ZoneGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def zone_with_http_info(
+    def zone_with_http_info(
         self,
         type: Annotated[NWSZoneType, ApiField(description="""Zone type""")],
         zone_id: Annotated[str, ApiField( description="""NWS public zone/county identifier""")],
         effective: Annotated[Optional[datetime], ApiField(
             description="""Effective date/time""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -14690,30 +13226,20 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ZoneGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def zone_without_preload_content(
+    def zone_without_preload_content(
         self,
         type: Annotated[NWSZoneType, ApiField(description="""Zone type""")],
         zone_id: Annotated[str, ApiField( description="""NWS public zone/county identifier""")],
         effective: Annotated[Optional[datetime], ApiField(
             description="""Effective date/time""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -14765,9 +13291,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ZoneGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -14847,18 +13372,10 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def zone_forecast(
+    def zone_forecast(
         self,
         type: Annotated[str, ApiField(description="""Zone type""")],
         zone_id: Annotated[str, ApiField( description="""NWS public zone/county identifier""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -14907,28 +13424,18 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ZoneForecastGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def zone_forecast_with_http_info(
+    def zone_forecast_with_http_info(
         self,
         type: Annotated[str, ApiField(description="""Zone type""")],
         zone_id: Annotated[str, ApiField( description="""NWS public zone/county identifier""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -14977,28 +13484,18 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ZoneForecastGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def zone_forecast_without_preload_content(
+    def zone_forecast_without_preload_content(
         self,
         type: Annotated[str, ApiField(description="""Zone type""")],
         zone_id: Annotated[str, ApiField( description="""NWS public zone/county identifier""")],
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -15047,9 +13544,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ZoneForecastGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -15115,7 +13611,7 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def zone_list(
+    def zone_list(
         self,
         id: Annotated[Optional[list[str]], ApiField(
             description="""Zone ID (forecast or county)""")] = None,
@@ -15132,14 +13628,6 @@ class DefaultApi:
         limit: Annotated[Optional[Annotated[int, ApiField( ge=1)]], ApiField(description="""Limit""")] = None,
         effective: Annotated[Optional[datetime], ApiField(
             description="""Effective date/time""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -15206,17 +13694,15 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ZoneCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def zone_list_with_http_info(
+    def zone_list_with_http_info(
         self,
         id: Annotated[Optional[list[str]], ApiField(
             description="""Zone ID (forecast or county)""")] = None,
@@ -15233,14 +13719,6 @@ class DefaultApi:
         limit: Annotated[Optional[Annotated[int, ApiField( ge=1)]], ApiField(description="""Limit""")] = None,
         effective: Annotated[Optional[datetime], ApiField(
             description="""Effective date/time""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -15307,17 +13785,15 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ZoneCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def zone_list_without_preload_content(
+    def zone_list_without_preload_content(
         self,
         id: Annotated[Optional[list[str]], ApiField(
             description="""Zone ID (forecast or county)""")] = None,
@@ -15334,14 +13810,6 @@ class DefaultApi:
         limit: Annotated[Optional[Annotated[int, ApiField( ge=1)]], ApiField(description="""Limit""")] = None,
         effective: Annotated[Optional[datetime], ApiField(
             description="""Effective date/time""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -15408,9 +13876,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ZoneCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -15523,7 +13990,7 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def zone_list_type(
+    def zone_list_type(
         self,
         type: Annotated[NWSZoneType, ApiField(description="""Zone type""")],
         id: Annotated[Optional[list[str]], ApiField(
@@ -15541,14 +14008,6 @@ class DefaultApi:
         limit: Annotated[Optional[Annotated[int, ApiField( ge=1)]], ApiField(description="""Limit""")] = None,
         effective: Annotated[Optional[datetime], ApiField(
             description="""Effective date/time""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -15618,17 +14077,15 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ZoneCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def zone_list_type_with_http_info(
+    def zone_list_type_with_http_info(
         self,
         type: Annotated[NWSZoneType, ApiField(description="""Zone type""")],
         id: Annotated[Optional[list[str]], ApiField(
@@ -15646,14 +14103,6 @@ class DefaultApi:
         limit: Annotated[Optional[Annotated[int, ApiField( ge=1)]], ApiField(description="""Limit""")] = None,
         effective: Annotated[Optional[datetime], ApiField(
             description="""Effective date/time""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -15723,17 +14172,15 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ZoneCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def zone_list_type_without_preload_content(
+    def zone_list_type_without_preload_content(
         self,
         type: Annotated[NWSZoneType, ApiField(description="""Zone type""")],
         id: Annotated[Optional[list[str]], ApiField(
@@ -15751,14 +14198,6 @@ class DefaultApi:
         limit: Annotated[Optional[Annotated[int, ApiField( ge=1)]], ApiField(description="""Limit""")] = None,
         effective: Annotated[Optional[datetime], ApiField(
             description="""Effective date/time""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -15828,9 +14267,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ZoneCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -15946,7 +14384,7 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def zone_obs(
+    def zone_obs(
         self,
         zone_id: Annotated[str, ApiField( description="""NWS public zone/county identifier""")],
         start: Annotated[Optional[datetime], ApiField(
@@ -15955,14 +14393,6 @@ class DefaultApi:
             description="""End date/time""")] = None,
         limit: Annotated[Optional[Annotated[int, ApiField(
             le=500, ge=1)]], ApiField(description="""Limit""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -16017,17 +14447,15 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ObservationCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def zone_obs_with_http_info(
+    def zone_obs_with_http_info(
         self,
         zone_id: Annotated[str, ApiField( description="""NWS public zone/county identifier""")],
         start: Annotated[Optional[datetime], ApiField(
@@ -16036,14 +14464,6 @@ class DefaultApi:
             description="""End date/time""")] = None,
         limit: Annotated[Optional[Annotated[int, ApiField(
             le=500, ge=1)]], ApiField(description="""Limit""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -16098,17 +14518,15 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ObservationCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def zone_obs_without_preload_content(
+    def zone_obs_without_preload_content(
         self,
         zone_id: Annotated[str, ApiField( description="""NWS public zone/county identifier""")],
         start: Annotated[Optional[datetime], ApiField(
@@ -16117,14 +14535,6 @@ class DefaultApi:
             description="""End date/time""")] = None,
         limit: Annotated[Optional[Annotated[int, ApiField(
             le=500, ge=1)]], ApiField(description="""Limit""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -16179,9 +14589,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ObservationCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
@@ -16277,21 +14686,13 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
-    async def zone_stations(
+    def zone_stations(
         self,
         zone_id: Annotated[str, ApiField( description="""NWS public zone/county identifier""")],
         limit: Annotated[Optional[Annotated[int, ApiField(
             le=500, ge=1)]], ApiField(description="""Limit""")] = None,
         cursor: Annotated[Optional[str], ApiField(
             description="""Pagination cursor""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -16343,31 +14744,21 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ObservationStationCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
-    async def zone_stations_with_http_info(
+    def zone_stations_with_http_info(
         self,
         zone_id: Annotated[str, ApiField( description="""NWS public zone/county identifier""")],
         limit: Annotated[Optional[Annotated[int, ApiField(
             le=500, ge=1)]], ApiField(description="""Limit""")] = None,
         cursor: Annotated[Optional[str], ApiField(
             description="""Pagination cursor""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -16419,31 +14810,21 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ObservationStationCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
-        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
-    async def zone_stations_without_preload_content(
+    def zone_stations_without_preload_content(
         self,
         zone_id: Annotated[str, ApiField( description="""NWS public zone/county identifier""")],
         limit: Annotated[Optional[Annotated[int, ApiField(
             le=500, ge=1)]], ApiField(description="""Limit""")] = None,
         cursor: Annotated[Optional[str], ApiField(
             description="""Pagination cursor""")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[float, ApiField(gt=0)],
-            tuple[
-                Annotated[float, ApiField(gt=0)],
-                Annotated[float, ApiField(gt=0)]
-            ]
-        ] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -16495,9 +14876,8 @@ class DefaultApi:
         _response_types_map: dict[str, Optional[str]] = {
             200: ObservationStationCollectionGeoJson,
         }
-        response_data = await self.api_client.call_api(
+        response_data = self.api_client.call_api(
             *_param,
-            _request_timeout=_request_timeout
         )
         return response_data.response
 
