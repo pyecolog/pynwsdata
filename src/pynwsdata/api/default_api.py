@@ -1,12 +1,11 @@
 
-import warnings
-from typing import TYPE_CHECKING, Annotated, Any, Optional, Union, TypeAlias
-from pynwsdata.api_object import ApiObject, ApiField
 
 
 from datetime import date, datetime
-from typing import Any, Optional, Union
-from pynwsdata.api_object import ApiObject, ApiField
+from typing import TYPE_CHECKING, Annotated, Any, Optional, Union, TypeAlias
+import warnings
+
+from pynwsdata.api_object import ApiField
 from pynwsdata.models.alert_certainty import AlertCertainty
 from pynwsdata.models.alert_collection_geo_json import AlertCollectionGeoJson
 from pynwsdata.models.alert_geo_json import AlertGeoJson
@@ -46,8 +45,6 @@ from pynwsdata.models.zone_forecast_geo_json import ZoneForecastGeoJson
 from pynwsdata.models.zone_geo_json import ZoneGeoJson
 
 from pynwsdata.api_client import ApiClient, RequestSerialized
-from pynwsdata.api_response import ApiResponse
-from pynwsdata.rest import RESTResponseType
 
 RESPONSE_ERROR: TypeAlias = Exception
 
@@ -151,7 +148,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._alerts_active_serialize(
             status=status,
             message_type=message_type,
@@ -183,245 +179,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def alerts_active_with_http_info(
-        self,
-        status: Annotated[Optional[list[str]], ApiField(
-            description="""Status (actual, exercise, system, test, draft)""")] = None,
-        message_type: Annotated[Optional[list[str]], ApiField(
-            description="""Message type (alert, update, cancel)""")] = None,
-        event: Annotated[Optional[list[str]], ApiField(
-            description="""Event name""")] = None,
-        code: Annotated[Optional[list[str]], ApiField(
-            description="""Event code""")] = None,
-        area: Annotated[Optional[list[AreaCode]], ApiField(
-            description="""State/territory code or marine area code This parameter is incompatible with the following parameters: point, region, region_type, zone """)] = None,
-        point: Annotated[Optional[str], ApiField(description="""Point (latitude,longitude)
-        This parameter is incompatible with the following parameters: area, region, region_type, zone """)] = None,
-        region: Annotated[Optional[list[MarineRegionCode]], ApiField(
-            description="""Marine region code This parameter is incompatible with the following parameters: area, point, region_type, zone """)] = None,
-        region_type: Annotated[Optional[str], ApiField(description="""Region type (land or marine)
-        This parameter is incompatible with the following parameters: area, point, region, zone """)] = None,
-        zone: Annotated[Optional[list[str]], ApiField(description="""Zone ID (forecast or county)
-        This parameter is incompatible with the following parameters: area, point, region, region_type """)] = None,
-        urgency: Annotated[Optional[list[AlertUrgency]], ApiField(
-            description="""Urgency (immediate, expected, future, past, unknown)""")] = None,
-        severity: Annotated[Optional[list[AlertSeverity]], ApiField(
-            description="""Severity (extreme, severe, moderate, minor, unknown)""")] = None,
-        certainty: Annotated[Optional[list[AlertCertainty]], ApiField(
-            description="""Certainty (observed, likely, possible, unlikely, unknown)""")] = None,
-        limit: Annotated[Optional[Annotated[int, ApiField(
-            le=500, ge=1)]], ApiField(description="""Limit""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[AlertCollectionGeoJson]:
-        """alerts_active
-
-        Returns all currently active alerts
-
-        :param status: Status (actual, exercise, system, test, draft)
-        :type status: list[str]
-        :param message_type: Message type (alert, update, cancel)
-        :type message_type: list[str]
-        :param event: Event name
-        :type event: list[str]
-        :param code: Event code
-        :type code: list[str]
-        :param area: State/territory code or marine area code This parameter is incompatible with the following parameters: point, region, region_type, zone
-        :type area: list[AreaCode]
-        :param point: Point (latitude,longitude)
-        This parameter is incompatible with the following parameters: area, region, region_type, zone
-        :type point: str
-        :param region: Marine region code This parameter is incompatible with the following parameters: area, point, region_type, zone
-        :type region: list[MarineRegionCode]
-        :param region_type: Region type (land or marine)
-        This parameter is incompatible with the following parameters: area, point, region, zone
-        :type region_type: str
-        :param zone: Zone ID (forecast or county)
-        This parameter is incompatible with the following parameters: area, point, region, region_type
-        :type zone: list[str]
-        :param urgency: Urgency (immediate, expected, future, past, unknown)
-        :type urgency: list[AlertUrgency]
-        :param severity: Severity (extreme, severe, moderate, minor, unknown)
-        :type severity: list[AlertSeverity]
-        :param certainty: Certainty (observed, likely, possible, unlikely, unknown)
-        :type certainty: list[AlertCertainty]
-        :param limit: Limit
-        :type limit: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._alerts_active_serialize(
-            status=status,
-            message_type=message_type,
-            event=event,
-            code=code,
-            area=area,
-            point=point,
-            region=region,
-            region_type=region_type,
-            zone=zone,
-            urgency=urgency,
-            severity=severity,
-            certainty=certainty,
-            limit=limit,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: AlertCollectionGeoJson,
-            301: RESPONSE_ERROR,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def alerts_active_without_preload_content(
-        self,
-        status: Annotated[Optional[list[str]], ApiField(
-            description="""Status (actual, exercise, system, test, draft)""")] = None,
-        message_type: Annotated[Optional[list[str]], ApiField(
-            description="""Message type (alert, update, cancel)""")] = None,
-        event: Annotated[Optional[list[str]], ApiField(
-            description="""Event name""")] = None,
-        code: Annotated[Optional[list[str]], ApiField(
-            description="""Event code""")] = None,
-        area: Annotated[Optional[list[AreaCode]], ApiField(
-            description="""State/territory code or marine area code This parameter is incompatible with the following parameters: point, region, region_type, zone """)] = None,
-        point: Annotated[Optional[str], ApiField(description="""Point(latitude, longitude)
-                                                                                   This parameter is incompatible with the following parameters: area, region, region_type, zone """)] = None,
-        region: Annotated[Optional[list[MarineRegionCode]], ApiField(
-            description="""Marine region code This parameter is incompatible with the following parameters: area, point, region_type, zone """)] = None,
-        region_type: Annotated[Optional[str], ApiField(description="""Region type(land or marine)
-                                                       This parameter is incompatible with the following parameters: area, point, region, zone """)] = None,
-        zone: Annotated[Optional[list[str]], ApiField(description="""Zone ID(forecast or county)
-                                                                                        This parameter is incompatible with the following parameters: area, point, region, region_type """)] = None,
-        urgency: Annotated[Optional[list[AlertUrgency]], ApiField(
-            description="""Urgency (immediate, expected, future, past, unknown)""")] = None,
-        severity: Annotated[Optional[list[AlertSeverity]], ApiField(
-            description="""Severity (extreme, severe, moderate, minor, unknown)""")] = None,
-        certainty: Annotated[Optional[list[AlertCertainty]], ApiField(
-            description="""Certainty (observed, likely, possible, unlikely, unknown)""")] = None,
-        limit: Annotated[Optional[Annotated[int, ApiField(
-            le=500, ge=1)]], ApiField(description="""Limit""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """alerts_active
-
-        Returns all currently active alerts
-
-        :param status: Status (actual, exercise, system, test, draft)
-        :type status: list[str]
-        :param message_type: Message type (alert, update, cancel)
-        :type message_type: list[str]
-        :param event: Event name
-        :type event: list[str]
-        :param code: Event code
-        :type code: list[str]
-        :param area: State/territory code or marine area code This parameter is incompatible with the following parameters: point, region, region_type, zone
-        :type area: list[AreaCode]
-        :param point: Point (latitude,longitude)
-        This parameter is incompatible with the following parameters: area, region, region_type, zone
-        :type point: str
-        :param region: Marine region code This parameter is incompatible with the following parameters: area, point, region_type, zone
-        :type region: list[MarineRegionCode]
-        :param region_type: Region type (land or marine)
-        This parameter is incompatible with the following parameters: area, point, region, zone
-        :type region_type: str
-        :param zone: Zone ID (forecast or county)
-        This parameter is incompatible with the following parameters: area, point, region, region_type
-        :type zone: list[str]
-        :param urgency: Urgency (immediate, expected, future, past, unknown)
-        :type urgency: list[AlertUrgency]
-        :param severity: Severity (extreme, severe, moderate, minor, unknown)
-        :type severity: list[AlertSeverity]
-        :param certainty: Certainty (observed, likely, possible, unlikely, unknown)
-        :type certainty: list[AlertCertainty]
-        :param limit: Limit
-        :type limit: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._alerts_active_serialize(
-            status=status,
-            message_type=message_type,
-            event=event,
-            code=code,
-            area=area,
-            point=point,
-            region=region,
-            region_type=region_type,
-            zone=zone,
-            urgency=urgency,
-            severity=severity,
-            certainty=certainty,
-            limit=limit,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: AlertCollectionGeoJson,
-            301: RESPONSE_ERROR,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _alerts_active_serialize(
         self,
@@ -591,7 +348,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._alerts_active_area_serialize(
             area=area,
             _request_auth=_request_auth,
@@ -610,115 +366,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def alerts_active_area_with_http_info(
-        self,
-        area: Annotated[Any, ApiField(description="""State/area ID""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[AlertCollectionGeoJson]:
-        """alerts_active_area
-
-        Returns active alerts for the given area (state or marine area)
-
-        :param area: State/area ID (required)
-        :type area: AreaCode
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._alerts_active_area_serialize(
-            area=area,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: AlertCollectionGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def alerts_active_area_without_preload_content(
-        self,
-        area: Annotated[Any, ApiField(description="""State/area ID""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """alerts_active_area
-
-        Returns active alerts for the given area (state or marine area)
-
-        :param area: State/area ID (required)
-        :type area: AreaCode
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._alerts_active_area_serialize(
-            area=area,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: AlertCollectionGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _alerts_active_area_serialize(
         self,
@@ -813,7 +460,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._alerts_active_count_serialize(
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -831,107 +477,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def alerts_active_count_with_http_info(
-        self,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[AlertsActiveCount200Response]:
-        """alerts_active_count
-
-        Returns info on the number of active alerts
-
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._alerts_active_count_serialize(
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: AlertsActiveCount200Response,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def alerts_active_count_without_preload_content(
-        self,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """alerts_active_count
-
-        Returns info on the number of active alerts
-
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._alerts_active_count_serialize(
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: AlertsActiveCount200Response,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _alerts_active_count_serialize(
         self,
@@ -1024,7 +569,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._alerts_active_region_serialize(
             region=region,
             _request_auth=_request_auth,
@@ -1043,115 +587,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def alerts_active_region_with_http_info(
-        self,
-        region: Annotated[MarineRegionCode, ApiField(description="""Marine region ID""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[AlertCollectionGeoJson]:
-        """alerts_active_region
-
-        Returns active alerts for the given marine region
-
-        :param region: Marine region ID (required)
-        :type region: MarineRegionCode
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._alerts_active_region_serialize(
-            region=region,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: AlertCollectionGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def alerts_active_region_without_preload_content(
-        self,
-        region: Annotated[MarineRegionCode, ApiField(description="""Marine region ID""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """alerts_active_region
-
-        Returns active alerts for the given marine region
-
-        :param region: Marine region ID (required)
-        :type region: MarineRegionCode
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._alerts_active_region_serialize(
-            region=region,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: AlertCollectionGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _alerts_active_region_serialize(
         self,
@@ -1215,7 +650,7 @@ class DefaultApi:
 
     def alerts_active_zone(
         self,
-        zone_id: Annotated[str, ApiField( description="""NWS public zone/county identifier""")],
+        zone_id: Annotated[str, ApiField(description="""NWS public zone/county identifier""")],
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -1249,7 +684,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._alerts_active_zone_serialize(
             zone_id=zone_id,
             _request_auth=_request_auth,
@@ -1268,115 +702,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def alerts_active_zone_with_http_info(
-        self,
-        zone_id: Annotated[str, ApiField( description="""NWS public zone/county identifier""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[AlertCollectionGeoJson]:
-        """alerts_active_zone
-
-        Returns active alerts for the given NWS public zone or county
-
-        :param zone_id: NWS public zone/county identifier (required)
-        :type zone_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._alerts_active_zone_serialize(
-            zone_id=zone_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: AlertCollectionGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def alerts_active_zone_without_preload_content(
-        self,
-        zone_id: Annotated[str, ApiField( description="""NWS public zone/county identifier""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """alerts_active_zone
-
-        Returns active alerts for the given NWS public zone or county
-
-        :param zone_id: NWS public zone/county identifier (required)
-        :type zone_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._alerts_active_zone_serialize(
-            zone_id=zone_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: AlertCollectionGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _alerts_active_zone_serialize(
         self,
@@ -1542,7 +867,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._alerts_query_serialize(
             active=active,
             start=start,
@@ -1578,285 +902,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def alerts_query_with_http_info(
-        self,
-        active: Annotated[Optional[bool], ApiField(
-            description="""list only active alerts (use /alerts/active endpoints instead)""")] = None,
-        start: Annotated[Optional[datetime], ApiField(
-            description="""Start time""")] = None,
-        end: Annotated[Optional[datetime], ApiField(
-            description="""End time""")] = None,
-        status: Annotated[Optional[list[str]], ApiField(
-            description="""Status (actual, exercise, system, test, draft)""")] = None,
-        message_type: Annotated[Optional[list[str]], ApiField(
-            description="""Message type (alert, update, cancel)""")] = None,
-        event: Annotated[Optional[list[str]], ApiField(
-            description="""Event name""")] = None,
-        code: Annotated[Optional[list[str]], ApiField(
-            description="""Event code""")] = None,
-        area: Annotated[Optional[list[AreaCode]], ApiField(
-            description="""State/territory code or marine area code This parameter is incompatible with the following parameters: point, region, region_type, zone """)] = None,
-        point: Annotated[Optional[str], ApiField(description="""Point(latitude, longitude)
-                                                                                   This parameter is incompatible with the following parameters: area, region, region_type, zone """)] = None,
-        region: Annotated[Optional[list[MarineRegionCode]], ApiField(
-            description="""Marine region code This parameter is incompatible with the following parameters: area, point, region_type, zone """)] = None,
-        region_type: Annotated[Optional[str], ApiField(description="""Region type(land or marine)
-                                                       This parameter is incompatible with the following parameters: area, point, region, zone """)] = None,
-        zone: Annotated[Optional[list[str]], ApiField(description="""Zone ID(forecast or county)
-                                                                                        This parameter is incompatible with the following parameters: area, point, region, region_type """)] = None,
-        urgency: Annotated[Optional[list[AlertUrgency]], ApiField(
-            description="""Urgency (immediate, expected, future, past, unknown)""")] = None,
-        severity: Annotated[Optional[list[AlertSeverity]], ApiField(
-            description="""Severity (extreme, severe, moderate, minor, unknown)""")] = None,
-        certainty: Annotated[Optional[list[AlertCertainty]], ApiField(
-            description="""Certainty (observed, likely, possible, unlikely, unknown)""")] = None,
-        limit: Annotated[Optional[Annotated[int, ApiField(
-            le=500, ge=1)]], ApiField(description="""Limit""")] = None,
-        cursor: Annotated[Optional[str], ApiField(
-            description="""Pagination cursor""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[AlertCollectionGeoJson]:
-        """alerts_query
-
-        Returns all alerts
-
-        :param active: list only active alerts (use /alerts/active endpoints instead)
-        :type active: bool
-        :param start: Start time
-        :type start: datetime
-        :param end: End time
-        :type end: datetime
-        :param status: Status (actual, exercise, system, test, draft)
-        :type status: list[str]
-        :param message_type: Message type (alert, update, cancel)
-        :type message_type: list[str]
-        :param event: Event name
-        :type event: list[str]
-        :param code: Event code
-        :type code: list[str]
-        :param area: State/territory code or marine area code This parameter is incompatible with the following parameters: point, region, region_type, zone
-        :type area: list[AreaCode]
-        :param point: Point (latitude,longitude)
-        This parameter is incompatible with the following parameters: area, region, region_type, zone
-        :type point: str
-        :param region: Marine region code This parameter is incompatible with the following parameters: area, point, region_type, zone
-        :type region: list[MarineRegionCode]
-        :param region_type: Region type (land or marine)
-        This parameter is incompatible with the following parameters: area, point, region, zone
-        :type region_type: str
-        :param zone: Zone ID (forecast or county)
-        This parameter is incompatible with the following parameters: area, point, region, region_type
-        :type zone: list[str]
-        :param urgency: Urgency (immediate, expected, future, past, unknown)
-        :type urgency: list[AlertUrgency]
-        :param severity: Severity (extreme, severe, moderate, minor, unknown)
-        :type severity: list[AlertSeverity]
-        :param certainty: Certainty (observed, likely, possible, unlikely, unknown)
-        :type certainty: list[AlertCertainty]
-        :param limit: Limit
-        :type limit: int
-        :param cursor: Pagination cursor
-        :type cursor: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._alerts_query_serialize(
-            active=active,
-            start=start,
-            end=end,
-            status=status,
-            message_type=message_type,
-            event=event,
-            code=code,
-            area=area,
-            point=point,
-            region=region,
-            region_type=region_type,
-            zone=zone,
-            urgency=urgency,
-            severity=severity,
-            certainty=certainty,
-            limit=limit,
-            cursor=cursor,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: AlertCollectionGeoJson,
-            301: RESPONSE_ERROR,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def alerts_query_without_preload_content(
-        self,
-        active: Annotated[Optional[bool], ApiField(
-            description="""list only active alerts (use /alerts/active endpoints instead)""")] = None,
-        start: Annotated[Optional[datetime], ApiField(
-            description="""Start time""")] = None,
-        end: Annotated[Optional[datetime], ApiField(
-            description="""End time""")] = None,
-        status: Annotated[Optional[list[str]], ApiField(
-            description="""Status (actual, exercise, system, test, draft)""")] = None,
-        message_type: Annotated[Optional[list[str]], ApiField(
-            description="""Message type (alert, update, cancel)""")] = None,
-        event: Annotated[Optional[list[str]], ApiField(
-            description="""Event name""")] = None,
-        code: Annotated[Optional[list[str]], ApiField(
-            description="""Event code""")] = None,
-        area: Annotated[Optional[list[AreaCode]], ApiField(
-            description="""State/territory code or marine area code This parameter is incompatible with the following parameters: point, region, region_type, zone """)] = None,
-        point: Annotated[Optional[str], ApiField(description="""Point(latitude, longitude)
-                                                                                   This parameter is incompatible with the following parameters: area, region, region_type, zone """)] = None,
-        region: Annotated[Optional[list[MarineRegionCode]], ApiField(
-            description="""Marine region code This parameter is incompatible with the following parameters: area, point, region_type, zone """)] = None,
-        region_type: Annotated[Optional[str], ApiField(description="""Region type(land or marine)
-                                                       This parameter is incompatible with the following parameters: area, point, region, zone """)] = None,
-        zone: Annotated[Optional[list[str]], ApiField(description="""Zone ID(forecast or county)
-                                                                                        This parameter is incompatible with the following parameters: area, point, region, region_type """)] = None,
-        urgency: Annotated[Optional[list[AlertUrgency]], ApiField(
-            description="""Urgency (immediate, expected, future, past, unknown)""")] = None,
-        severity: Annotated[Optional[list[AlertSeverity]], ApiField(
-            description="""Severity (extreme, severe, moderate, minor, unknown)""")] = None,
-        certainty: Annotated[Optional[list[AlertCertainty]], ApiField(
-            description="""Certainty (observed, likely, possible, unlikely, unknown)""")] = None,
-        limit: Annotated[Optional[Annotated[int, ApiField(
-            le=500, ge=1)]], ApiField(description="""Limit""")] = None,
-        cursor: Annotated[Optional[str], ApiField(
-            description="""Pagination cursor""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """alerts_query
-
-        Returns all alerts
-
-        :param active: list only active alerts (use /alerts/active endpoints instead)
-        :type active: bool
-        :param start: Start time
-        :type start: datetime
-        :param end: End time
-        :type end: datetime
-        :param status: Status (actual, exercise, system, test, draft)
-        :type status: list[str]
-        :param message_type: Message type (alert, update, cancel)
-        :type message_type: list[str]
-        :param event: Event name
-        :type event: list[str]
-        :param code: Event code
-        :type code: list[str]
-        :param area: State/territory code or marine area code This parameter is incompatible with the following parameters: point, region, region_type, zone
-        :type area: list[AreaCode]
-        :param point: Point (latitude,longitude)
-        This parameter is incompatible with the following parameters: area, region, region_type, zone
-        :type point: str
-        :param region: Marine region code This parameter is incompatible with the following parameters: area, point, region_type, zone
-        :type region: list[MarineRegionCode]
-        :param region_type: Region type (land or marine)
-        This parameter is incompatible with the following parameters: area, point, region, zone
-        :type region_type: str
-        :param zone: Zone ID (forecast or county)
-        This parameter is incompatible with the following parameters: area, point, region, region_type
-        :type zone: list[str]
-        :param urgency: Urgency (immediate, expected, future, past, unknown)
-        :type urgency: list[AlertUrgency]
-        :param severity: Severity (extreme, severe, moderate, minor, unknown)
-        :type severity: list[AlertSeverity]
-        :param certainty: Certainty (observed, likely, possible, unlikely, unknown)
-        :type certainty: list[AlertCertainty]
-        :param limit: Limit
-        :type limit: int
-        :param cursor: Pagination cursor
-        :type cursor: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._alerts_query_serialize(
-            active=active,
-            start=start,
-            end=end,
-            status=status,
-            message_type=message_type,
-            event=event,
-            code=code,
-            area=area,
-            point=point,
-            region=region,
-            region_type=region_type,
-            zone=zone,
-            urgency=urgency,
-            severity=severity,
-            certainty=certainty,
-            limit=limit,
-            cursor=cursor,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: AlertCollectionGeoJson,
-            301: RESPONSE_ERROR,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _alerts_query_serialize(
         self,
@@ -2064,7 +1109,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._alerts_single_serialize(
             id=id,
             _request_auth=_request_auth,
@@ -2083,115 +1127,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def alerts_single_with_http_info(
-        self,
-        id: Annotated[str, ApiField(description="""Alert identifier""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[AlertGeoJson]:
-        """alerts_single
-
-        Returns a specific alert
-
-        :param id: Alert identifier (required)
-        :type id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._alerts_single_serialize(
-            id=id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: AlertGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def alerts_single_without_preload_content(
-        self,
-        id: Annotated[str, ApiField(description="""Alert identifier""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """alerts_single
-
-        Returns a specific alert
-
-        :param id: Alert identifier (required)
-        :type id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._alerts_single_serialize(
-            id=id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: AlertGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _alerts_single_serialize(
         self,
@@ -2286,7 +1221,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._alerts_types_serialize(
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -2304,107 +1238,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def alerts_types_with_http_info(
-        self,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[AlertsTypes200Response]:
-        """alerts_types
-
-        Returns a list of alert types
-
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._alerts_types_serialize(
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: AlertsTypes200Response,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def alerts_types_without_preload_content(
-        self,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """alerts_types
-
-        Returns a list of alert types
-
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._alerts_types_serialize(
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: AlertsTypes200Response,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _alerts_types_serialize(
         self,
@@ -2465,7 +1298,7 @@ class DefaultApi:
         self,
         cwsu_id: Annotated[NWSCenterWeatherServiceUnitId, ApiField(description="""NWS CWSU ID""")],
         var_date: Annotated[date, ApiField(description="""Date (YYYY-MM-DD format)""")],
-        sequence: Annotated[int, ApiField( ge=100, description="""Sequence number""")],
+        sequence: Annotated[int, ApiField(ge=100, description="""Sequence number""")],
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -2503,7 +1336,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._cwa_serialize(
             cwsu_id=cwsu_id,
             var_date=var_date,
@@ -2524,131 +1356,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def cwa_with_http_info(
-        self,
-        cwsu_id: Annotated[NWSCenterWeatherServiceUnitId, ApiField(description="""NWS CWSU ID""")],
-        var_date: Annotated[date, ApiField(description="""Date (YYYY-MM-DD format)""")],
-        sequence: Annotated[int, ApiField( ge=100, description="""Sequence number""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[CenterWeatherAdvisoryGeoJson]:
-        """cwa
-
-        Returns a list of Center Weather Advisories from a CWSU
-
-        :param cwsu_id: NWS CWSU ID (required)
-        :type cwsu_id: NWSCenterWeatherServiceUnitId
-        :param var_date: Date (YYYY-MM-DD format) (required)
-        :type var_date: date
-        :param sequence: Sequence number (required)
-        :type sequence: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._cwa_serialize(
-            cwsu_id=cwsu_id,
-            var_date=var_date,
-            sequence=sequence,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: CenterWeatherAdvisoryGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def cwa_without_preload_content(
-        self,
-        cwsu_id: Annotated[NWSCenterWeatherServiceUnitId, ApiField(description="""NWS CWSU ID""")],
-        var_date: Annotated[date, ApiField(description="""Date (YYYY-MM-DD format)""")],
-        sequence: Annotated[int, ApiField( ge=100, description="""Sequence number""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """cwa
-
-        Returns a list of Center Weather Advisories from a CWSU
-
-        :param cwsu_id: NWS CWSU ID (required)
-        :type cwsu_id: NWSCenterWeatherServiceUnitId
-        :param var_date: Date (YYYY-MM-DD format) (required)
-        :type var_date: date
-        :param sequence: Sequence number (required)
-        :type sequence: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._cwa_serialize(
-            cwsu_id=cwsu_id,
-            var_date=var_date,
-            sequence=sequence,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: CenterWeatherAdvisoryGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _cwa_serialize(
         self,
@@ -2751,7 +1458,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._cwas_serialize(
             cwsu_id=cwsu_id,
             _request_auth=_request_auth,
@@ -2770,115 +1476,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def cwas_with_http_info(
-        self,
-        cwsu_id: Annotated[NWSCenterWeatherServiceUnitId, ApiField(description="""NWS CWSU ID""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[CenterWeatherAdvisoryCollectionGeoJson]:
-        """cwas
-
-        Returns a list of Center Weather Advisories from a CWSU
-
-        :param cwsu_id: NWS CWSU ID (required)
-        :type cwsu_id: NWSCenterWeatherServiceUnitId
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._cwas_serialize(
-            cwsu_id=cwsu_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: CenterWeatherAdvisoryCollectionGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def cwas_without_preload_content(
-        self,
-        cwsu_id: Annotated[NWSCenterWeatherServiceUnitId, ApiField(description="""NWS CWSU ID""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """cwas
-
-        Returns a list of Center Weather Advisories from a CWSU
-
-        :param cwsu_id: NWS CWSU ID (required)
-        :type cwsu_id: NWSCenterWeatherServiceUnitId
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._cwas_serialize(
-            cwsu_id=cwsu_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: CenterWeatherAdvisoryCollectionGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _cwas_serialize(
         self,
@@ -2974,7 +1571,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._cwsu_serialize(
             cwsu_id=cwsu_id,
             _request_auth=_request_auth,
@@ -2993,115 +1589,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def cwsu_with_http_info(
-        self,
-        cwsu_id: Annotated[NWSCenterWeatherServiceUnitId, ApiField(description="""NWS CWSU ID""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Office]:
-        """cwsu
-
-        Returns metadata about a Center Weather Service Unit
-
-        :param cwsu_id: NWS CWSU ID (required)
-        :type cwsu_id: NWSCenterWeatherServiceUnitId
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._cwsu_serialize(
-            cwsu_id=cwsu_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: Office,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def cwsu_without_preload_content(
-        self,
-        cwsu_id: Annotated[NWSCenterWeatherServiceUnitId, ApiField(description="""NWS CWSU ID""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """cwsu
-
-        Returns metadata about a Center Weather Service Unit
-
-        :param cwsu_id: NWS CWSU ID (required)
-        :type cwsu_id: NWSCenterWeatherServiceUnitId
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._cwsu_serialize(
-            cwsu_id=cwsu_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: Office,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _cwsu_serialize(
         self,
@@ -3194,7 +1681,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._glossary_serialize(
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -3212,107 +1698,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def glossary_with_http_info(
-        self,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Glossary200Response]:
-        """glossary
-
-        Returns glossary terms
-
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._glossary_serialize(
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: Glossary200Response,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def glossary_without_preload_content(
-        self,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """glossary
-
-        Returns glossary terms
-
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._glossary_serialize(
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: Glossary200Response,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _glossary_serialize(
         self,
@@ -3372,8 +1757,8 @@ class DefaultApi:
     def gridpoint(
         self,
         wfo: Annotated[NWSForecastOfficeId, ApiField(description="""Forecast office ID""")],
-        x: Annotated[int, ApiField( ge=0, description="""Forecast grid X coordinate""")],
-        y: Annotated[int, ApiField( ge=0, description="""Forecast grid Y coordinate""")],
+        x: Annotated[int, ApiField(ge=0, description="""Forecast grid X coordinate""")],
+        y: Annotated[int, ApiField(ge=0, description="""Forecast grid Y coordinate""")],
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -3411,7 +1796,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._gridpoint_serialize(
             wfo=wfo,
             x=x,
@@ -3432,131 +1816,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def gridpoint_with_http_info(
-        self,
-        wfo: Annotated[NWSForecastOfficeId, ApiField(description="""Forecast office ID""")],
-        x: Annotated[int, ApiField( ge=0, description="""Forecast grid X coordinate""")],
-        y: Annotated[int, ApiField( ge=0, description="""Forecast grid Y coordinate""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[GridpointGeoJson]:
-        """gridpoint
-
-        Returns raw numerical forecast data for a 2.5km grid area
-
-        :param wfo: Forecast office ID (required)
-        :type wfo: NWSForecastOfficeId
-        :param x: Forecast grid X coordinate (required)
-        :type x: int
-        :param y: Forecast grid Y coordinate (required)
-        :type y: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._gridpoint_serialize(
-            wfo=wfo,
-            x=x,
-            y=y,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: GridpointGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def gridpoint_without_preload_content(
-        self,
-        wfo: Annotated[NWSForecastOfficeId, ApiField(description="""Forecast office ID""")],
-        x: Annotated[int, ApiField( ge=0, description="""Forecast grid X coordinate""")],
-        y: Annotated[int, ApiField( ge=0, description="""Forecast grid Y coordinate""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """gridpoint
-
-        Returns raw numerical forecast data for a 2.5km grid area
-
-        :param wfo: Forecast office ID (required)
-        :type wfo: NWSForecastOfficeId
-        :param x: Forecast grid X coordinate (required)
-        :type x: int
-        :param y: Forecast grid Y coordinate (required)
-        :type y: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._gridpoint_serialize(
-            wfo=wfo,
-            x=x,
-            y=y,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: GridpointGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _gridpoint_serialize(
         self,
@@ -3626,8 +1885,8 @@ class DefaultApi:
     def gridpoint_forecast(
         self,
         wfo: Annotated[NWSForecastOfficeId, ApiField(description="""Forecast office ID""")],
-        x: Annotated[int, ApiField( ge=0, description="""Forecast grid X coordinate""")],
-        y: Annotated[int, ApiField( ge=0, description="""Forecast grid Y coordinate""")],
+        x: Annotated[int, ApiField(ge=0, description="""Forecast grid X coordinate""")],
+        y: Annotated[int, ApiField(ge=0, description="""Forecast grid Y coordinate""")],
         feature_flags: Annotated[Optional[list[str]], ApiField(
             description="""Enable future and experimental features (see documentation for more info): 
             * forecast_temperature_qv: Represent temperature as QuantitativeValue 
@@ -3675,7 +1934,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._gridpoint_forecast_serialize(
             wfo=wfo,
             x=x,
@@ -3698,151 +1956,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def gridpoint_forecast_with_http_info(
-        self,
-        wfo: Annotated[NWSForecastOfficeId, ApiField(description="""Forecast office ID""")],
-        x: Annotated[int, ApiField( ge=0, description="""Forecast grid X coordinate""")],
-        y: Annotated[int, ApiField( ge=0, description="""Forecast grid Y coordinate""")],
-        feature_flags: Annotated[Optional[list[str]], ApiField(
-            description="""Enable future and experimental features (see documentation for more info): * forecast_temperature_qv: Represent temperature as QuantitativeValue * forecast_wind_speed_qv: Represent wind speed as QuantitativeValue """)] = None,
-        units: Annotated[Optional[GridpointForecastUnits], ApiField(
-            description="""Use US customary or SI (metric) units in textual output""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[GridpointForecastGeoJson]:
-        """gridpoint_forecast
-
-        Returns a textual forecast for a 2.5km grid area
-
-        :param wfo: Forecast office ID (required)
-        :type wfo: NWSForecastOfficeId
-        :param x: Forecast grid X coordinate (required)
-        :type x: int
-        :param y: Forecast grid Y coordinate (required)
-        :type y: int
-        :param feature_flags: Enable future and experimental features (see documentation for more info): * forecast_temperature_qv: Represent temperature as QuantitativeValue * forecast_wind_speed_qv: Represent wind speed as QuantitativeValue
-        :type feature_flags: list[str]
-        :param units: Use US customary or SI (metric) units in textual output
-        :type units: GridpointForecastUnits
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._gridpoint_forecast_serialize(
-            wfo=wfo,
-            x=x,
-            y=y,
-            feature_flags=feature_flags,
-            units=units,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: GridpointForecastGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def gridpoint_forecast_without_preload_content(
-        self,
-        wfo: Annotated[NWSForecastOfficeId, ApiField(description="""Forecast office ID""")],
-        x: Annotated[int, ApiField( ge=0, description="""Forecast grid X coordinate""")],
-        y: Annotated[int, ApiField( ge=0, description="""Forecast grid Y coordinate""")],
-        feature_flags: Annotated[Optional[list[str]], ApiField(
-            description="""Enable future and experimental features (see documentation for more info): * forecast_temperature_qv: Represent temperature as QuantitativeValue * forecast_wind_speed_qv: Represent wind speed as QuantitativeValue """)] = None,
-        units: Annotated[Optional[GridpointForecastUnits], ApiField(
-            description="""Use US customary or SI (metric) units in textual output""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """gridpoint_forecast
-
-        Returns a textual forecast for a 2.5km grid area
-
-        :param wfo: Forecast office ID (required)
-        :type wfo: NWSForecastOfficeId
-        :param x: Forecast grid X coordinate (required)
-        :type x: int
-        :param y: Forecast grid Y coordinate (required)
-        :type y: int
-        :param feature_flags: Enable future and experimental features (see documentation for more info): * forecast_temperature_qv: Represent temperature as QuantitativeValue * forecast_wind_speed_qv: Represent wind speed as QuantitativeValue
-        :type feature_flags: list[str]
-        :param units: Use US customary or SI (metric) units in textual output
-        :type units: GridpointForecastUnits
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._gridpoint_forecast_serialize(
-            wfo=wfo,
-            x=x,
-            y=y,
-            feature_flags=feature_flags,
-            units=units,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: GridpointForecastGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _gridpoint_forecast_serialize(
         self,
@@ -3922,8 +2035,8 @@ class DefaultApi:
     def gridpoint_forecast_hourly(
         self,
         wfo: Annotated[NWSForecastOfficeId, ApiField(description="""Forecast office ID""")],
-        x: Annotated[int, ApiField( ge=0, description="""Forecast grid X coordinate""")],
-        y: Annotated[int, ApiField( ge=0, description="""Forecast grid Y coordinate""")],
+        x: Annotated[int, ApiField(ge=0, description="""Forecast grid X coordinate""")],
+        y: Annotated[int, ApiField(ge=0, description="""Forecast grid Y coordinate""")],
         feature_flags: Annotated[Optional[list[str]], ApiField(
             description="""Enable future and experimental features (see documentation for more info): 
             * forecast_temperature_qv: Represent temperature as QuantitativeValue 
@@ -3971,7 +2084,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._gridpoint_forecast_hourly_serialize(
             wfo=wfo,
             x=x,
@@ -3994,151 +2106,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def gridpoint_forecast_hourly_with_http_info(
-        self,
-        wfo: Annotated[NWSForecastOfficeId, ApiField(description="""Forecast office ID""")],
-        x: Annotated[int, ApiField( ge=0, description="""Forecast grid X coordinate""")],
-        y: Annotated[int, ApiField( ge=0, description="""Forecast grid Y coordinate""")],
-        feature_flags: Annotated[Optional[list[str]], ApiField(
-            description="""Enable future and experimental features (see documentation for more info): * forecast_temperature_qv: Represent temperature as QuantitativeValue * forecast_wind_speed_qv: Represent wind speed as QuantitativeValue """)] = None,
-        units: Annotated[Optional[GridpointForecastUnits], ApiField(
-            description="""Use US customary or SI (metric) units in textual output""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[GridpointForecastGeoJson]:
-        """gridpoint_forecast_hourly
-
-        Returns a textual hourly forecast for a 2.5km grid area
-
-        :param wfo: Forecast office ID (required)
-        :type wfo: NWSForecastOfficeId
-        :param x: Forecast grid X coordinate (required)
-        :type x: int
-        :param y: Forecast grid Y coordinate (required)
-        :type y: int
-        :param feature_flags: Enable future and experimental features (see documentation for more info): * forecast_temperature_qv: Represent temperature as QuantitativeValue * forecast_wind_speed_qv: Represent wind speed as QuantitativeValue
-        :type feature_flags: list[str]
-        :param units: Use US customary or SI (metric) units in textual output
-        :type units: GridpointForecastUnits
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._gridpoint_forecast_hourly_serialize(
-            wfo=wfo,
-            x=x,
-            y=y,
-            feature_flags=feature_flags,
-            units=units,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: GridpointForecastGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def gridpoint_forecast_hourly_without_preload_content(
-        self,
-        wfo: Annotated[NWSForecastOfficeId, ApiField(description="""Forecast office ID""")],
-        x: Annotated[int, ApiField( ge=0, description="""Forecast grid X coordinate""")],
-        y: Annotated[int, ApiField( ge=0, description="""Forecast grid Y coordinate""")],
-        feature_flags: Annotated[Optional[list[str]], ApiField(
-            description="""Enable future and experimental features (see documentation for more info): * forecast_temperature_qv: Represent temperature as QuantitativeValue * forecast_wind_speed_qv: Represent wind speed as QuantitativeValue """)] = None,
-        units: Annotated[Optional[GridpointForecastUnits], ApiField(
-            description="""Use US customary or SI (metric) units in textual output""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """gridpoint_forecast_hourly
-
-        Returns a textual hourly forecast for a 2.5km grid area
-
-        :param wfo: Forecast office ID (required)
-        :type wfo: NWSForecastOfficeId
-        :param x: Forecast grid X coordinate (required)
-        :type x: int
-        :param y: Forecast grid Y coordinate (required)
-        :type y: int
-        :param feature_flags: Enable future and experimental features (see documentation for more info): * forecast_temperature_qv: Represent temperature as QuantitativeValue * forecast_wind_speed_qv: Represent wind speed as QuantitativeValue
-        :type feature_flags: list[str]
-        :param units: Use US customary or SI (metric) units in textual output
-        :type units: GridpointForecastUnits
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._gridpoint_forecast_hourly_serialize(
-            wfo=wfo,
-            x=x,
-            y=y,
-            feature_flags=feature_flags,
-            units=units,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: GridpointForecastGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _gridpoint_forecast_hourly_serialize(
         self,
@@ -4218,8 +2185,8 @@ class DefaultApi:
     def gridpoint_stations(
         self,
         wfo: Annotated[NWSForecastOfficeId, ApiField(description="""Forecast office ID""")],
-        x: Annotated[int, ApiField( ge=0, description="""Forecast grid X coordinate""")],
-        y: Annotated[int, ApiField( ge=0, description="""Forecast grid Y coordinate""")],
+        x: Annotated[int, ApiField(ge=0, description="""Forecast grid X coordinate""")],
+        y: Annotated[int, ApiField(ge=0, description="""Forecast grid Y coordinate""")],
         limit: Annotated[Optional[Annotated[int, ApiField(
             le=500, ge=1)]], ApiField(description="""Limit""")] = None,
         cursor: Annotated[Optional[str], ApiField(
@@ -4265,7 +2232,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._gridpoint_stations_serialize(
             wfo=wfo,
             x=x,
@@ -4288,151 +2254,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def gridpoint_stations_with_http_info(
-        self,
-        wfo: Annotated[NWSForecastOfficeId, ApiField(description="""Forecast office ID""")],
-        x: Annotated[int, ApiField( ge=0, description="""Forecast grid X coordinate""")],
-        y: Annotated[int, ApiField( ge=0, description="""Forecast grid Y coordinate""")],
-        limit: Annotated[Optional[Annotated[int, ApiField(
-            le=500, ge=1)]], ApiField(description="""Limit""")] = None,
-        cursor: Annotated[Optional[str], ApiField(
-            description="""Pagination cursor""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[ObservationStationCollectionGeoJson]:
-        """gridpoint_stations
-
-        Returns a list of observation stations usable for a given 2.5km grid area
-
-        :param wfo: Forecast office ID (required)
-        :type wfo: NWSForecastOfficeId
-        :param x: Forecast grid X coordinate (required)
-        :type x: int
-        :param y: Forecast grid Y coordinate (required)
-        :type y: int
-        :param limit: Limit
-        :type limit: int
-        :param cursor: Pagination cursor
-        :type cursor: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._gridpoint_stations_serialize(
-            wfo=wfo,
-            x=x,
-            y=y,
-            limit=limit,
-            cursor=cursor,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: ObservationStationCollectionGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def gridpoint_stations_without_preload_content(
-        self,
-        wfo: Annotated[NWSForecastOfficeId, ApiField(description="""Forecast office ID""")],
-        x: Annotated[int, ApiField( ge=0, description="""Forecast grid X coordinate""")],
-        y: Annotated[int, ApiField( ge=0, description="""Forecast grid Y coordinate""")],
-        limit: Annotated[Optional[Annotated[int, ApiField(
-            le=500, ge=1)]], ApiField(description="""Limit""")] = None,
-        cursor: Annotated[Optional[str], ApiField(
-            description="""Pagination cursor""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """gridpoint_stations
-
-        Returns a list of observation stations usable for a given 2.5km grid area
-
-        :param wfo: Forecast office ID (required)
-        :type wfo: NWSForecastOfficeId
-        :param x: Forecast grid X coordinate (required)
-        :type x: int
-        :param y: Forecast grid Y coordinate (required)
-        :type y: int
-        :param limit: Limit
-        :type limit: int
-        :param cursor: Pagination cursor
-        :type cursor: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._gridpoint_stations_serialize(
-            wfo=wfo,
-            x=x,
-            y=y,
-            limit=limit,
-            cursor=cursor,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: ObservationStationCollectionGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _gridpoint_stations_serialize(
         self,
@@ -4584,155 +2405,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def icons_with_http_info(
-        self,
-        set: Annotated[str, ApiField(description=""".""")],
-        time_of_day: Annotated[str, ApiField(description=""".""")],
-        first: Annotated[str, ApiField(description=""".""")],
-        size: Annotated[Optional[Any], ApiField(
-            description="""Font size""")] = None,
-        fontsize: Annotated[Optional[Annotated[int, ApiField(
-            le=24, ge=2)]], ApiField(description="""Font size""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[bytearray]:
-        """(Deprecated) icons
-
-        Returns a forecast icon. Icon services in API are deprecated.
-
-        :param set: . (required)
-        :type set: str
-        :param time_of_day: . (required)
-        :type time_of_day: str
-        :param first: . (required)
-        :type first: str
-        :param size: Font size
-        :type size: IconsSizeParameter
-        :param fontsize: Font size
-        :type fontsize: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-        warnings.warn(
-            "GET /icons/{set}/{timeOfDay}/{first} is deprecated.", DeprecationWarning)
-
-        _param = self._icons_serialize(
-            set=set,
-            time_of_day=time_of_day,
-            first=first,
-            size=size,
-            fontsize=fontsize,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: bytearray,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def icons_without_preload_content(
-        self,
-        set: Annotated[str, ApiField(description=""".""")],
-        time_of_day: Annotated[str, ApiField(description=""".""")],
-        first: Annotated[str, ApiField(description=""".""")],
-        size: Annotated[Optional[Any], ApiField(
-            description="""Font size""")] = None,
-        fontsize: Annotated[Optional[Annotated[int, ApiField(
-            le=24, ge=2)]], ApiField(description="""Font size""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """(Deprecated) icons
-
-        Returns a forecast icon. Icon services in API are deprecated.
-
-        :param set: . (required)
-        :type set: str
-        :param time_of_day: . (required)
-        :type time_of_day: str
-        :param first: . (required)
-        :type first: str
-        :param size: Font size
-        :type size: IconsSizeParameter
-        :param fontsize: Font size
-        :type fontsize: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-        warnings.warn(
-            "GET /icons/{set}/{timeOfDay}/{first} is deprecated.", DeprecationWarning)
-
-        _param = self._icons_serialize(
-            set=set,
-            time_of_day=time_of_day,
-            first=first,
-            size=size,
-            fontsize=fontsize,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: bytearray,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _icons_serialize(
         self,
@@ -4888,163 +2560,6 @@ class DefaultApi:
             response_types_map=_response_types_map,
         ).data
 
-    def icons_dual_condition_with_http_info(
-        self,
-        set: Annotated[str, ApiField(description=""".""")],
-        time_of_day: Annotated[str, ApiField(description=""".""")],
-        first: Annotated[str, ApiField(description=""".""")],
-        second: Annotated[str, ApiField(description=""".""")],
-        size: Annotated[Optional[Any], ApiField(
-            description="""Font size""")] = None,
-        fontsize: Annotated[Optional[Annotated[int, ApiField(
-            le=24, ge=2)]], ApiField(description="""Font size""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[bytearray]:
-        """(Deprecated) icons_dual_condition
-
-        Returns a forecast icon. Icon services in API are deprecated.
-
-        :param set: . (required)
-        :type set: str
-        :param time_of_day: . (required)
-        :type time_of_day: str
-        :param first: . (required)
-        :type first: str
-        :param second: . (required)
-        :type second: str
-        :param size: Font size
-        :type size: IconsSizeParameter
-        :param fontsize: Font size
-        :type fontsize: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-        warnings.warn(
-            "GET /icons/{set}/{timeOfDay}/{first}/{second} is deprecated.", DeprecationWarning)
-
-        _param = self._icons_dual_condition_serialize(
-            set=set,
-            time_of_day=time_of_day,
-            first=first,
-            second=second,
-            size=size,
-            fontsize=fontsize,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: bytearray,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def icons_dual_condition_without_preload_content(
-        self,
-        set: Annotated[str, ApiField(description=""".""")],
-        time_of_day: Annotated[str, ApiField(description=""".""")],
-        first: Annotated[str, ApiField(description=""".""")],
-        second: Annotated[str, ApiField(description=""".""")],
-        size: Annotated[Optional[Any], ApiField(
-            description="""Font size""")] = None,
-        fontsize: Annotated[Optional[Annotated[int, ApiField(
-            le=24, ge=2)]], ApiField(description="""Font size""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """(Deprecated) icons_dual_condition
-
-        Returns a forecast icon. Icon services in API are deprecated.
-
-        :param set: . (required)
-        :type set: str
-        :param time_of_day: . (required)
-        :type time_of_day: str
-        :param first: . (required)
-        :type first: str
-        :param second: . (required)
-        :type second: str
-        :param size: Font size
-        :type size: IconsSizeParameter
-        :param fontsize: Font size
-        :type fontsize: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-        warnings.warn(
-            "GET /icons/{set}/{timeOfDay}/{first}/{second} is deprecated.", DeprecationWarning)
-
-        _param = self._icons_dual_condition_serialize(
-            set=set,
-            time_of_day=time_of_day,
-            first=first,
-            second=second,
-            size=size,
-            fontsize=fontsize,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: bytearray,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
-
     def _icons_dual_condition_serialize(
         self,
         set,
@@ -5158,7 +2673,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._location_products_serialize(
             location_id=location_id,
             _request_auth=_request_auth,
@@ -5177,115 +2691,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def location_products_with_http_info(
-        self,
-        location_id: Annotated[str, ApiField(description=""".""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[TextProductTypeCollection]:
-        """location_products
-
-        Returns a list of valid text product types for a given issuance location
-
-        :param location_id: . (required)
-        :type location_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._location_products_serialize(
-            location_id=location_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: TextProductTypeCollection,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def location_products_without_preload_content(
-        self,
-        location_id: Annotated[str, ApiField(description=""".""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """location_products
-
-        Returns a list of valid text product types for a given issuance location
-
-        :param location_id: . (required)
-        :type location_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._location_products_serialize(
-            location_id=location_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: TextProductTypeCollection,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _location_products_serialize(
         self,
@@ -5381,7 +2786,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._obs_station_serialize(
             station_id=station_id,
             _request_auth=_request_auth,
@@ -5400,115 +2804,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def obs_station_with_http_info(
-        self,
-        station_id: Annotated[str, ApiField(description="""Observation station ID""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[ObservationStationGeoJson]:
-        """obs_station
-
-        Returns metadata about a given observation station
-
-        :param station_id: Observation station ID (required)
-        :type station_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._obs_station_serialize(
-            station_id=station_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: ObservationStationGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def obs_station_without_preload_content(
-        self,
-        station_id: Annotated[str, ApiField(description="""Observation station ID""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """obs_station
-
-        Returns metadata about a given observation station
-
-        :param station_id: Observation station ID (required)
-        :type station_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._obs_station_serialize(
-            station_id=station_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: ObservationStationGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _obs_station_serialize(
         self,
@@ -5618,7 +2913,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._obs_stations_serialize(
             id=id,
             state=state,
@@ -5640,147 +2934,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def obs_stations_with_http_info(
-        self,
-        id: Annotated[Optional[list[str]], ApiField(
-            description="""Filter by observation station ID""")] = None,
-        state: Annotated[Optional[list[AreaCode]], ApiField(
-            description="""Filter by state/marine area code""")] = None,
-        limit: Annotated[Optional[Annotated[int, ApiField(
-            le=500, ge=1)]], ApiField(description="""Limit""")] = None,
-        cursor: Annotated[Optional[str], ApiField(
-            description="""Pagination cursor""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[ObservationStationCollectionGeoJson]:
-        """obs_stations
-
-        Returns a list of observation stations.
-
-        :param id: Filter by observation station ID
-        :type id: list[str]
-        :param state: Filter by state/marine area code
-        :type state: list[AreaCode]
-        :param limit: Limit
-        :type limit: int
-        :param cursor: Pagination cursor
-        :type cursor: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._obs_stations_serialize(
-            id=id,
-            state=state,
-            limit=limit,
-            cursor=cursor,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: ObservationStationCollectionGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def obs_stations_without_preload_content(
-        self,
-        id: Annotated[Optional[list[str]], ApiField(
-            description="""Filter by observation station ID""")] = None,
-        state: Annotated[Optional[list[AreaCode]], ApiField(
-            description="""Filter by state/marine area code""")] = None,
-        limit: Annotated[Optional[Annotated[int, ApiField(
-            le=500, ge=1)]], ApiField(description="""Limit""")] = None,
-        cursor: Annotated[Optional[str], ApiField(
-            description="""Pagination cursor""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """obs_stations
-
-        Returns a list of observation stations.
-
-        :param id: Filter by observation station ID
-        :type id: list[str]
-        :param state: Filter by state/marine area code
-        :type state: list[AreaCode]
-        :param limit: Limit
-        :type limit: int
-        :param cursor: Pagination cursor
-        :type cursor: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._obs_stations_serialize(
-            id=id,
-            state=state,
-            limit=limit,
-            cursor=cursor,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: ObservationStationCollectionGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _obs_stations_serialize(
         self,
@@ -5896,7 +3049,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._office_serialize(
             office_id=office_id,
             _request_auth=_request_auth,
@@ -5915,115 +3067,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def office_with_http_info(
-        self,
-        office_id: Annotated[Any, ApiField(description="""NWS office ID""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Office]:
-        """office
-
-        Returns metadata about a NWS forecast office
-
-        :param office_id: NWS office ID (required)
-        :type office_id: NWSOfficeId
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._office_serialize(
-            office_id=office_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: Office,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def office_without_preload_content(
-        self,
-        office_id: Annotated[Any, ApiField(description="""NWS office ID""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """office
-
-        Returns metadata about a NWS forecast office
-
-        :param office_id: NWS office ID (required)
-        :type office_id: NWSOfficeId
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._office_serialize(
-            office_id=office_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: Office,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _office_serialize(
         self,
@@ -6122,7 +3165,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._office_headline_serialize(
             office_id=office_id,
             headline_id=headline_id,
@@ -6142,123 +3184,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def office_headline_with_http_info(
-        self,
-        office_id: Annotated[Any, ApiField(description="""NWS office ID""")],
-        headline_id: Annotated[str, ApiField(description="""Headline record ID""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[OfficeHeadline]:
-        """office_headline
-
-        Returns a specific news headline for a given NWS office
-
-        :param office_id: NWS office ID (required)
-        :type office_id: NWSOfficeId
-        :param headline_id: Headline record ID (required)
-        :type headline_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._office_headline_serialize(
-            office_id=office_id,
-            headline_id=headline_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: OfficeHeadline,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def office_headline_without_preload_content(
-        self,
-        office_id: Annotated[Any, ApiField(description="""NWS office ID""")],
-        headline_id: Annotated[str, ApiField(description="""Headline record ID""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """office_headline
-
-        Returns a specific news headline for a given NWS office
-
-        :param office_id: NWS office ID (required)
-        :type office_id: NWSOfficeId
-        :param headline_id: Headline record ID (required)
-        :type headline_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._office_headline_serialize(
-            office_id=office_id,
-            headline_id=headline_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: OfficeHeadline,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _office_headline_serialize(
         self,
@@ -6357,7 +3282,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._office_headlines_serialize(
             office_id=office_id,
             _request_auth=_request_auth,
@@ -6376,115 +3300,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def office_headlines_with_http_info(
-        self,
-        office_id: Annotated[Any, ApiField(description="""NWS office ID""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[OfficeHeadlineCollection]:
-        """office_headlines
-
-        Returns a list of news headlines for a given NWS office
-
-        :param office_id: NWS office ID (required)
-        :type office_id: NWSOfficeId
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._office_headlines_serialize(
-            office_id=office_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: OfficeHeadlineCollection,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def office_headlines_without_preload_content(
-        self,
-        office_id: Annotated[Any, ApiField(description="""NWS office ID""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """office_headlines
-
-        Returns a list of news headlines for a given NWS office
-
-        :param office_id: NWS office ID (required)
-        :type office_id: NWSOfficeId
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._office_headlines_serialize(
-            office_id=office_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: OfficeHeadlineCollection,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _office_headlines_serialize(
         self,
@@ -6546,7 +3361,7 @@ class DefaultApi:
 
     def point(
         self,
-        point: Annotated[str, ApiField( description="""Point (latitude, longitude)""")],
+        point: Annotated[str, ApiField(description="""Point (latitude, longitude)""")],
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -6580,7 +3395,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._point_serialize(
             point=point,
             _request_auth=_request_auth,
@@ -6599,115 +3413,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def point_with_http_info(
-        self,
-        point: Annotated[str, ApiField( description="""Point (latitude, longitude)""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[PointGeoJson]:
-        """point
-
-        Returns metadata about a given latitude/longitude point
-
-        :param point: Point (latitude, longitude) (required)
-        :type point: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._point_serialize(
-            point=point,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: PointGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def point_without_preload_content(
-        self,
-        point: Annotated[str, ApiField( description="""Point (latitude, longitude)""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """point
-
-        Returns metadata about a given latitude/longitude point
-
-        :param point: Point (latitude, longitude) (required)
-        :type point: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._point_serialize(
-            point=point,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: PointGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _point_serialize(
         self,
@@ -6770,7 +3475,7 @@ class DefaultApi:
 
     def point_stations(
         self,
-        point: Annotated[str, ApiField( description="""Point (latitude, longitude)""")],
+        point: Annotated[str, ApiField(description="""Point (latitude, longitude)""")],
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -6825,119 +3530,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def point_stations_with_http_info(
-        self,
-        point: Annotated[str, ApiField( description="""Point (latitude, longitude)""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[ProblemDetail]:
-        """(Deprecated) point_stations
-
-        Returns a list of observation stations for a given point
-
-        :param point: Point (latitude, longitude) (required)
-        :type point: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-        warnings.warn(
-            "GET /points/{point}/stations is deprecated.", DeprecationWarning)
-
-        _param = self._point_stations_serialize(
-            point=point,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            301: RESPONSE_ERROR,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def point_stations_without_preload_content(
-        self,
-        point: Annotated[str, ApiField( description="""Point (latitude, longitude)""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """(Deprecated) point_stations
-
-        Returns a list of observation stations for a given point
-
-        :param point: Point (latitude, longitude) (required)
-        :type point: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-        warnings.warn(
-            "GET /points/{point}/stations is deprecated.", DeprecationWarning)
-
-        _param = self._point_stations_serialize(
-            point=point,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            301: RESPONSE_ERROR,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _point_stations_serialize(
         self,
@@ -7032,7 +3624,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._product_serialize(
             product_id=product_id,
             _request_auth=_request_auth,
@@ -7051,115 +3642,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def product_with_http_info(
-        self,
-        product_id: Annotated[str, ApiField(description=""".""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[TextProduct]:
-        """product
-
-        Returns a specific text product
-
-        :param product_id: . (required)
-        :type product_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._product_serialize(
-            product_id=product_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: TextProduct,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def product_without_preload_content(
-        self,
-        product_id: Annotated[str, ApiField(description=""".""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """product
-
-        Returns a specific text product
-
-        :param product_id: . (required)
-        :type product_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._product_serialize(
-            product_id=product_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: TextProduct,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _product_serialize(
         self,
@@ -7252,7 +3734,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._product_locations_serialize(
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -7270,107 +3751,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def product_locations_with_http_info(
-        self,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[TextProductLocationCollection]:
-        """product_locations
-
-        Returns a list of valid text product issuance locations
-
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._product_locations_serialize(
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: TextProductLocationCollection,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def product_locations_without_preload_content(
-        self,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """product_locations
-
-        Returns a list of valid text product issuance locations
-
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._product_locations_serialize(
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: TextProductLocationCollection,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _product_locations_serialize(
         self,
@@ -7460,7 +3840,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._product_types_serialize(
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -7478,107 +3857,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def product_types_with_http_info(
-        self,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[TextProductTypeCollection]:
-        """product_types
-
-        Returns a list of valid text product types and codes
-
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._product_types_serialize(
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: TextProductTypeCollection,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def product_types_without_preload_content(
-        self,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """product_types
-
-        Returns a list of valid text product types and codes
-
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._product_types_serialize(
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: TextProductTypeCollection,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _product_types_serialize(
         self,
@@ -7696,7 +3974,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._products_query_serialize(
             location=location,
             start=start,
@@ -7721,177 +3998,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def products_query_with_http_info(
-        self,
-        location: Annotated[Optional[list[str]],
-                            ApiField(description="""Location id""")] = None,
-        start: Annotated[Optional[datetime], ApiField(
-            description="""Start time""")] = None,
-        end: Annotated[Optional[datetime], ApiField(
-            description="""End time""")] = None,
-        office: Annotated[Optional[list[str]], ApiField(
-            description="""Issuing office""")] = None,
-        wmoid: Annotated[Optional[list[str]], ApiField(
-            description="""WMO id code""")] = None,
-        type: Annotated[Optional[list[str]], ApiField(
-            description="""Product code""")] = None,
-        limit: Annotated[Optional[Annotated[int, ApiField(
-            le=500, ge=1)]], ApiField(description="""Limit""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[TextProductCollection]:
-        """products_query
-
-        Returns a list of text products
-
-        :param location: Location id
-        :type location: list[str]
-        :param start: Start time
-        :type start: datetime
-        :param end: End time
-        :type end: datetime
-        :param office: Issuing office
-        :type office: list[str]
-        :param wmoid: WMO id code
-        :type wmoid: list[str]
-        :param type: Product code
-        :type type: list[str]
-        :param limit: Limit
-        :type limit: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._products_query_serialize(
-            location=location,
-            start=start,
-            end=end,
-            office=office,
-            wmoid=wmoid,
-            type=type,
-            limit=limit,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: TextProductCollection,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def products_query_without_preload_content(
-        self,
-        location: Annotated[Optional[list[str]],
-                            ApiField(description="""Location id""")] = None,
-        start: Annotated[Optional[datetime], ApiField(
-            description="""Start time""")] = None,
-        end: Annotated[Optional[datetime], ApiField(
-            description="""End time""")] = None,
-        office: Annotated[Optional[list[str]], ApiField(
-            description="""Issuing office""")] = None,
-        wmoid: Annotated[Optional[list[str]], ApiField(
-            description="""WMO id code""")] = None,
-        type: Annotated[Optional[list[str]], ApiField(
-            description="""Product code""")] = None,
-        limit: Annotated[Optional[Annotated[int, ApiField(
-            le=500, ge=1)]], ApiField(description="""Limit""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """products_query
-
-        Returns a list of text products
-
-        :param location: Location id
-        :type location: list[str]
-        :param start: Start time
-        :type start: datetime
-        :param end: End time
-        :type end: datetime
-        :param office: Issuing office
-        :type office: list[str]
-        :param wmoid: WMO id code
-        :type wmoid: list[str]
-        :param type: Product code
-        :type type: list[str]
-        :param limit: Limit
-        :type limit: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._products_query_serialize(
-            location=location,
-            start=start,
-            end=end,
-            office=office,
-            wmoid=wmoid,
-            type=type,
-            limit=limit,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: TextProductCollection,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _products_query_serialize(
         self,
@@ -8041,7 +4147,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._products_type_serialize(
             type_id=type_id,
             _request_auth=_request_auth,
@@ -8060,115 +4165,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def products_type_with_http_info(
-        self,
-        type_id: Annotated[str, ApiField(description=""".""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[TextProductCollection]:
-        """products_type
-
-        Returns a list of text products of a given type
-
-        :param type_id: . (required)
-        :type type_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._products_type_serialize(
-            type_id=type_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: TextProductCollection,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def products_type_without_preload_content(
-        self,
-        type_id: Annotated[str, ApiField(description=""".""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """products_type
-
-        Returns a list of text products of a given type
-
-        :param type_id: . (required)
-        :type type_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._products_type_serialize(
-            type_id=type_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: TextProductCollection,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _products_type_serialize(
         self,
@@ -8267,7 +4263,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._products_type_location_serialize(
             type_id=type_id,
             location_id=location_id,
@@ -8287,123 +4282,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def products_type_location_with_http_info(
-        self,
-        type_id: Annotated[str, ApiField(description=""".""")],
-        location_id: Annotated[str, ApiField(description=""".""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[TextProductCollection]:
-        """products_type_location
-
-        Returns a list of text products of a given type for a given issuance location
-
-        :param type_id: . (required)
-        :type type_id: str
-        :param location_id: . (required)
-        :type location_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._products_type_location_serialize(
-            type_id=type_id,
-            location_id=location_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: TextProductCollection,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def products_type_location_without_preload_content(
-        self,
-        type_id: Annotated[str, ApiField(description=""".""")],
-        location_id: Annotated[str, ApiField(description=""".""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """products_type_location
-
-        Returns a list of text products of a given type for a given issuance location
-
-        :param type_id: . (required)
-        :type type_id: str
-        :param location_id: . (required)
-        :type location_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._products_type_location_serialize(
-            type_id=type_id,
-            location_id=location_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: TextProductCollection,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _products_type_location_serialize(
         self,
@@ -8502,7 +4380,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._products_type_locations_serialize(
             type_id=type_id,
             _request_auth=_request_auth,
@@ -8521,115 +4398,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def products_type_locations_with_http_info(
-        self,
-        type_id: Annotated[str, ApiField(description=""".""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[TextProductLocationCollection]:
-        """products_type_locations
-
-        Returns a list of valid text product issuance locations for a given product type
-
-        :param type_id: . (required)
-        :type type_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._products_type_locations_serialize(
-            type_id=type_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: TextProductLocationCollection,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def products_type_locations_without_preload_content(
-        self,
-        type_id: Annotated[str, ApiField(description=""".""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """products_type_locations
-
-        Returns a list of valid text product issuance locations for a given product type
-
-        :param type_id: . (required)
-        :type type_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._products_type_locations_serialize(
-            type_id=type_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: TextProductLocationCollection,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _products_type_locations_serialize(
         self,
@@ -8733,7 +4501,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._radar_profiler_serialize(
             station_id=station_id,
             time=time,
@@ -8754,135 +4521,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def radar_profiler_with_http_info(
-        self,
-        station_id: Annotated[str, ApiField(description="""Profiler station ID""")],
-        time: Annotated[Optional[Any], ApiField(
-            description="""Time interval""")] = None,
-        interval: Annotated[Optional[str], ApiField(
-            description="""Averaging interval""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[object]:
-        """radar_profiler
-
-        Returns metadata about a given radar wind profiler
-
-        :param station_id: Profiler station ID (required)
-        :type station_id: str
-        :param time: Time interval
-        :type time: ISO8601Interval
-        :param interval: Averaging interval
-        :type interval: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._radar_profiler_serialize(
-            station_id=station_id,
-            time=time,
-            interval=interval,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: object,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def radar_profiler_without_preload_content(
-        self,
-        station_id: Annotated[str, ApiField(description="""Profiler station ID""")],
-        time: Annotated[Optional[Any], ApiField(
-            description="""Time interval""")] = None,
-        interval: Annotated[Optional[str], ApiField(
-            description="""Averaging interval""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """radar_profiler
-
-        Returns metadata about a given radar wind profiler
-
-        :param station_id: Profiler station ID (required)
-        :type station_id: str
-        :param time: Time interval
-        :type time: ISO8601Interval
-        :param interval: Averaging interval
-        :type interval: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._radar_profiler_serialize(
-            station_id=station_id,
-            time=time,
-            interval=interval,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: object,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _radar_profiler_serialize(
         self,
@@ -8969,7 +4607,8 @@ class DefaultApi:
             description="""Record type""")] = None,
         feed: Annotated[Optional[str], ApiField(
             description="""Originating product feed""")] = None,
-        resolution: Annotated[Optional[Annotated[int, ApiField( ge=1)]], ApiField(description="""Resolution version""")] = None,
+        resolution: Annotated[Optional[Annotated[int, ApiField(ge=1)]], ApiField(
+            description="""Resolution version""")] = None,
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -9019,7 +4658,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._radar_queue_serialize(
             host=host,
             limit=limit,
@@ -9046,193 +4684,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def radar_queue_with_http_info(
-        self,
-        host: Annotated[str, ApiField(description="""LDM host""")],
-        limit: Annotated[Optional[Annotated[int, ApiField(
-            le=500, ge=1)]], ApiField(description="""Record limit""")] = None,
-        arrived: Annotated[Optional[Any], ApiField(
-            description="""Range for arrival time""")] = None,
-        created: Annotated[Optional[Any], ApiField(
-            description="""Range for creation time""")] = None,
-        published: Annotated[Optional[Any], ApiField(
-            description="""Range for publish time""")] = None,
-        station: Annotated[Optional[str], ApiField(
-            description="""Station identifier""")] = None,
-        type: Annotated[Optional[str], ApiField(
-            description="""Record type""")] = None,
-        feed: Annotated[Optional[str], ApiField(
-            description="""Originating product feed""")] = None,
-        resolution: Annotated[Optional[Annotated[int, ApiField( ge=1)]], ApiField(description="""Resolution version""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[object]:
-        """radar_queue
-
-        Returns metadata about a given radar queue
-
-        :param host: LDM host (required)
-        :type host: str
-        :param limit: Record limit
-        :type limit: int
-        :param arrived: Range for arrival time
-        :type arrived: ISO8601Interval
-        :param created: Range for creation time
-        :type created: ISO8601Interval
-        :param published: Range for publish time
-        :type published: ISO8601Interval
-        :param station: Station identifier
-        :type station: str
-        :param type: Record type
-        :type type: str
-        :param feed: Originating product feed
-        :type feed: str
-        :param resolution: Resolution version
-        :type resolution: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._radar_queue_serialize(
-            host=host,
-            limit=limit,
-            arrived=arrived,
-            created=created,
-            published=published,
-            station=station,
-            type=type,
-            feed=feed,
-            resolution=resolution,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: object,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def radar_queue_without_preload_content(
-        self,
-        host: Annotated[str, ApiField(description="""LDM host""")],
-        limit: Annotated[Optional[Annotated[int, ApiField(
-            le=500, ge=1)]], ApiField(description="""Record limit""")] = None,
-        arrived: Annotated[Optional[Any], ApiField(
-            description="""Range for arrival time""")] = None,
-        created: Annotated[Optional[Any], ApiField(
-            description="""Range for creation time""")] = None,
-        published: Annotated[Optional[Any], ApiField(
-            description="""Range for publish time""")] = None,
-        station: Annotated[Optional[str], ApiField(
-            description="""Station identifier""")] = None,
-        type: Annotated[Optional[str], ApiField(
-            description="""Record type""")] = None,
-        feed: Annotated[Optional[str], ApiField(
-            description="""Originating product feed""")] = None,
-        resolution: Annotated[Optional[Annotated[int, ApiField( ge=1)]], ApiField(description="""Resolution version""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """radar_queue
-
-        Returns metadata about a given radar queue
-
-        :param host: LDM host (required)
-        :type host: str
-        :param limit: Record limit
-        :type limit: int
-        :param arrived: Range for arrival time
-        :type arrived: ISO8601Interval
-        :param created: Range for creation time
-        :type created: ISO8601Interval
-        :param published: Range for publish time
-        :type published: ISO8601Interval
-        :param station: Station identifier
-        :type station: str
-        :param type: Record type
-        :type type: str
-        :param feed: Originating product feed
-        :type feed: str
-        :param resolution: Resolution version
-        :type resolution: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._radar_queue_serialize(
-            host=host,
-            limit=limit,
-            arrived=arrived,
-            created=created,
-            published=published,
-            station=station,
-            type=type,
-            feed=feed,
-            resolution=resolution,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: object,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _radar_queue_serialize(
         self,
@@ -9372,7 +4823,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._radar_server_serialize(
             id=id,
             reporting_host=reporting_host,
@@ -9392,125 +4842,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def radar_server_with_http_info(
-        self,
-        id: Annotated[str, ApiField(description="""Server ID""")],
-        reporting_host: Annotated[Optional[str], ApiField(
-            description="""Show records from specific reporting host""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[object]:
-        """radar_server
-
-        Returns metadata about a given radar server
-
-        :param id: Server ID (required)
-        :type id: str
-        :param reporting_host: Show records from specific reporting host
-        :type reporting_host: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._radar_server_serialize(
-            id=id,
-            reporting_host=reporting_host,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: object,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def radar_server_without_preload_content(
-        self,
-        id: Annotated[str, ApiField(description="""Server ID""")],
-        reporting_host: Annotated[Optional[str], ApiField(
-            description="""Show records from specific reporting host""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """radar_server
-
-        Returns metadata about a given radar server
-
-        :param id: Server ID (required)
-        :type id: str
-        :param reporting_host: Show records from specific reporting host
-        :type reporting_host: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._radar_server_serialize(
-            id=id,
-            reporting_host=reporting_host,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: object,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _radar_server_serialize(
         self,
@@ -9612,7 +4943,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._radar_servers_serialize(
             reporting_host=reporting_host,
             _request_auth=_request_auth,
@@ -9631,117 +4961,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def radar_servers_with_http_info(
-        self,
-        reporting_host: Annotated[Optional[str], ApiField(
-            description="""Show records from specific reporting host""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[object]:
-        """radar_servers
-
-        Returns a list of radar servers
-
-        :param reporting_host: Show records from specific reporting host
-        :type reporting_host: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._radar_servers_serialize(
-            reporting_host=reporting_host,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: object,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def radar_servers_without_preload_content(
-        self,
-        reporting_host: Annotated[Optional[str], ApiField(
-            description="""Show records from specific reporting host""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """radar_servers
-
-        Returns a list of radar servers
-
-        :param reporting_host: Show records from specific reporting host
-        :type reporting_host: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._radar_servers_serialize(
-            reporting_host=reporting_host,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: object,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _radar_servers_serialize(
         self,
@@ -9847,7 +5066,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._radar_station_serialize(
             station_id=station_id,
             reporting_host=reporting_host,
@@ -9868,135 +5086,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def radar_station_with_http_info(
-        self,
-        station_id: Annotated[str, ApiField(description="""Radar station ID""")],
-        reporting_host: Annotated[Optional[str], ApiField(
-            description="""Show RDA and latency info from specific reporting host""")] = None,
-        host: Annotated[Optional[str], ApiField(
-            description="""Show latency info from specific LDM host""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[object]:
-        """radar_station
-
-        Returns metadata about a given radar station
-
-        :param station_id: Radar station ID (required)
-        :type station_id: str
-        :param reporting_host: Show RDA and latency info from specific reporting host
-        :type reporting_host: str
-        :param host: Show latency info from specific LDM host
-        :type host: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._radar_station_serialize(
-            station_id=station_id,
-            reporting_host=reporting_host,
-            host=host,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: object,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def radar_station_without_preload_content(
-        self,
-        station_id: Annotated[str, ApiField(description="""Radar station ID""")],
-        reporting_host: Annotated[Optional[str], ApiField(
-            description="""Show RDA and latency info from specific reporting host""")] = None,
-        host: Annotated[Optional[str], ApiField(
-            description="""Show latency info from specific LDM host""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """radar_station
-
-        Returns metadata about a given radar station
-
-        :param station_id: Radar station ID (required)
-        :type station_id: str
-        :param reporting_host: Show RDA and latency info from specific reporting host
-        :type reporting_host: str
-        :param host: Show latency info from specific LDM host
-        :type host: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._radar_station_serialize(
-            station_id=station_id,
-            reporting_host=reporting_host,
-            host=host,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: object,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _radar_station_serialize(
         self,
@@ -10103,7 +5192,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._radar_station_alarms_serialize(
             station_id=station_id,
             _request_auth=_request_auth,
@@ -10122,115 +5210,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def radar_station_alarms_with_http_info(
-        self,
-        station_id: Annotated[str, ApiField(description="""Radar station ID""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[object]:
-        """radar_station_alarms
-
-        Returns metadata about a given radar station alarms
-
-        :param station_id: Radar station ID (required)
-        :type station_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._radar_station_alarms_serialize(
-            station_id=station_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: object,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def radar_station_alarms_without_preload_content(
-        self,
-        station_id: Annotated[str, ApiField(description="""Radar station ID""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """radar_station_alarms
-
-        Returns metadata about a given radar station alarms
-
-        :param station_id: Radar station ID (required)
-        :type station_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._radar_station_alarms_serialize(
-            station_id=station_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: object,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _radar_station_alarms_serialize(
         self,
@@ -10335,7 +5314,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._radar_stations_serialize(
             station_type=station_type,
             reporting_host=reporting_host,
@@ -10356,137 +5334,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def radar_stations_with_http_info(
-        self,
-        station_type: Annotated[Optional[list[str]], ApiField(
-            description="""Limit results to a specific station type or types""")] = None,
-        reporting_host: Annotated[Optional[str], ApiField(
-            description="""Show RDA and latency info from specific reporting host""")] = None,
-        host: Annotated[Optional[str], ApiField(
-            description="""Show latency info from specific LDM host""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[object]:
-        """radar_stations
-
-        Returns a list of radar stations
-
-        :param station_type: Limit results to a specific station type or types
-        :type station_type: list[str]
-        :param reporting_host: Show RDA and latency info from specific reporting host
-        :type reporting_host: str
-        :param host: Show latency info from specific LDM host
-        :type host: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._radar_stations_serialize(
-            station_type=station_type,
-            reporting_host=reporting_host,
-            host=host,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: object,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def radar_stations_without_preload_content(
-        self,
-        station_type: Annotated[Optional[list[str]], ApiField(
-            description="""Limit results to a specific station type or types""")] = None,
-        reporting_host: Annotated[Optional[str], ApiField(
-            description="""Show RDA and latency info from specific reporting host""")] = None,
-        host: Annotated[Optional[str], ApiField(
-            description="""Show latency info from specific LDM host""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """radar_stations
-
-        Returns a list of radar stations
-
-        :param station_type: Limit results to a specific station type or types
-        :type station_type: list[str]
-        :param reporting_host: Show RDA and latency info from specific reporting host
-        :type reporting_host: str
-        :param host: Show latency info from specific LDM host
-        :type host: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._radar_stations_serialize(
-            station_type=station_type,
-            reporting_host=reporting_host,
-            host=host,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: object,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _radar_stations_serialize(
         self,
@@ -10618,119 +5465,6 @@ class DefaultApi:
             response_types_map=_response_types_map,
         ).data
 
-    def satellite_thumbnails_with_http_info(
-        self,
-        area: Annotated[str, ApiField(description=""".""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[bytearray]:
-        """(Deprecated) satellite_thumbnails
-
-        Returns a thumbnail image for a satellite region. Image services in API are deprecated.
-
-        :param area: . (required)
-        :type area: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-        warnings.warn(
-            "GET /thumbnails/satellite/{area} is deprecated.", DeprecationWarning)
-
-        _param = self._satellite_thumbnails_serialize(
-            area=area,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: bytearray,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def satellite_thumbnails_without_preload_content(
-        self,
-        area: Annotated[str, ApiField(description=""".""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """(Deprecated) satellite_thumbnails
-
-        Returns a thumbnail image for a satellite region. Image services in API are deprecated.
-
-        :param area: . (required)
-        :type area: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-        warnings.warn(
-            "GET /thumbnails/satellite/{area} is deprecated.", DeprecationWarning)
-
-        _param = self._satellite_thumbnails_serialize(
-            area=area,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: bytearray,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
-
     def _satellite_thumbnails_serialize(
         self,
         area,
@@ -10791,9 +5525,9 @@ class DefaultApi:
 
     def sigmet(
         self,
-        atsu: Annotated[str, ApiField( description="""ATSU identifier""")],
+        atsu: Annotated[str, ApiField(description="""ATSU identifier""")],
         var_date: Annotated[date, ApiField(description="""Date (YYYY-MM-DD format)""")],
-        time: Annotated[str, ApiField( description="""Time (HHMM format). This time is always specified in UTC (Zulu) time.""")],
+        time: Annotated[str, ApiField(description="""Time (HHMM format). This time is always specified in UTC (Zulu) time.""")],
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -10831,7 +5565,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._sigmet_serialize(
             atsu=atsu,
             var_date=var_date,
@@ -10852,131 +5585,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def sigmet_with_http_info(
-        self,
-        atsu: Annotated[str, ApiField( description="""ATSU identifier""")],
-        var_date: Annotated[date, ApiField(description="""Date (YYYY-MM-DD format)""")],
-        time: Annotated[str, ApiField( description="""Time (HHMM format). This time is always specified in UTC (Zulu) time.""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[SigmetGeoJson]:
-        """sigmet
-
-        Returns a specific SIGMET/AIRMET
-
-        :param atsu: ATSU identifier (required)
-        :type atsu: str
-        :param var_date: Date (YYYY-MM-DD format) (required)
-        :type var_date: date
-        :param time: Time (HHMM format). This time is always specified in UTC (Zulu) time. (required)
-        :type time: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._sigmet_serialize(
-            atsu=atsu,
-            var_date=var_date,
-            time=time,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: SigmetGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def sigmet_without_preload_content(
-        self,
-        atsu: Annotated[str, ApiField( description="""ATSU identifier""")],
-        var_date: Annotated[date, ApiField(description="""Date (YYYY-MM-DD format)""")],
-        time: Annotated[str, ApiField( description="""Time (HHMM format). This time is always specified in UTC (Zulu) time.""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """sigmet
-
-        Returns a specific SIGMET/AIRMET
-
-        :param atsu: ATSU identifier (required)
-        :type atsu: str
-        :param var_date: Date (YYYY-MM-DD format) (required)
-        :type var_date: date
-        :param time: Time (HHMM format). This time is always specified in UTC (Zulu) time. (required)
-        :type time: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._sigmet_serialize(
-            atsu=atsu,
-            var_date=var_date,
-            time=time,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: SigmetGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _sigmet_serialize(
         self,
@@ -11096,7 +5704,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._sigmet_query_serialize(
             start=start,
             end=end,
@@ -11119,157 +5726,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def sigmet_query_with_http_info(
-        self,
-        start: Annotated[Optional[datetime], ApiField(
-            description="""Start time""")] = None,
-        end: Annotated[Optional[datetime], ApiField(
-            description="""End time""")] = None,
-        var_date: Annotated[Optional[date], ApiField(
-            description="""Date (YYYY-MM-DD format)""")] = None,
-        atsu: Annotated[Optional[str], ApiField(
-            description="""ATSU identifier""")] = None,
-        sequence: Annotated[Optional[str], ApiField(
-            description="""SIGMET sequence number""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[SigmetCollectionGeoJson]:
-        """sigmet_query
-
-        Returns a list of SIGMET/AIRMETs
-
-        :param start: Start time
-        :type start: datetime
-        :param end: End time
-        :type end: datetime
-        :param var_date: Date (YYYY-MM-DD format)
-        :type var_date: date
-        :param atsu: ATSU identifier
-        :type atsu: str
-        :param sequence: SIGMET sequence number
-        :type sequence: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._sigmet_query_serialize(
-            start=start,
-            end=end,
-            var_date=var_date,
-            atsu=atsu,
-            sequence=sequence,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: SigmetCollectionGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def sigmet_query_without_preload_content(
-        self,
-        start: Annotated[Optional[datetime], ApiField(
-            description="""Start time""")] = None,
-        end: Annotated[Optional[datetime], ApiField(
-            description="""End time""")] = None,
-        var_date: Annotated[Optional[date], ApiField(
-            description="""Date (YYYY-MM-DD format)""")] = None,
-        atsu: Annotated[Optional[str], ApiField(
-            description="""ATSU identifier""")] = None,
-        sequence: Annotated[Optional[str], ApiField(
-            description="""SIGMET sequence number""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """sigmet_query
-
-        Returns a list of SIGMET/AIRMETs
-
-        :param start: Start time
-        :type start: datetime
-        :param end: End time
-        :type end: datetime
-        :param var_date: Date (YYYY-MM-DD format)
-        :type var_date: date
-        :param atsu: ATSU identifier
-        :type atsu: str
-        :param sequence: SIGMET sequence number
-        :type sequence: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._sigmet_query_serialize(
-            start=start,
-            end=end,
-            var_date=var_date,
-            atsu=atsu,
-            sequence=sequence,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: SigmetCollectionGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _sigmet_query_serialize(
         self,
@@ -11380,7 +5836,7 @@ class DefaultApi:
 
     def sigmets_by_atsu(
         self,
-        atsu: Annotated[str, ApiField( description="""ATSU identifier""")],
+        atsu: Annotated[str, ApiField(description="""ATSU identifier""")],
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -11414,7 +5870,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._sigmets_by_atsu_serialize(
             atsu=atsu,
             _request_auth=_request_auth,
@@ -11433,115 +5888,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def sigmets_by_atsu_with_http_info(
-        self,
-        atsu: Annotated[str, ApiField( description="""ATSU identifier""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[SigmetCollectionGeoJson]:
-        """sigmets_by_atsu
-
-        Returns a list of SIGMET/AIRMETs for the specified ATSU
-
-        :param atsu: ATSU identifier (required)
-        :type atsu: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._sigmets_by_atsu_serialize(
-            atsu=atsu,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: SigmetCollectionGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def sigmets_by_atsu_without_preload_content(
-        self,
-        atsu: Annotated[str, ApiField( description="""ATSU identifier""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """sigmets_by_atsu
-
-        Returns a list of SIGMET/AIRMETs for the specified ATSU
-
-        :param atsu: ATSU identifier (required)
-        :type atsu: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._sigmets_by_atsu_serialize(
-            atsu=atsu,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: SigmetCollectionGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _sigmets_by_atsu_serialize(
         self,
@@ -11603,7 +5949,7 @@ class DefaultApi:
 
     def sigmets_by_atsuby_date(
         self,
-        atsu: Annotated[str, ApiField( description="""ATSU identifier""")],
+        atsu: Annotated[str, ApiField(description="""ATSU identifier""")],
         var_date: Annotated[date, ApiField(description="""Date (YYYY-MM-DD format)""")],
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
@@ -11640,7 +5986,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._sigmets_by_atsuby_date_serialize(
             atsu=atsu,
             var_date=var_date,
@@ -11660,123 +6005,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def sigmets_by_atsuby_date_with_http_info(
-        self,
-        atsu: Annotated[str, ApiField( description="""ATSU identifier""")],
-        var_date: Annotated[date, ApiField(description="""Date (YYYY-MM-DD format)""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[SigmetCollectionGeoJson]:
-        """sigmets_by_atsuby_date
-
-        Returns a list of SIGMET/AIRMETs for the specified ATSU for the specified date
-
-        :param atsu: ATSU identifier (required)
-        :type atsu: str
-        :param var_date: Date (YYYY-MM-DD format) (required)
-        :type var_date: date
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._sigmets_by_atsuby_date_serialize(
-            atsu=atsu,
-            var_date=var_date,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: SigmetCollectionGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def sigmets_by_atsuby_date_without_preload_content(
-        self,
-        atsu: Annotated[str, ApiField( description="""ATSU identifier""")],
-        var_date: Annotated[date, ApiField(description="""Date (YYYY-MM-DD format)""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """sigmets_by_atsuby_date
-
-        Returns a list of SIGMET/AIRMETs for the specified ATSU for the specified date
-
-        :param atsu: ATSU identifier (required)
-        :type atsu: str
-        :param var_date: Date (YYYY-MM-DD format) (required)
-        :type var_date: date
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._sigmets_by_atsuby_date_serialize(
-            atsu=atsu,
-            var_date=var_date,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: SigmetCollectionGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _sigmets_by_atsuby_date_serialize(
         self,
@@ -11879,7 +6107,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._station_observation_latest_serialize(
             station_id=station_id,
             require_qc=require_qc,
@@ -11899,125 +6126,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def station_observation_latest_with_http_info(
-        self,
-        station_id: Annotated[str, ApiField(description="""Observation station ID""")],
-        require_qc: Annotated[Optional[bool],
-                              ApiField(description="""Require QC""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[ObservationGeoJson]:
-        """station_observation_latest
-
-        Returns the latest observation for a station
-
-        :param station_id: Observation station ID (required)
-        :type station_id: str
-        :param require_qc: Require QC
-        :type require_qc: bool
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._station_observation_latest_serialize(
-            station_id=station_id,
-            require_qc=require_qc,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: ObservationGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def station_observation_latest_without_preload_content(
-        self,
-        station_id: Annotated[str, ApiField(description="""Observation station ID""")],
-        require_qc: Annotated[Optional[bool],
-                              ApiField(description="""Require QC""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """station_observation_latest
-
-        Returns the latest observation for a station
-
-        :param station_id: Observation station ID (required)
-        :type station_id: str
-        :param require_qc: Require QC
-        :type require_qc: bool
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._station_observation_latest_serialize(
-            station_id=station_id,
-            require_qc=require_qc,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: ObservationGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _station_observation_latest_serialize(
         self,
@@ -12133,7 +6241,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._station_observation_list_serialize(
             station_id=station_id,
             start=start,
@@ -12155,145 +6262,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def station_observation_list_with_http_info(
-        self,
-        station_id: Annotated[str, ApiField(description="""Observation station ID""")],
-        start: Annotated[Optional[datetime], ApiField(
-            description="""Start time""")] = None,
-        end: Annotated[Optional[datetime], ApiField(
-            description="""End time""")] = None,
-        limit: Annotated[Optional[Annotated[int, ApiField(
-            le=500, ge=1)]], ApiField(description="""Limit""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[ObservationCollectionGeoJson]:
-        """station_observation_list
-
-        Returns a list of observations for a given station
-
-        :param station_id: Observation station ID (required)
-        :type station_id: str
-        :param start: Start time
-        :type start: datetime
-        :param end: End time
-        :type end: datetime
-        :param limit: Limit
-        :type limit: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._station_observation_list_serialize(
-            station_id=station_id,
-            start=start,
-            end=end,
-            limit=limit,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: ObservationCollectionGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def station_observation_list_without_preload_content(
-        self,
-        station_id: Annotated[str, ApiField(description="""Observation station ID""")],
-        start: Annotated[Optional[datetime], ApiField(
-            description="""Start time""")] = None,
-        end: Annotated[Optional[datetime], ApiField(
-            description="""End time""")] = None,
-        limit: Annotated[Optional[Annotated[int, ApiField(
-            le=500, ge=1)]], ApiField(description="""Limit""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """station_observation_list
-
-        Returns a list of observations for a given station
-
-        :param station_id: Observation station ID (required)
-        :type station_id: str
-        :param start: Start time
-        :type start: datetime
-        :param end: End time
-        :type end: datetime
-        :param limit: Limit
-        :type limit: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._station_observation_list_serialize(
-            station_id=station_id,
-            start=start,
-            end=end,
-            limit=limit,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: ObservationCollectionGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _station_observation_list_serialize(
         self,
@@ -12426,7 +6394,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._station_observation_time_serialize(
             station_id=station_id,
             time=time,
@@ -12446,123 +6413,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def station_observation_time_with_http_info(
-        self,
-        station_id: Annotated[str, ApiField(description="""Observation station ID""")],
-        time: Annotated[datetime, ApiField(description="""Timestamp of requested observation""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[ObservationGeoJson]:
-        """station_observation_time
-
-        Returns a single observation.
-
-        :param station_id: Observation station ID (required)
-        :type station_id: str
-        :param time: Timestamp of requested observation (required)
-        :type time: datetime
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._station_observation_time_serialize(
-            station_id=station_id,
-            time=time,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: ObservationGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def station_observation_time_without_preload_content(
-        self,
-        station_id: Annotated[str, ApiField(description="""Observation station ID""")],
-        time: Annotated[datetime, ApiField(description="""Timestamp of requested observation""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """station_observation_time
-
-        Returns a single observation.
-
-        :param station_id: Observation station ID (required)
-        :type station_id: str
-        :param time: Timestamp of requested observation (required)
-        :type time: datetime
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._station_observation_time_serialize(
-            station_id=station_id,
-            time=time,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: ObservationGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _station_observation_time_serialize(
         self,
@@ -12632,7 +6482,7 @@ class DefaultApi:
         self,
         station_id: Annotated[str, ApiField(description="""Observation station ID""")],
         var_date: Annotated[date, ApiField(description="""Date (YYYY-MM-DD format)""")],
-        time: Annotated[str, ApiField( description="""Time (HHMM format). This time is always specified in UTC (Zulu) time.""")],
+        time: Annotated[str, ApiField(description="""Time (HHMM format). This time is always specified in UTC (Zulu) time.""")],
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -12670,7 +6520,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._taf_serialize(
             station_id=station_id,
             var_date=var_date,
@@ -12691,131 +6540,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def taf_with_http_info(
-        self,
-        station_id: Annotated[str, ApiField(description="""Observation station ID""")],
-        var_date: Annotated[date, ApiField(description="""Date (YYYY-MM-DD format)""")],
-        time: Annotated[str, ApiField( description="""Time (HHMM format). This time is always specified in UTC (Zulu) time.""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[object]:
-        """taf
-
-        Returns a single Terminal Aerodrome Forecast.
-
-        :param station_id: Observation station ID (required)
-        :type station_id: str
-        :param var_date: Date (YYYY-MM-DD format) (required)
-        :type var_date: date
-        :param time: Time (HHMM format). This time is always specified in UTC (Zulu) time. (required)
-        :type time: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._taf_serialize(
-            station_id=station_id,
-            var_date=var_date,
-            time=time,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: object,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def taf_without_preload_content(
-        self,
-        station_id: Annotated[str, ApiField(description="""Observation station ID""")],
-        var_date: Annotated[date, ApiField(description="""Date (YYYY-MM-DD format)""")],
-        time: Annotated[str, ApiField( description="""Time (HHMM format). This time is always specified in UTC (Zulu) time.""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """taf
-
-        Returns a single Terminal Aerodrome Forecast.
-
-        :param station_id: Observation station ID (required)
-        :type station_id: str
-        :param var_date: Date (YYYY-MM-DD format) (required)
-        :type var_date: date
-        :param time: Time (HHMM format). This time is always specified in UTC (Zulu) time. (required)
-        :type time: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._taf_serialize(
-            station_id=station_id,
-            var_date=var_date,
-            time=time,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: object,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _taf_serialize(
         self,
@@ -12917,7 +6641,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._tafs_serialize(
             station_id=station_id,
             _request_auth=_request_auth,
@@ -12936,115 +6659,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def tafs_with_http_info(
-        self,
-        station_id: Annotated[str, ApiField(description="""Observation station ID""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[object]:
-        """tafs
-
-        Returns Terminal Aerodrome Forecasts for the specified airport station.
-
-        :param station_id: Observation station ID (required)
-        :type station_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._tafs_serialize(
-            station_id=station_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: object,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def tafs_without_preload_content(
-        self,
-        station_id: Annotated[str, ApiField(description="""Observation station ID""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """tafs
-
-        Returns Terminal Aerodrome Forecasts for the specified airport station.
-
-        :param station_id: Observation station ID (required)
-        :type station_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._tafs_serialize(
-            station_id=station_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: object,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _tafs_serialize(
         self,
@@ -13107,7 +6721,7 @@ class DefaultApi:
     def zone(
         self,
         type: Annotated[NWSZoneType, ApiField(description="""Zone type""")],
-        zone_id: Annotated[str, ApiField( description="""NWS public zone/county identifier""")],
+        zone_id: Annotated[str, ApiField(description="""NWS public zone/county identifier""")],
         effective: Annotated[Optional[datetime], ApiField(
             description="""Effective date/time""")] = None,
         _request_auth: Optional[dict[str, Any]] = None,
@@ -13147,7 +6761,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._zone_serialize(
             type=type,
             zone_id=zone_id,
@@ -13168,133 +6781,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def zone_with_http_info(
-        self,
-        type: Annotated[NWSZoneType, ApiField(description="""Zone type""")],
-        zone_id: Annotated[str, ApiField( description="""NWS public zone/county identifier""")],
-        effective: Annotated[Optional[datetime], ApiField(
-            description="""Effective date/time""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[ZoneGeoJson]:
-        """zone
-
-        Returns metadata about a given zone
-
-        :param type: Zone type (required)
-        :type type: NWSZoneType
-        :param zone_id: NWS public zone/county identifier (required)
-        :type zone_id: str
-        :param effective: Effective date/time
-        :type effective: datetime
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._zone_serialize(
-            type=type,
-            zone_id=zone_id,
-            effective=effective,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: ZoneGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def zone_without_preload_content(
-        self,
-        type: Annotated[NWSZoneType, ApiField(description="""Zone type""")],
-        zone_id: Annotated[str, ApiField( description="""NWS public zone/county identifier""")],
-        effective: Annotated[Optional[datetime], ApiField(
-            description="""Effective date/time""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """zone
-
-        Returns metadata about a given zone
-
-        :param type: Zone type (required)
-        :type type: NWSZoneType
-        :param zone_id: NWS public zone/county identifier (required)
-        :type zone_id: str
-        :param effective: Effective date/time
-        :type effective: datetime
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._zone_serialize(
-            type=type,
-            zone_id=zone_id,
-            effective=effective,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: ZoneGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _zone_serialize(
         self,
@@ -13375,7 +6861,7 @@ class DefaultApi:
     def zone_forecast(
         self,
         type: Annotated[str, ApiField(description="""Zone type""")],
-        zone_id: Annotated[str, ApiField( description="""NWS public zone/county identifier""")],
+        zone_id: Annotated[str, ApiField(description="""NWS public zone/county identifier""")],
         _request_auth: Optional[dict[str, Any]] = None,
         _content_type: Optional[str] = None,
         _headers: Optional[dict[str, Any]] = None,
@@ -13411,7 +6897,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._zone_forecast_serialize(
             type=type,
             zone_id=zone_id,
@@ -13431,123 +6916,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def zone_forecast_with_http_info(
-        self,
-        type: Annotated[str, ApiField(description="""Zone type""")],
-        zone_id: Annotated[str, ApiField( description="""NWS public zone/county identifier""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[ZoneForecastGeoJson]:
-        """zone_forecast
-
-        Returns the current zone forecast for a given zone
-
-        :param type: Zone type (required)
-        :type type: str
-        :param zone_id: NWS public zone/county identifier (required)
-        :type zone_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._zone_forecast_serialize(
-            type=type,
-            zone_id=zone_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: ZoneForecastGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def zone_forecast_without_preload_content(
-        self,
-        type: Annotated[str, ApiField(description="""Zone type""")],
-        zone_id: Annotated[str, ApiField( description="""NWS public zone/county identifier""")],
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """zone_forecast
-
-        Returns the current zone forecast for a given zone
-
-        :param type: Zone type (required)
-        :type type: str
-        :param zone_id: NWS public zone/county identifier (required)
-        :type zone_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._zone_forecast_serialize(
-            type=type,
-            zone_id=zone_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: ZoneForecastGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _zone_forecast_serialize(
         self,
@@ -13625,7 +6993,8 @@ class DefaultApi:
             description="""Point (latitude,longitude)""")] = None,
         include_geometry: Annotated[Optional[bool], ApiField(
             description="""Include geometry in results (true/false)""")] = None,
-        limit: Annotated[Optional[Annotated[int, ApiField( ge=1)]], ApiField(description="""Limit""")] = None,
+        limit: Annotated[Optional[Annotated[int, ApiField(ge=1)]], ApiField(
+            description="""Limit""")] = None,
         effective: Annotated[Optional[datetime], ApiField(
             description="""Effective date/time""")] = None,
         _request_auth: Optional[dict[str, Any]] = None,
@@ -13675,7 +7044,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._zone_list_serialize(
             id=id,
             area=area,
@@ -13701,185 +7069,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def zone_list_with_http_info(
-        self,
-        id: Annotated[Optional[list[str]], ApiField(
-            description="""Zone ID (forecast or county)""")] = None,
-        area: Annotated[Optional[list[AreaCode]], ApiField(
-            description="""State/marine area code""")] = None,
-        region: Annotated[Optional[list[RegionCode]],
-                          ApiField(description="""Region code""")] = None,
-        type: Annotated[Optional[list[NWSZoneType]],
-                        ApiField(description="""Zone type""")] = None,
-        point: Annotated[Optional[str], ApiField(
-            description="""Point (latitude,longitude)""")] = None,
-        include_geometry: Annotated[Optional[bool], ApiField(
-            description="""Include geometry in results (true/false)""")] = None,
-        limit: Annotated[Optional[Annotated[int, ApiField( ge=1)]], ApiField(description="""Limit""")] = None,
-        effective: Annotated[Optional[datetime], ApiField(
-            description="""Effective date/time""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[ZoneCollectionGeoJson]:
-        """zone_list
-
-        Returns a list of zones
-
-        :param id: Zone ID (forecast or county)
-        :type id: list[str]
-        :param area: State/marine area code
-        :type area: list[AreaCode]
-        :param region: Region code
-        :type region: list[RegionCode]
-        :param type: Zone type
-        :type type: list[NWSZoneType]
-        :param point: Point (latitude,longitude)
-        :type point: str
-        :param include_geometry: Include geometry in results (true/false)
-        :type include_geometry: bool
-        :param limit: Limit
-        :type limit: int
-        :param effective: Effective date/time
-        :type effective: datetime
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._zone_list_serialize(
-            id=id,
-            area=area,
-            region=region,
-            type=type,
-            point=point,
-            include_geometry=include_geometry,
-            limit=limit,
-            effective=effective,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: ZoneCollectionGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def zone_list_without_preload_content(
-        self,
-        id: Annotated[Optional[list[str]], ApiField(
-            description="""Zone ID (forecast or county)""")] = None,
-        area: Annotated[Optional[list[AreaCode]], ApiField(
-            description="""State/marine area code""")] = None,
-        region: Annotated[Optional[list[RegionCode]],
-                          ApiField(description="""Region code""")] = None,
-        type: Annotated[Optional[list[NWSZoneType]],
-                        ApiField(description="""Zone type""")] = None,
-        point: Annotated[Optional[str], ApiField(
-            description="""Point (latitude,longitude)""")] = None,
-        include_geometry: Annotated[Optional[bool], ApiField(
-            description="""Include geometry in results (true/false)""")] = None,
-        limit: Annotated[Optional[Annotated[int, ApiField( ge=1)]], ApiField(description="""Limit""")] = None,
-        effective: Annotated[Optional[datetime], ApiField(
-            description="""Effective date/time""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """zone_list
-
-        Returns a list of zones
-
-        :param id: Zone ID (forecast or county)
-        :type id: list[str]
-        :param area: State/marine area code
-        :type area: list[AreaCode]
-        :param region: Region code
-        :type region: list[RegionCode]
-        :param type: Zone type
-        :type type: list[NWSZoneType]
-        :param point: Point (latitude,longitude)
-        :type point: str
-        :param include_geometry: Include geometry in results (true/false)
-        :type include_geometry: bool
-        :param limit: Limit
-        :type limit: int
-        :param effective: Effective date/time
-        :type effective: datetime
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._zone_list_serialize(
-            id=id,
-            area=area,
-            region=region,
-            type=type,
-            point=point,
-            include_geometry=include_geometry,
-            limit=limit,
-            effective=effective,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: ZoneCollectionGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _zone_list_serialize(
         self,
@@ -14005,7 +7194,8 @@ class DefaultApi:
             description="""Point (latitude,longitude)""")] = None,
         include_geometry: Annotated[Optional[bool], ApiField(
             description="""Include geometry in results (true/false)""")] = None,
-        limit: Annotated[Optional[Annotated[int, ApiField( ge=1)]], ApiField(description="""Limit""")] = None,
+        limit: Annotated[Optional[Annotated[int, ApiField(ge=1)]], ApiField(
+            description="""Limit""")] = None,
         effective: Annotated[Optional[datetime], ApiField(
             description="""Effective date/time""")] = None,
         _request_auth: Optional[dict[str, Any]] = None,
@@ -14057,7 +7247,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._zone_list_type_serialize(
             type=type,
             id=id,
@@ -14084,193 +7273,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def zone_list_type_with_http_info(
-        self,
-        type: Annotated[NWSZoneType, ApiField(description="""Zone type""")],
-        id: Annotated[Optional[list[str]], ApiField(
-            description="""Zone ID (forecast or county)""")] = None,
-        area: Annotated[Optional[list[AreaCode]], ApiField(
-            description="""State/marine area code""")] = None,
-        region: Annotated[Optional[list[RegionCode]],
-                          ApiField(description="""Region code""")] = None,
-        type2: Annotated[Optional[list[NWSZoneType]],
-                         ApiField(description="""Zone type""")] = None,
-        point: Annotated[Optional[str], ApiField(
-            description="""Point (latitude,longitude)""")] = None,
-        include_geometry: Annotated[Optional[bool], ApiField(
-            description="""Include geometry in results (true/false)""")] = None,
-        limit: Annotated[Optional[Annotated[int, ApiField( ge=1)]], ApiField(description="""Limit""")] = None,
-        effective: Annotated[Optional[datetime], ApiField(
-            description="""Effective date/time""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[ZoneCollectionGeoJson]:
-        """zone_list_type
-
-        Returns a list of zones of a given type
-
-        :param type: Zone type (required)
-        :type type: NWSZoneType
-        :param id: Zone ID (forecast or county)
-        :type id: list[str]
-        :param area: State/marine area code
-        :type area: list[AreaCode]
-        :param region: Region code
-        :type region: list[RegionCode]
-        :param type2: Zone type
-        :type type2: list[NWSZoneType]
-        :param point: Point (latitude,longitude)
-        :type point: str
-        :param include_geometry: Include geometry in results (true/false)
-        :type include_geometry: bool
-        :param limit: Limit
-        :type limit: int
-        :param effective: Effective date/time
-        :type effective: datetime
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._zone_list_type_serialize(
-            type=type,
-            id=id,
-            area=area,
-            region=region,
-            type2=type2,
-            point=point,
-            include_geometry=include_geometry,
-            limit=limit,
-            effective=effective,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: ZoneCollectionGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def zone_list_type_without_preload_content(
-        self,
-        type: Annotated[NWSZoneType, ApiField(description="""Zone type""")],
-        id: Annotated[Optional[list[str]], ApiField(
-            description="""Zone ID (forecast or county)""")] = None,
-        area: Annotated[Optional[list[AreaCode]], ApiField(
-            description="""State/marine area code""")] = None,
-        region: Annotated[Optional[list[RegionCode]],
-                          ApiField(description="""Region code""")] = None,
-        type2: Annotated[Optional[list[NWSZoneType]],
-                         ApiField(description="""Zone type""")] = None,
-        point: Annotated[Optional[str], ApiField(
-            description="""Point (latitude,longitude)""")] = None,
-        include_geometry: Annotated[Optional[bool], ApiField(
-            description="""Include geometry in results (true/false)""")] = None,
-        limit: Annotated[Optional[Annotated[int, ApiField( ge=1)]], ApiField(description="""Limit""")] = None,
-        effective: Annotated[Optional[datetime], ApiField(
-            description="""Effective date/time""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """zone_list_type
-
-        Returns a list of zones of a given type
-
-        :param type: Zone type (required)
-        :type type: NWSZoneType
-        :param id: Zone ID (forecast or county)
-        :type id: list[str]
-        :param area: State/marine area code
-        :type area: list[AreaCode]
-        :param region: Region code
-        :type region: list[RegionCode]
-        :param type2: Zone type
-        :type type2: list[NWSZoneType]
-        :param point: Point (latitude,longitude)
-        :type point: str
-        :param include_geometry: Include geometry in results (true/false)
-        :type include_geometry: bool
-        :param limit: Limit
-        :type limit: int
-        :param effective: Effective date/time
-        :type effective: datetime
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._zone_list_type_serialize(
-            type=type,
-            id=id,
-            area=area,
-            region=region,
-            type2=type2,
-            point=point,
-            include_geometry=include_geometry,
-            limit=limit,
-            effective=effective,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: ZoneCollectionGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _zone_list_type_serialize(
         self,
@@ -14386,7 +7388,7 @@ class DefaultApi:
 
     def zone_obs(
         self,
-        zone_id: Annotated[str, ApiField( description="""NWS public zone/county identifier""")],
+        zone_id: Annotated[str, ApiField(description="""NWS public zone/county identifier""")],
         start: Annotated[Optional[datetime], ApiField(
             description="""Start date/time""")] = None,
         end: Annotated[Optional[datetime], ApiField(
@@ -14432,7 +7434,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._zone_obs_serialize(
             zone_id=zone_id,
             start=start,
@@ -14454,145 +7455,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def zone_obs_with_http_info(
-        self,
-        zone_id: Annotated[str, ApiField( description="""NWS public zone/county identifier""")],
-        start: Annotated[Optional[datetime], ApiField(
-            description="""Start date/time""")] = None,
-        end: Annotated[Optional[datetime], ApiField(
-            description="""End date/time""")] = None,
-        limit: Annotated[Optional[Annotated[int, ApiField(
-            le=500, ge=1)]], ApiField(description="""Limit""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[ObservationCollectionGeoJson]:
-        """zone_obs
-
-        Returns a list of observations for a given zone
-
-        :param zone_id: NWS public zone/county identifier (required)
-        :type zone_id: str
-        :param start: Start date/time
-        :type start: datetime
-        :param end: End date/time
-        :type end: datetime
-        :param limit: Limit
-        :type limit: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._zone_obs_serialize(
-            zone_id=zone_id,
-            start=start,
-            end=end,
-            limit=limit,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: ObservationCollectionGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def zone_obs_without_preload_content(
-        self,
-        zone_id: Annotated[str, ApiField( description="""NWS public zone/county identifier""")],
-        start: Annotated[Optional[datetime], ApiField(
-            description="""Start date/time""")] = None,
-        end: Annotated[Optional[datetime], ApiField(
-            description="""End date/time""")] = None,
-        limit: Annotated[Optional[Annotated[int, ApiField(
-            le=500, ge=1)]], ApiField(description="""Limit""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """zone_obs
-
-        Returns a list of observations for a given zone
-
-        :param zone_id: NWS public zone/county identifier (required)
-        :type zone_id: str
-        :param start: Start date/time
-        :type start: datetime
-        :param end: End date/time
-        :type end: datetime
-        :param limit: Limit
-        :type limit: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._zone_obs_serialize(
-            zone_id=zone_id,
-            start=start,
-            end=end,
-            limit=limit,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: ObservationCollectionGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _zone_obs_serialize(
         self,
@@ -14688,7 +7550,7 @@ class DefaultApi:
 
     def zone_stations(
         self,
-        zone_id: Annotated[str, ApiField( description="""NWS public zone/county identifier""")],
+        zone_id: Annotated[str, ApiField(description="""NWS public zone/county identifier""")],
         limit: Annotated[Optional[Annotated[int, ApiField(
             le=500, ge=1)]], ApiField(description="""Limit""")] = None,
         cursor: Annotated[Optional[str], ApiField(
@@ -14730,7 +7592,6 @@ class DefaultApi:
         :return: Returns the result object.
         """
 
-
         _param = self._zone_stations_serialize(
             zone_id=zone_id,
             limit=limit,
@@ -14751,135 +7612,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
-    def zone_stations_with_http_info(
-        self,
-        zone_id: Annotated[str, ApiField( description="""NWS public zone/county identifier""")],
-        limit: Annotated[Optional[Annotated[int, ApiField(
-            le=500, ge=1)]], ApiField(description="""Limit""")] = None,
-        cursor: Annotated[Optional[str], ApiField(
-            description="""Pagination cursor""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> ApiResponse[ObservationStationCollectionGeoJson]:
-        """zone_stations
-
-        Returns a list of observation stations for a given zone
-
-        :param zone_id: NWS public zone/county identifier (required)
-        :type zone_id: str
-        :param limit: Limit
-        :type limit: int
-        :param cursor: Pagination cursor
-        :type cursor: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._zone_stations_serialize(
-            zone_id=zone_id,
-            limit=limit,
-            cursor=cursor,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: ObservationStationCollectionGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-    def zone_stations_without_preload_content(
-        self,
-        zone_id: Annotated[str, ApiField( description="""NWS public zone/county identifier""")],
-        limit: Annotated[Optional[Annotated[int, ApiField(
-            le=500, ge=1)]], ApiField(description="""Limit""")] = None,
-        cursor: Annotated[Optional[str], ApiField(
-            description="""Pagination cursor""")] = None,
-        _request_auth: Optional[dict[str, Any]] = None,
-        _content_type: Optional[str] = None,
-        _headers: Optional[dict[str, Any]] = None,
-        _host_index: Annotated[int, ApiField(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """zone_stations
-
-        Returns a list of observation stations for a given zone
-
-        :param zone_id: NWS public zone/county identifier (required)
-        :type zone_id: str
-        :param limit: Limit
-        :type limit: int
-        :param cursor: Pagination cursor
-        :type cursor: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """
-
-
-        _param = self._zone_stations_serialize(
-            zone_id=zone_id,
-            limit=limit,
-            cursor=cursor,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: dict[str, Optional[str]] = {
-            200: ObservationStationCollectionGeoJson,
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-        )
-        return response_data.response
 
     def _zone_stations_serialize(
         self,
