@@ -3,6 +3,7 @@ from aenum import StrEnum, EnumMeta, extend_enum
 import csv
 import os
 from pint import UnitRegistry
+from pint_xarray import unit_registry
 
 from pynwsdata.models.quantitative_value import QuantitativeValue
 
@@ -55,6 +56,20 @@ if __name__ == "__main__":
     # WmoUnit["km_h-1"] = reg.Unit("km h^-1")
 
     assert WmoUnit["km_h-1"].get_unit(reg) == reg.Unit("km h^-1")
+
+
+def parse_unit(unit: str) -> str:
+    global unit_registry
+    if unit.startswith("wmo"):
+        unit = unit.split(":", 1)[-1]
+    # try to parse the unit name to a pint unit name
+    try:
+        unit = WmoUnit[unit]
+    except KeyError:
+        pass
+    else:
+        unit = str(unit_registry.Unit(unit))
+    return unit
 
 # TBD store the UnitRegistry instance as an application feature
 #

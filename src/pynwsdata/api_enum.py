@@ -2,33 +2,12 @@
 from aenum import StrEnum, EnumType
 from typing import cast, TYPE_CHECKING, Any, ClassVar, Self
 
-
-class MetaApiEnum(EnumType):
-    def __getitem__(self, key: str) -> Self:
-        return self._members_[key]
+from ecolog.util.const import StrConst, MetaConst
 
 
-class ApiEnum(StrEnum, metaclass=MetaApiEnum):
-    if TYPE_CHECKING:
-        value: str
-        name: str
-        _member_map_: ClassVar[dict[str, Self]]
-        _value2member_map_: ClassVar[dict[str, Self]]
+class ApiEnum(StrConst): pass
 
-    def __hash__(self) -> int:
-        try:
-            return self._hash
-        except AttributeError:
-            pass
-        _h = hash(self.value)
-        self._hash = _h
-        return _h
-
-    def __eq__(self, value) -> bool:
-        return hash(self) == hash(value)
-
-
-class MetaCategoricalEnum(MetaApiEnum):
+class MetaCategoricalEnum(MetaConst):
     _all_members_: dict[str, "CategoricalEnum"]
 
     def __init__(self, *args, **kwds):

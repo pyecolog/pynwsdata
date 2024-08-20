@@ -10,7 +10,7 @@ import re
 import sys
 from urllib.parse import quote, urlparse
 import ujson
-from typing import cast, Any, Optional, Union
+from typing import TYPE_CHECKING, cast, Any, Optional, Union, Self
 
 from pynwsdata.configuration import Configuration
 from pynwsdata.api_object import (
@@ -53,12 +53,19 @@ class ApiClient:
         to the API
     """
 
+
+    if TYPE_CHECKING:
+        configuration: Configuration
+        default_headers: dict[str, str]
+        cookie: Optional[str]
+        user_agent: str
+
     def __init__(
         self,
-        configuration=None,
-        header_name=None,
-        header_value=None,
-        cookie=None
+        configuration: Optional[Configuration] = None,
+        header_name: Optional[str] = None,
+        header_value: Optional[str] = None,
+        cookie: Optional[str] = None
     ) -> None:
         # use default configuration if none is provided
         if configuration is None:
@@ -100,7 +107,7 @@ class ApiClient:
     _default = None
 
     @classmethod
-    def get_default(cls):
+    def get_default(cls) -> Self:
         """Return new instance of ApiClient.
 
         This method returns newly created, based on default constructor,
@@ -355,12 +362,15 @@ class ApiClient:
                         #
                         if ownv:
                             if __debug__:
-                                self.configuration.logger.info("request paged %s => %s", response_data.request_info.url, next_url)
+                                self.configuration.logger.info(
+                                    "request paged %s => %s", response_data.request_info.url, next_url)
                             mtd = response_data.request_info.method
                             hdrs = response_data.request_info.headers
 
-                            next_data = self.rest_client.request(mtd, next_url, hdrs)
-                            next_re: ApiResponse = self.response_deserialize(next_data, {200: rcls})
+                            next_data = self.rest_client.request(
+                                mtd, next_url, hdrs)
+                            next_re: ApiResponse = self.response_deserialize(next_data, {
+                                                                             200: rcls})
                             next_o = next_re.data
 
                             nxtv: list = jf.__get__(next_o, rcls)

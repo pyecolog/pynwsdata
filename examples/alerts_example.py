@@ -2,7 +2,7 @@
 
 from pynwsdata.configuration import Configuration
 from pynwsdata.api_client import ApiClient
-from pynwsdata.api.default_api import DefaultApi
+from pynwsdata.api.geo_api import GeoApi
 from pynwsdata.exceptions import ApiException
 
 from pprint import pprint
@@ -17,8 +17,7 @@ configuration = Configuration(
 def run_exmaple():
     global configuration
 
-    with ApiClient(configuration) as api_client:
-        api_instance = DefaultApi(api_client)
+    with GeoApi.client_scope() as api_instance:
 
         try:
             api_response = api_instance.alerts_active()

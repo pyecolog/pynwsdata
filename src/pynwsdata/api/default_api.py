@@ -63,7 +63,7 @@ class DefaultApi:
     if TYPE_CHECKING:
         api_client: ApiClient
 
-    def __init__(self, api_client=None) -> None:
+    def __init__(self, api_client: Optional[ApiClient]=None) -> None:
         if api_client is None:
             api_client = ApiClient.get_default()
         self.api_client = api_client
@@ -121,11 +121,6 @@ class DefaultApi:
         :type certainty: list[AlertCertainty]
         :param limit: Limit
         :type limit: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -321,11 +316,6 @@ class DefaultApi:
 
         :param area: State/area ID (required)
         :type area: AreaCode
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -433,11 +423,6 @@ class DefaultApi:
 
         Returns info on the number of active alerts
 
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -542,11 +527,6 @@ class DefaultApi:
 
         :param region: Marine region ID (required)
         :type region: MarineRegionCode
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -657,11 +637,6 @@ class DefaultApi:
 
         :param zone_id: NWS public zone/county identifier (required)
         :type zone_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -823,11 +798,6 @@ class DefaultApi:
         :type limit: int
         :param cursor: Pagination cursor
         :type cursor: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -1065,11 +1035,6 @@ class DefaultApi:
 
         :param id: Alert identifier (required)
         :type id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -1177,11 +1142,6 @@ class DefaultApi:
 
         Returns a list of alert types
 
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -1292,11 +1252,6 @@ class DefaultApi:
         :type var_date: date
         :param sequence: Sequence number (required)
         :type sequence: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -1414,11 +1369,6 @@ class DefaultApi:
 
         :param cwsu_id: NWS CWSU ID (required)
         :type cwsu_id: NWSCenterWeatherServiceUnitId
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -1527,11 +1477,6 @@ class DefaultApi:
 
         :param cwsu_id: NWS CWSU ID (required)
         :type cwsu_id: NWSCenterWeatherServiceUnitId
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -1637,11 +1582,6 @@ class DefaultApi:
 
         Returns glossary terms
 
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -1752,11 +1692,6 @@ class DefaultApi:
         :type x: int
         :param y: Forecast grid Y coordinate (required)
         :type y: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -1888,11 +1823,6 @@ class DefaultApi:
         :type feature_flags: list[str]
         :param units: Use US customary or SI (metric) units in textual output
         :type units: GridpointForecastUnits
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -2036,11 +1966,6 @@ class DefaultApi:
         :type feature_flags: list[str]
         :param units: Use US customary or SI (metric) units in textual output
         :type units: GridpointForecastUnits
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -2182,11 +2107,6 @@ class DefaultApi:
         :type limit: int
         :param cursor: Pagination cursor
         :type cursor: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -2328,11 +2248,6 @@ class DefaultApi:
         :type size: IconsSizeParameter
         :param fontsize: Font size
         :type fontsize: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -2479,11 +2394,6 @@ class DefaultApi:
         :type size: IconsSizeParameter
         :param fontsize: Font size
         :type fontsize: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -2619,11 +2529,6 @@ class DefaultApi:
 
         :param location_id: . (required)
         :type location_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -2732,11 +2637,6 @@ class DefaultApi:
 
         :param station_id: Observation station ID (required)
         :type station_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -2855,11 +2755,6 @@ class DefaultApi:
         :type limit: int
         :param cursor: Pagination cursor
         :type cursor: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -2991,11 +2886,6 @@ class DefaultApi:
 
         :param office_id: NWS office ID (required)
         :type office_id: NWSOfficeId
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -3107,11 +2997,6 @@ class DefaultApi:
         :type office_id: NWSOfficeId
         :param headline_id: Headline record ID (required)
         :type headline_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -3224,11 +3109,6 @@ class DefaultApi:
 
         :param office_id: NWS office ID (required)
         :type office_id: NWSOfficeId
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -3342,11 +3222,6 @@ class DefaultApi:
                       precision will be applied automatically.
         :type point: Union[tuple[float, float], str]
 
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -3459,11 +3334,6 @@ class DefaultApi:
 
         :param point: Point (latitude, longitude) (required)
         :type point: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -3574,11 +3444,6 @@ class DefaultApi:
 
         :param product_id: . (required)
         :type product_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -3684,11 +3549,6 @@ class DefaultApi:
 
         Returns a list of valid text product issuance locations
 
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -3790,11 +3650,6 @@ class DefaultApi:
 
         Returns a list of valid text product types and codes
 
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -3918,11 +3773,6 @@ class DefaultApi:
         :type type: list[str]
         :param limit: Limit
         :type limit: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -4091,11 +3941,6 @@ class DefaultApi:
 
         :param type_id: . (required)
         :type type_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -4207,11 +4052,6 @@ class DefaultApi:
         :type type_id: str
         :param location_id: . (required)
         :type location_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -4324,11 +4164,6 @@ class DefaultApi:
 
         :param type_id: . (required)
         :type type_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -4443,11 +4278,6 @@ class DefaultApi:
         :type time: ISO8601Interval
         :param interval: Averaging interval
         :type interval: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -4592,11 +4422,6 @@ class DefaultApi:
         :type feed: str
         :param resolution: Resolution version
         :type resolution: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -4756,11 +4581,6 @@ class DefaultApi:
         :type id: str
         :param reporting_host: Show records from specific reporting host
         :type reporting_host: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -4875,11 +4695,6 @@ class DefaultApi:
 
         :param reporting_host: Show records from specific reporting host
         :type reporting_host: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -4996,11 +4811,6 @@ class DefaultApi:
         :type reporting_host: str
         :param host: Show latency info from specific LDM host
         :type host: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -5122,11 +4932,6 @@ class DefaultApi:
 
         :param station_id: Radar station ID (required)
         :type station_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -5241,11 +5046,6 @@ class DefaultApi:
         :type reporting_host: str
         :param host: Show latency info from specific LDM host
         :type host: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -5370,11 +5170,6 @@ class DefaultApi:
 
         :param area: . (required)
         :type area: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -5492,11 +5287,6 @@ class DefaultApi:
         :type var_date: date
         :param time: Time (HHMM format). This time is always specified in UTC (Zulu) time. (required)
         :type time: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -5626,11 +5416,6 @@ class DefaultApi:
         :type atsu: str
         :param sequence: SIGMET sequence number
         :type sequence: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -5792,11 +5577,6 @@ class DefaultApi:
 
         :param atsu: ATSU identifier (required)
         :type atsu: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -5908,11 +5688,6 @@ class DefaultApi:
         :type atsu: str
         :param var_date: Date (YYYY-MM-DD format) (required)
         :type var_date: date
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -6029,11 +5804,6 @@ class DefaultApi:
         :type station_id: str
         :param require_qc: Require QC
         :type require_qc: bool
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -6160,11 +5930,6 @@ class DefaultApi:
         :type end: datetime
         :param limit: Limit
         :type limit: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -6313,11 +6078,6 @@ class DefaultApi:
         :type station_id: str
         :param time: Timestamp of requested observation (required)
         :type time: datetime
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -6439,11 +6199,6 @@ class DefaultApi:
         :type var_date: date
         :param time: Time (HHMM format). This time is always specified in UTC (Zulu) time. (required)
         :type time: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -6560,11 +6315,6 @@ class DefaultApi:
 
         :param station_id: Observation station ID (required)
         :type station_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -6679,11 +6429,6 @@ class DefaultApi:
         :type zone_id: str
         :param effective: Effective date/time
         :type effective: datetime
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -6815,11 +6560,6 @@ class DefaultApi:
         :type type: str
         :param zone_id: NWS public zone/county identifier (required)
         :type zone_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -6956,11 +6696,6 @@ class DefaultApi:
         :type limit: int
         :param effective: Effective date/time
         :type effective: datetime
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -7153,11 +6888,6 @@ class DefaultApi:
         :type limit: int
         :param effective: Effective date/time
         :type effective: datetime
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -7337,11 +7067,6 @@ class DefaultApi:
         :type end: datetime
         :param limit: Limit
         :type limit: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.
@@ -7493,11 +7218,6 @@ class DefaultApi:
         :type limit: int
         :param cursor: Pagination cursor
         :type cursor: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
         :param _request_auth: set to override the auth_settings for an a single
                               request; this effectively ignores the
                               authentication in the spec for a single request.

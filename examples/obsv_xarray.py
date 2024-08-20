@@ -1,8 +1,20 @@
 
 from functools import partial
 import concurrent.futures as cf
-from itertools import chain
 import os
+import pandas as pd
+import sys
+from threading import RLock
+import time
+from typing import Any, Optional, Union
+import xarray as xr
+from pint_xarray import unit_registry
+import numpy as np
+import numpy.typing as npt
+import shapely
+
+from ecolog.util.const import StrConst
+from ecolog.util.nputil import is_nan_all
 from pynwsdata.configuration import Configuration
 from pynwsdata.api_client import ApiClient
 from pynwsdata.api_object import ApiField
@@ -11,88 +23,167 @@ from pynwsdata.exceptions import ApiException
 from pynwsdata.models.observation import Observation
 from pynwsdata.models.observation_geo_json import ObservationGeoJson
 from pynwsdata.models.quantitative_value import QuantitativeValue
-import sys
-from threading import RLock
-import time
-from typing import Optional, Union
-import xarray as xr
-import pint_xarray
-import numpy as np
 
-from pynwsdata.units.registry import UnitRegistry, WmoUnit
+from pynwsdata.units.registry import WmoUnit, parse_unit
 
-reg = UnitRegistry()
 WmoUnit.initialize()
 
 # fields for each ObservationGeoJson.properties value
-OBSV_FIELDS: dict[str, ApiField] = Observation.fields
+
+OBSV_PROPERTY_FIELDS: dict[str, ApiField] = Observation.fields
+
 
 ApiClient.set_verbose_logging()
 
 EMPTY_MAP = dict()
+EMPTY_STR = ""
 
-# callback for threaded dispatch when requesting the latest observation data
-def observation_callback(station: str,
+class Const(StrConst):
+    # known limitation:
+    #
+    # if the resulting observation dataset is stored to netcdf,
+    # this enum class must be available when the dataset
+    # is restored from file
+    #
+    NOT_FOUND = "not_found"
+    ERRORS = "errors"
+    CANCELLED = "cancelled"
+    LOCATION_REQUESTED = "location_requested"
+    LOCATION_MATCH = "location_match"
+    LOCATION_COORDS = "location_coords"
+    STATION_ID = "station_id"
+    STATION_NAMES = "station_names"
+    STATION_DATA = "station_data"
+    STATION_NAME = "station_name"
+
+    TIMESTAMP = "timestamp"
+    LAT = "lat"
+    LON = "lon"
+    RELATIVE_DISTANCE = "relative_distance"
+    RELATIVE_TO = "relative_to"
+    METRIC = "metric"
+    INDEX = "index"
+    POINT = "point"
+    POINT_DATA = "point_data"
+    WFO = "wfo"
+    GRID_X = "grid_x"
+    GRID_Y = "grid_y"
+    SOURCE_UNITS = "source_units"
+    UNITS = "units"
+
+
+def observation_callback(station: str, offset: int, units: dict[str, Any],
                          lock: RLock, data: dict[str, dict[str, object]],
                          future: cf.Future[ObservationGeoJson]):
+    # callback for threaded dispatch when requesting the latest observation data
+
     with lock:
         # hold the data lock and update data for observation/error tracking
         if future.cancelled():
-            data['cancelled'][station] = True
+            # record the cancelled state
+            try:
+                can: list[str] = data[Const.CANCELLED]
+            except KeyError:
+                data[Const.CANCELLED] = [station]
+            else:
+                can.apppend(station)
             return
         exc: Optional[ApiException] = future.exception(None)
         if exc:
+            # record the exception for this observation request
             if exc.status == 404:
                 try:
-                    nf = data["not_found"]
+                    nf: list[str] = data[Const.NOT_FOUND]
                 except KeyError:
-                    data["not_found"] = [station]
+                    data[Const.NOT_FOUND] = [station]
                 else:
                     nf.append(station)
             else:
                 try:
-                    err = data["errors"]
+                    err = data[Const.ERRORS]
                 except KeyError:
-                    data["errors"] = {station: exc}
+                    data[Const.ERRORS] = {station: exc}
                 else:
                     err[id] = exc
             return
-        obsv = future.result()
-        ocls = obsv.__class__
-        for name, field in OBSV_FIELDS.items():
-            value = field.__get__(obsv.properties, ocls)
-            # filter out any direct None/empty value or QuantativeValue with a None value,
-            # else storing the value for this station under the observation field name
-            if value and not (isinstance(value, QuantitativeValue) and value.value is None):
-                data[name][station] = value
+        obsv = future.result(0)
+        props = obsv.properties
+        pcls = props.__class__
+        for name, field in OBSV_PROPERTY_FIELDS.items():
+            value = field.__get__(props, pcls)
+            if isinstance(value, QuantitativeValue):
+                xv = value.value
+                if xv is None:
+                    xv = np.nan
+                # ensure the unit is recorded for this field
+                try:
+                    uu = units[name]
+                except KeyError:
+                    uu = value.unit_code
+                    if uu:
+                        units[name] = parse_unit(uu)
+            elif value:
+                xv = value
+            elif field.interface.interface_class is str:
+                xv = EMPTY_STR
+            else:
+                xv = np.nan
 
+            data[name][offset] = xv
 
 def latest_observations(loc: Union[str, tuple[float, float]], config: Optional[Configuration] = None):
     # primary callback
     #
-    # requires DD format encoding for latitude, longitude
-    # for a location in NWS weather map coverage
+    # loc: either a tuple in DD format, encoding (latitude, longitude)
+    # or a string denoting a collloquial place name. If provided as a
+    # place name, the coordinates for the location will be determined
+    # via a geocode query with Nominatim.
     #
-    # this will retrieve station location information for the weather
-    # grid at the provided lattitude and longitude, then collectintg
-    # observation data for each station
+    # This function will retrieve point / weather grid information for
+    # the denoted lattitude and longitude, then collecting observation
+    # data for each station in the respective grid section. Each
+    # observation request will run within a thread of the thread pool
+    # executor for the contained api_instance.
     #
-    # after the observation requests have all completed, this function
-    # will construct an xarray DataSet. The DataSet will contain all
-    # measured values as reported in the observation responses. For
-    # each measurement, a coordinates series will be included in
-    # the dataset, indicating which station was reporting each
-    # measurement value.
+    # After the observation requests have all completed in each request
+    # thread, along with any data updates for the observations at each
+    # respective station set, this function will construct an xarray
+    # DataSet. The DataSet will present the measured values as reported
+    # in the observation  responses, as well as measurement unit information
+    # for each observation series (when available).
     #
-    # known limitations
-    # - no pagination support for the stations list
+    # Each measurement series in the dataset will be presented in relation
+    # to the coordinates of a multi-index. The multi-index will be comprised
+    # of the following index levels:
     #
-    with ApiClient(config or Configuration()) as client:
-        api_instance = GeoApi(client)
+    # - id (station ID) : np.ndarray, dtype "U5"
+    # - timestamp : pd.DatetimeIndex
+    # - lat: np.ndarray, np.float64
+    # - lon: np.ndarray, np.float64
+    #
+    # Measurement units will be included via pint-xarray. Internally,
+    # this uses an enum class providing pint-compatible measurement units
+    # for each wmoUnit in the observation series.
+    #
+
+    global unit_registry
+
+    with GeoApi.client_scope(config or Configuration()) as api_instance:
+        attrs: dict = {Const.LOCATION_REQUESTED: loc}
+
+        thx = api_instance.executor
         if isinstance(loc, str):
-            point_response = api_instance.geocode_point(loc)
-        else:        
+            match_loc = api_instance.geocode_location(loc)
+            match_coords = match_loc.latitude, match_loc.longitude
+            attrs[Const.LOCATION_MATCH] = match_loc.address
+            attrs[Const.LOCATION_COORDS] = match_coords
+            point_response = api_instance.point(match_coords)
+        else:
+            match_coords = loc
+            attrs[Const.LOCATION_COORDS] = loc
             point_response = api_instance.point(loc)
+
+
         props = point_response.properties
         gid = props.grid_id
         grid_x = props.grid_x
@@ -101,23 +192,44 @@ def latest_observations(loc: Union[str, tuple[float, float]], config: Optional[C
         stations_response = api_instance.gridpoint_stations(
             wfo=gid, x=grid_x, y=grid_y)
 
+        stations_id = tuple(map(lambda s: sys.intern(s.properties.station_identifier), stations_response.features))
+        stations_id_tuple = stations_id
+        station_offsets = {cc: offset for offset, cc in enumerate(stations_id)}
+        stations_id = np.array(stations_id, "U5")
+        n_stations = stations_id.size
 
-        data: dict[str, dict[str, object]] = {
-            k: {} for k in OBSV_FIELDS.keys()
-        }
+        data = dict()
+        string_fields = set()
+
+        for k, v in OBSV_PROPERTY_FIELDS.items():
+            tc = v.interface.interface_class
+            if tc is QuantitativeValue:
+                data[k] = np.full(n_stations, np.nan, np.float64)
+            elif tc is str:
+                data[k] = np.full(n_stations, EMPTY_STR, np.object_)
+                string_fields.add(k)
+            else:
+                data[k] = np.full(n_stations, np.nan, np.object_)
+
         futures: dict[str, cf.Future[ObservationGeoJson]] = dict()
 
-        with cf.ThreadPoolExecutor(thread_name_prefix="observation_") as xt:
-            # dipsatching the observation requests to separate threads
-            lock = RLock()
-            for station in stations_response.features:
-                sid = station.properties.station_identifier
-                sid = sys.intern(sid)
-                future = xt.submit(
-                    api_instance.station_observation_latest, station_id=sid)
-                cb = partial(observation_callback, sid, lock, data)
-                future.add_done_callback(cb)
-                futures[sid] = future
+        # dipsatching the observation requests within separate threads
+        lock = RLock()
+        unit_map = dict()
+        station_names = [EMPTY_STR] * n_stations
+        station_lat = np.full(n_stations, np.nan, np.float64)
+        station_lon = np.full(n_stations, np.nan, np.float64)
+        for station in stations_response.features:
+            sid = sys.intern(station.properties.station_identifier)
+            soffset = station_offsets[sid]
+            station_names[soffset] = station.properties.name
+            lon, lat = station.geometry.coordinates
+            station_lat[soffset] = lat
+            station_lon[soffset] = lon
+            future = thx.submit(api_instance.station_observation_latest, station_id=sid)
+            cb = partial(observation_callback, sid, soffset, unit_map, lock, data)
+            future.add_done_callback(cb)
+            futures[sid] = future
 
         #
         # block in the main thread until all observation requests have completed
@@ -129,96 +241,88 @@ def latest_observations(loc: Union[str, tuple[float, float]], config: Optional[C
         while next((True for f in futures.values() if not f.done()), None):
             time.sleep(poll)
 
+        # construct an Xarray Dataset from the observation series
 
-        vars = dict()
-        coords = dict()
-        units = dict()
-        # initialize the attribute map for the resulting dataset
-        attrs = {
-            "wfo": gid,
-            "grid_x": grid_x,
-            "grid_y": grid_y,
-            "point": point_response,
-            "source_units": units,
-            "stations": {sys.intern(os.path.basename(stn.id)): stn for stn in stations_response.features}
+        timestamps = data.pop(Const.TIMESTAMP)
+        timestamps = pd.DatetimeIndex(timestamps, copy=False, name=Const.TIMESTAMP)
+
+        index = pd.MultiIndex.from_arrays(
+            (stations_id, timestamps, station_lat, station_lon),
+            names=(Const.STATION_ID, Const.TIMESTAMP, Const.LAT, Const.LON)
+            )
+
+
+        # calculate the relative_distance series
+        #
+        # - application: relational sorting for the observation series,
+        #   in relation to the coordinates denoted to the function
+        #
+        # - known limitation: no units for distance
+        point_vals = np.fromiter(map(shapely.Point, zip(station_lat, station_lon)), "O", n_stations)
+        distance = np.fromiter(map(partial(shapely.distance, shapely.Point(match_coords)), point_vals),
+                               np.float64, n_stations)
+
+        vars = {
+            Const.RELATIVE_DISTANCE: (
+                [Const.INDEX], distance, {
+                    Const.RELATIVE_TO: match_coords,
+                    Const.METRIC: (str(Const.LAT), str(Const.LON))
+                    })
         }
 
-        extra_names = frozenset(("not_found", "errors"))
+        # create coordinates for the multi-index
+        # and supplemental coordinate data
+        coords = xr.Coordinates.from_pandas_multiindex(index, Const.INDEX)
+        coords.update({
+            Const.STATION_NAME: ([Const.INDEX], np.array(station_names)),
+            Const.POINT: ([Const.INDEX], point_vals)
+        })
+
+        # initialize the attribute map for the resulting dataset
+        attrs.update({
+            Const.WFO: gid,
+            Const.GRID_X: grid_x,
+            Const.GRID_Y: grid_y,
+            Const.POINT_DATA: point_response,
+            Const.SOURCE_UNITS: unit_map,
+            Const.STATION_NAMES: dict(zip(stations_id_tuple, station_names)),
+            Const.STATION_DATA: {sys.intern(stn.properties.station_identifier): stn for stn in stations_response.features},
+        })
+
+
+
+        # coord_names = (Const.STATION_ID, Const.TIMESTAMP)
+        coord_names = [Const.INDEX]
+
+
+        other = data.pop(Const.NOT_FOUND, None)
+        if other:
+            attrs[Const.NOT_FOUND] = tuple(other)
+        other = data.pop(Const.ERRORS, None)
+        if other:
+            attrs[Const.ERRORS] = other
 
 
         for name, values in data.items():
+            if is_nan_all(values) or not any(values):
+                continue
             name = sys.intern(name)
-            if name in extra_names:
-                attrs[name] = tuple(values)
-            elif values:
-                coords_name = "_".join((name, "station"))
-                # store the station series under dataset coords
-                cc = np.array(tuple(values.keys()))
-                coords[coords_name] = ([coords_name], cc)
-                #
-                # format and store the value series under dataset vars
-                #
-                # the storage will vary, here, depending on the type
-                # of the first (assuming: all) values in the series
-                #
-                tv = tuple(values.values())
-                first = tv[0]
-                unit = None
-                if isinstance(first, QuantitativeValue):
-                    # store the value series,
-                    # also storing the value unit
-                    unit = first.unit_code
-                    if unit.startswith("wmo"):
-                        # FIXME this parse is not sufficient for wind_direction
-                        # => "degree (angle)"
-                        unit = unit.split(":", 1)[-1] # .replace("_", " ")
-                    # try to parse the unit name to a pint unit name
-                    try:
-                        unit = WmoUnit[unit]
-                    except KeyError:
-                        pass
-                    else:
-                        unit = str(reg.Unit(unit))
-                    units[name] = unit
-                    cv = np.array(tuple(qv.value for qv in tv))
-                elif isinstance(first, list):
-                    # store the object series as an array of tuples,
-                    # where each tuple represents a series of values
-                    # as reported for each corresponding station
-                    # 
-                    # e.g fields: cloud_layers, present_weather
-                    # 
-                    # The corresponding station series will be available
-                    # in the field's <name>_station coordinate within
-                    # the resulting dataset, e.g cloud_layers_station
-                    #
-                    # Examples: accessing individual values
-                    # from the series for a single weather station
-                    #
-                    #  obsv.cloud_layers[0].data[()][0].base
-                    #  obsv.cloud_layers[0].data[()][0].amount
-                    #  obsv.cloud_layers_station[0]
-                    #   
-                    #  obsv.present_weather[0].data[()][0].raw_string
-                    #  obsv.present_weather[0].data[()][0].weather
-                    #  ...
-                    #  obsv.present_weather_station[0]
-                    #
-                    cv = np.fromiter(map(tuple, tv), "O", count=len(tv))
-                else:
-                    # store the series of individual values for all
-                    # reporting stations
-                    cv = np.array(tv)
-                if unit:
-                    mattrs = {"units": unit}
-                else:
-                    mattrs = EMPTY_MAP
-                vars[name] = ([coords_name], cv, mattrs)
+            unit = unit_map.get(name, None)
+            if unit:
+                mattrs = {Const.UNITS: unit}
+            else:
+                mattrs = EMPTY_MAP
+            if name in string_fields:
+                # convert the dtype from np.object_ to a minimum "U" type
+                dt = np.min_scalar_type(tuple(values))
+                values = values.astype(dt)
+            vars[name] = (coord_names, values, mattrs)
 
-        return xr.Dataset(vars, coords, attrs)
+        return xr.Dataset(vars, coords, attrs).sortby(Const.RELATIVE_DISTANCE).pint.quantify()
+
 
 if __name__ == "__main__":
-    obsv = latest_observations("Fargo, ND").pint.quantify()
+    obsv = latest_observations("Fargo, ND")
 
     # >>> obsv.temperature.pint.to("degF")
     # ...

@@ -13,9 +13,7 @@ ApiClient.set_verbose_logging()
 
 def latest_observations(loc: Union[str, tuple[int, int]]):
     global configuration
-    with ApiClient(configuration) as client:
-        api_instance = GeoApi(client)
-        # FIXME cache all point => (WFO, X, Y)
+    with GeoApi.client_scope() as api_instance:
         if isinstance(loc, str):
             point = api_instance.geocode_point(loc)
         else:

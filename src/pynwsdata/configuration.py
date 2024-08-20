@@ -71,10 +71,11 @@ conf = pynwsdata.Configuration(
 
     if TYPE_CHECKING:
         ssl_context: ssl.SSLContext
+        max_thread_workers: Optional[int]
 
     _default = None
 
-    def __init__(self, host=None,
+    def __init__(self, *, host=None,
                  api_key=None, api_key_prefix=None,
                  username=None, password=None,
                  access_token=None,
@@ -84,7 +85,7 @@ conf = pynwsdata.Configuration(
                  ssl_ca_cert=None,
                  retries: Optional[int]=None,
                  timeout: int = 120,
-                 *,
+                 max_thread_workers: Optional[int] = None,
                  debug: Optional[bool] = None
                  ) -> None:
         """Constructor
@@ -180,6 +181,8 @@ conf = pynwsdata.Configuration(
         self.retries: int = 3 if retries is None else retries
         """Upper limit for connection retry
         """
+
+        self.max_thread_workers: int = max_thread_workers
 
         self.datetime_format = "%Y-%m-%dT%H:%M:%S.%f%z"
         """datetime format
