@@ -1,21 +1,22 @@
 
+from pynwsdata.version import VERSION
+from aenum import Enum
 import datetime
 from dateutil.parser import parse
-from aenum import Enum
-import ujson
+import logging
 import mimetypes
 import os
 import re
 import sys
-
-from urllib.parse import quote
+from urllib.parse import quote, urlparse
+import ujson
 from typing import cast, Any, Optional, Union
 
 from pynwsdata.configuration import Configuration
 from pynwsdata.api_object import (
-    ApiObject, ApiType, EMPTY, API_TYPES,
+    ApiObject, ApiType, EMPTY, PagedApiObject, ApiField
 )
-from pynwsdata.api_transport.transport_base import (
+from pynwsdata.api_base import (
     ValueType, SeriesType
 )
 from pynwsdata.api_response import ApiResponse, T as ApiResponseT
@@ -27,10 +28,14 @@ from pynwsdata.exceptions import (
 
 RequestSerialized = tuple[str, str, dict[str, str], Optional[str], list[str]]
 
-from pynwsdata.version import VERSION
+# https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections
+REDIRECT_STATUS: frozenset[int] = frozenset((301, 302, 303, 307, 308))
+
 
 APPLICATION: str = __package__ or __name__
-USER_AGENT: str = "/".join((APPLICATION, VERSION, sys.implementation.name, sys.version.split()[0]))
+USER_AGENT: str = "/".join((APPLICATION, VERSION,
+                           sys.implementation.name, sys.version.split()[0]))
+
 
 class ApiClient:
     """Generic API client for OpenAPI client library builds.
@@ -85,9 +90,12 @@ class ApiClient:
     def user_agent(self, value):
         self.default_headers['User-Agent'] = value
 
+    @property
+    def logger(self) -> logging.Logger:
+        return self.configuration.logger
+
     def set_default_header(self, header_name, header_value):
         self.default_headers[header_name] = header_value
-
 
     _default = None
 
@@ -115,6 +123,19 @@ class ApiClient:
         """
         cls._default = default
 
+    @classmethod
+    def set_verbose_logging(cls):
+        root_logger = logging.getLogger(None)
+        if not root_logger.handlers:
+            hdlr = logging.StreamHandler(sys.stderr)
+            hdlr.setFormatter(
+                logging.Formatter(
+                    "[%(process)d %(asctime)s.%(msecs).03d %(thread)x] [%(name)s] [%(levelname)s] %(message)s",
+                    datefmt="%m.%d %X"
+                ))
+            root_logger.addHandler(hdlr)
+        root_logger.setLevel(logging.INFO)
+
     def param_serialize(
         self,
         method,
@@ -129,7 +150,6 @@ class ApiClient:
         _host=None,
         _request_auth=None
     ) -> RequestSerialized:
-
         """Builds the HTTP request params needed by the request.
         :param method: Method to call.
         :param resource_path: Path to method endpoint.
@@ -154,7 +174,7 @@ class ApiClient:
 
         config = self.configuration
 
-        # header parameters
+        # set request headers, including User-Agent
         header_params = header_params or {}
         header_params.update(self.default_headers)
         if self.cookie:
@@ -162,7 +182,7 @@ class ApiClient:
         if header_params:
             header_params = self.sanitize_for_serialization(header_params)
             header_params = dict(
-                self.parameters_to_tuples(header_params,collection_formats)
+                self.parameters_to_tuples(header_params, collection_formats)
             )
 
         # path parameters
@@ -206,11 +226,11 @@ class ApiClient:
             body = self.sanitize_for_serialization(body)
 
         # request url
-        if _host is None or self.configuration.ignore_operation_servers:
-            url = self.configuration.host + resource_path
+        if _host is None or config.ignore_operation_servers:
+            url = "".join((config.host, resource_path))
         else:
             # use server/host defined in path or operation instead
-            url = _host + resource_path
+            url = "".join((_host, resource_path))
 
         # query parameters
         if query_params:
@@ -219,10 +239,9 @@ class ApiClient:
                 query_params,
                 collection_formats
             )
-            url += "?" + url_query
+            url = "?".join((url, url_query))
 
         return method, url, header_params, body, post_params
-
 
     def call_api(
         self,
@@ -250,7 +269,7 @@ class ApiClient:
                 method, url,
                 headers=header_params,
                 body=body,
-                )
+            )
 
         except ApiException as e:
             raise e
@@ -268,7 +287,28 @@ class ApiClient:
         :return: ApiResponse
         """
 
-        response_type: Optional[type[ApiObject]] = response_types_map.get(response_data.status, None)
+        status = response_data.status
+        if status in REDIRECT_STATUS:
+            # handle redirect
+            info = response_data.request_info
+            req_mtd = info.method
+            req_hdrs = info.headers
+            req_body = info.body
+            dst_loc = response_data.get_header(b'location')
+            dst_base = urlparse(info.url)[:2]
+            dst_url = "%s://%s%s" % (*dst_base, dst_loc.decode())
+            if __debug__:
+                # server response message may include an explanation of the redirect
+                config = self.configuration
+                msg = response_data.read().decode()
+                config.logger.info("redirect %d %s => %s %s",
+                                   status, info.url, dst_url, msg)
+            nxt = self.rest_client.request(
+                req_mtd, dst_url, req_hdrs, req_body)
+            return self.response_deserialize(nxt, response_types_map)
+
+        response_type: Optional[type[ApiObject]] = response_types_map.get(
+            response_data.status, None)
 
         data = response_data.read()
 
@@ -277,21 +317,59 @@ class ApiClient:
             raise ApiException.from_response(
                 http_resp=response_data,
                 body=data.decode()
-                )
+            )
 
         # deserialize response data
         response_text = None
         return_data = None
         try:
             match = None
-            content_type = response_data.getheader(b'content-type').decode()
+            content_type = response_data.get_header(b'content-type').decode()
             if content_type is not None:
-                match = re.search(r"charset=([a-zA-Z\-\d]+)[\s;]?", content_type)
+                match = re.search(
+                    r"charset=([a-zA-Z\-\d]+)[\s;]?", content_type)
             encoding = match.group(1) if match else "utf-8"
             response_text = data.decode(encoding)
-            return_data = self.deserialize(response_text, response_type, content_type)
+            return_data: ApiObject = self.deserialize(
+                response_text, response_type, content_type)
+            if isinstance(return_data, PagedApiObject):
+                pagination = return_data.pagination
+                if pagination:
+                    next_url = pagination.next
+                    if next_url:
+                        rcls = return_data.__class__
+                        jf: ApiField = rcls.join_field
+                        ownv: list = jf.__get__(return_data, rcls)
+                        #
+                        # continue only if this request's join_field value was not empty,
+                        # otherwise, the paged request series might continue indefinitely.
+                        #
+                        # subsequent responses may provide a generally equivalent next_url
+                        # such that may differ only in  the 'cursor' query value, compared
+                        # to the previous request URL in the paged series
+                        #
+                        # - seen with the station_observation_latest() endpoint
+                        #   @ observation station collection
+                        #
+                        # - tested (preliminary) with the alert endpoint
+                        #
+                        if ownv:
+                            if __debug__:
+                                self.configuration.logger.info("request paged %s => %s", response_data.request_info.url, next_url)
+                            mtd = response_data.request_info.method
+                            hdrs = response_data.request_info.headers
+
+                            next_data = self.rest_client.request(mtd, next_url, hdrs)
+                            next_re: ApiResponse = self.response_deserialize(next_data, {200: rcls})
+                            next_o = next_re.data
+
+                            nxtv: list = jf.__get__(next_o, rcls)
+                            if nxtv:
+                                ownv.extend(nxtv)
+                    if not __debug__:
+                        del return_data.pagination
         finally:
-            if not 200 <= response_data.status <= 299:
+            if not 200 <= status <= 308:
                 raise ApiException.from_response(
                     http_resp=response_data,
                     body=response_text,
@@ -299,12 +377,11 @@ class ApiClient:
                 )
 
         return ApiResponse(
-            status_code = response_data.status,
-            data = return_data,
-            headers = response_data.getheaders(),
-            raw_data = response_data.data
+            status_code=response_data.status,
+            data=return_data,
+            headers=response_data.get_headers(),
+            raw_data=response_data.data
         )
-
 
     def sanitize_for_serialization(self, obj):
         """Builds a JSON POST object.
@@ -587,7 +664,6 @@ class ApiClient:
             raise ApiValueError(
                 'Authentication token must be in `query` or `header`'
             )
-
 
     def __deserialize_primitive(self, data, klass):
         """Deserializes string to primitive type.

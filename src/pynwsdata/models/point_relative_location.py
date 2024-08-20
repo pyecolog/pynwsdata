@@ -1,12 +1,16 @@
 
-from pynwsdata.models.relative_location_geo_json import RelativeLocationGeoJson
-from pynwsdata.models.relative_location_json_ld import RelativeLocationJsonLd
-from pynwsdata.api_object import ApiObject
-from typing import Union, Optional
+from pynwsdata.api_object import AbstractApiObject, SubtypeMap
+from typing import ClassVar
 
-class PointRelativeLocation(ApiObject):
+class PointRelativeLocation(AbstractApiObject):
     """
     PointRelativeLocation
     """
-    actual_instance: Optional[Union[RelativeLocationGeoJson, RelativeLocationJsonLd]] = None
-    one_of_schemas: frozenset[str] = frozenset(map(ApiObject.intern, [ "RelativeLocationGeoJson", "RelativeLocationJsonLd" ]))
+
+    subtype_map: ClassVar[SubtypeMap] = {
+        #
+        # The Feature type was encountered in server response data.
+        #
+        # In this usage, it appears to denote a RelativeLocationGeoJson type.
+        "Feature": ("RelativeLocationGeoJson", "relative_location_geo_json")
+    }

@@ -8,6 +8,7 @@ if TYPE_CHECKING:
 else:
     RESTResponse: TypeAlias = object
 
+
 class OpenApiException(Exception):
     """The base exception class for all OpenAPIExceptions"""
 
@@ -99,9 +100,9 @@ class ApiException(OpenApiException):
 
     def __init__(
         self,
-        status=None,
-        reason=None,
-        http_resp=None,
+        status: Optional[int] = None,
+        reason: Optional[str] = None,
+        http_resp: Optional[RESTResponse] = None,
         *,
         body: Optional[str] = None,
         data: Optional[Any] = None,
@@ -120,7 +121,7 @@ class ApiException(OpenApiException):
                     self.body = http_resp.data.decode('utf-8')
                 except Exception:
                     pass
-            self.headers = http_resp.getheaders()
+            self.headers = http_resp.get_headers()
 
     @classmethod
     def from_response(
@@ -143,7 +144,8 @@ class ApiException(OpenApiException):
                 self.headers)
 
         if self.data or self.body:
-            error_message += "HTTP response body: {0}\n".format(self.data or self.body)
+            error_message += "HTTP response body: {0}\n".format(
+                self.data or self.body)
 
         return error_message
 
@@ -180,13 +182,14 @@ def render_path(path_to_item):
 
 
 RESPONSE_ERROR_TYPES: dict[Union[int, tuple[int, int]], type[ApiException]] = {
-        400: BadRequestException,
-        401: UnauthorizedException,
-        403: ForbiddenException,
-        404: NotFoundException,
-        (500, 599): ServiceException
+    400: BadRequestException,
+    401: UnauthorizedException,
+    403: ForbiddenException,
+    404: NotFoundException,
+    (500, 599): ServiceException
 
 }
+
 
 def get_response_error_type(status: int) -> type[ApiException]:
     for strng, typ in RESPONSE_ERROR_TYPES.items():

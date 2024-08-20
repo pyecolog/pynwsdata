@@ -1,14 +1,11 @@
 
 
-from typing import Any, ClassVar, Optional
-from pynwsdata.api_object import ApiObject, ApiField
-from pynwsdata.models.quantitative_value import QuantitativeValue
 from typing import Optional
-from pynwsdata.api_object import ApiObject, ApiField
-from typing_extensions import Self
+from pynwsdata.api_object import ApiField
+from pynwsdata.models.point_relative_location import PointRelativeLocation
+from pynwsdata.models.quantitative_value import QuantitativeValue
 
-
-class RelativeLocationJsonLd(ApiObject):
+class RelativeLocationJsonLd(PointRelativeLocation):
     """
     RelativeLocationJsonLd
     """

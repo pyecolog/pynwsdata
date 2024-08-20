@@ -20,7 +20,9 @@ class Alert(ApiObject):
     An object representing a public alert message. Unless otherwise noted, the fields in this object correspond to the National Weather Service CAP v1.2 specification, which extends the OASIS Common Alerting Protocol (CAP) v1.2 specification and USA Integrated Public Alert and Warning System (IPAWS) Profile v1.0. Refer to this documentation for more complete information. http://docs.oasis-open.org/emergency/cap/v1.2/CAP-v1.2-os.html http://docs.oasis-open.org/emergency/cap/v1.2/ipaws-profile/v1.0/cs01/cap-v1.2-ipaws-profile-cs01.html https://alerts.weather.gov/#technical-notes-v12
     """
 
-    id: Optional[str] = ApiField(default=None, description="""The identifier of the alert message.""")
+    id: Optional[str] = ApiField(None, description="""The identifier of the alert message.""")
+    id_url: Optional[str] = ApiField(None, alias="@id")
+    geo_type: Optional[str] = ApiField(None, alias="@type")
     area_desc: Optional[str] = ApiField(default=None, description="""A textual description of the area affected by the alert.""", alias="areaDesc")
     geocode: Optional[AlertGeocode] = None
     affected_zones: Optional[list[str]] = ApiField(default=None, description="""An array of API links for zones affected by the alert. This is an API-specific extension field and is not part of the CAP specification. """, alias="affectedZones")

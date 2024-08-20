@@ -1,13 +1,11 @@
 
 import io
-import ssl
-from typing import Optional, Union, TYPE_CHECKING, TypeAlias, TypeVar
+from typing import  TYPE_CHECKING,Any, Optional, Union, TypeAlias, TypeVar
 from warnings import warn
 
 import httpcore
 
 from pynwsdata.configuration import Configuration
-from pynwsdata.exceptions import ApiValueError
 
 RESTResponseType: TypeAlias = httpcore.Response
 
@@ -15,28 +13,49 @@ RESTResponseType: TypeAlias = httpcore.Response
 T = TypeVar("T")
 
 
-class RESTResponse(io.IOBase):
+class RequestInfo(object):
+    # temporary request storage for redirect handling
+    __slots__  = "__weakref__", "method", "url", "headers", "body"
+    if TYPE_CHECKING:
+        url: str
+        method: str
+        headers: Optional[dict[str, str]]
+        body: Optional[str]
+
+    def __init__(self, method: str, url: str, headers: Optional[dict[str, str]], body: Optional[str]) -> None:
+        self.method = method
+        self.url = url
+        self.headers = headers
+        self.body = body
+
+
+
+class RESTResponse(io.IOBase): # IOBase ?
 
     if TYPE_CHECKING:
         response: RESTResponseType
         status: int
         data: Optional[bytes]
+        # values for redirect handling
+        request_info: RequestInfo
 
-    def __init__(self, resp: RESTResponseType) -> None:
+    def __init__(self, resp: RESTResponseType, request_info: RequestInfo):
         self.response = resp
         self.status = resp.status
         self.data = None
+        # values for redirect handling
+        self.request_info = request_info
 
     def read(self) -> bytes:
         if self.data is None:
             self.data = self.response.read()
         return self.data
 
-    def getheaders(self) -> list[tuple[bytes, bytes]]:
-        """Returns a CIMultiDictProxy of the response headers."""
+    def get_headers(self) -> list[tuple[bytes, bytes]]:
+        """Returns the response headers."""
         return self.response.headers
 
-    def getheader(self, name: Union[str, bytes], default: T = None) -> Union[bytes, T]:
+    def get_header(self, name: Union[str, bytes], default: T = None) -> Union[bytes, T]:
         """Returns a given response header."""
         if isinstance(name, str):
             name = name.encode()
@@ -86,9 +105,9 @@ class RESTClientObject:
 
     def request(
         self,
-        method,
-        url,
-        headers=None,
+        method: str,
+        url: str,
+        headers: Optional[dict[str, str]]=None,
         body=None,
     ):
         """Execute request
@@ -124,6 +143,8 @@ class RESTClientObject:
 
         pool_manager = self.pool_manager
 
+        request_info = RequestInfo(method, url, headers, body)
+
         r = pool_manager.request(**args)
 
-        return RESTResponse(r)
+        return RESTResponse(r, request_info)

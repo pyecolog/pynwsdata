@@ -25,13 +25,13 @@ class QuantitativeValue(ApiObject):
 
     def __repr__(self):
         value = self.value
-        if value is None:
-            return super().__repr__()
+        # if value is None:
+        #     return super().__repr__()
         unit = self.unit_code
         if unit is None:
             suffix = ""
         else:
-            suffix = " %s " % unit
+            suffix = " %s" % unit
         vmin = self.min_value
         vmax = self.max_value
         clsname = self.__class__.__name__
@@ -43,6 +43,14 @@ class QuantitativeValue(ApiObject):
             return "<%s %s (min %s)%s>" % (clsname, value, vmin, suffix)
         else:
             return "<%s %s (min %s) (max %s)%s>" % (clsname, value, vmin, vmax, suffix)
+
+    @classmethod
+    def from_json_parsed(cls, values: dict[str, Any]) -> Optional[Self]:
+        vv = super().from_json_parsed(values)
+        if vv.value is None:
+            return None
+        else:
+            return vv
 
 
 class QuantitativeValueInterim(QuantitativeValue):

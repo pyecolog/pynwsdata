@@ -1,6 +1,5 @@
 # example: Weather station alerts
 
-import asyncio as aio
 from pynwsdata.configuration import Configuration
 from pynwsdata.api_client import ApiClient
 from pynwsdata.api.default_api import DefaultApi
@@ -20,10 +19,9 @@ def run_exmaple():
 
     with ApiClient(configuration) as api_client:
         api_instance = DefaultApi(api_client)
-        limit = 10
 
         try:
-            api_response = api_instance.alerts_active(limit=limit)
+            api_response = api_instance.alerts_active()
             print("The response of DefaultApi->alerts_active:\n")
             pprint(api_response)
             return api_response

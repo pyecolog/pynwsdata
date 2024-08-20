@@ -129,21 +129,21 @@ conf = pynwsdata.Configuration(
         self.access_token = access_token
         """Access token
         """
-        self.logger = {}
+        self.loggers = {}
         """Logging Settings
         """
-        self.logger["package_logger"] = logging.getLogger("pynwsdata")
-        self.logger["urllib3_logger"] = logging.getLogger("urllib3")
+        self.loggers["package_logger"] = logging.getLogger("pynwsdata")
+        self.loggers["httpcore_logger"] = logging.getLogger("httpcore")
         self.logger_format = '%(asctime)s %(levelname)s %(message)s'
         """Log format
         """
-        self.logger_stream_handler = None
+        self.log_stream_handler = None
         """Log stream handler
         """
-        self.logger_file_handler: Optional[FileHandler] = None
+        self.log_file_handler: Optional[FileHandler] = None
         """Log file handler
         """
-        self.logger_file = None
+        self.log_file = None
         """Debug file location
         """
         if debug is not None:
@@ -213,9 +213,9 @@ conf = pynwsdata.Configuration(
             if k not in ('logger', 'logger_file_handler'):
                 setattr(result, k, copy.deepcopy(v, memo))
         # shallow copy of loggers
-        result.logger = copy.copy(self.logger)
+        result.loggers = copy.copy(self.loggers)
         # use setters to configure loggers
-        result.logger_file = self.logger_file
+        result.log_file = self.log_file
         result.debug = self.debug
         return result
 
@@ -258,7 +258,11 @@ conf = pynwsdata.Configuration(
         return cls._default
 
     @property
-    def logger_file(self):
+    def logger(self) -> logging.Logger:
+        return self.loggers["package_logger"]
+
+    @property
+    def log_file(self):
         """The logger file.
 
         If the logger_file is None, then add stream handler and remove file
@@ -269,8 +273,8 @@ conf = pynwsdata.Configuration(
         """
         return self.__logger_file
 
-    @logger_file.setter
-    def logger_file(self, value):
+    @log_file.setter
+    def log_file(self, value):
         """The logger file.
 
         If the logger_file is None, then add stream handler and remove file
@@ -283,10 +287,10 @@ conf = pynwsdata.Configuration(
         if self.__logger_file:
             # If set logging file,
             # then add file handler and remove stream handler.
-            self.logger_file_handler = logging.FileHandler(self.__logger_file)
-            self.logger_file_handler.setFormatter(self.logger_formatter)
-            for _, logger in self.logger.items():
-                logger.addHandler(self.logger_file_handler)
+            self.log_file_handler = logging.FileHandler(self.__logger_file)
+            self.log_file_handler.setFormatter(self.logger_formatter)
+            for _, logger in self.loggers.items():
+                logger.addHandler(self.log_file_handler)
 
     @property
     def debug(self):
@@ -307,14 +311,14 @@ conf = pynwsdata.Configuration(
         self.__debug = value
         if self.__debug:
             # if debug status is True, turn on debug logging
-            for _, logger in self.logger.items():
+            for _, logger in self.loggers.items():
                 logger.setLevel(logging.DEBUG)
             # turn on httplib debug
             httplib.HTTPConnection.debuglevel = 1
         else:
             # if debug status is False, turn off debug logging,
             # setting log level to default `logging.WARNING`
-            for _, logger in self.logger.items():
+            for _, logger in self.loggers.items():
                 logger.setLevel(logging.WARNING)
             # turn off httplib debug
             httplib.HTTPConnection.debuglevel = 0

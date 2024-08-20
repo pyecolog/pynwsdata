@@ -61,9 +61,14 @@ To = TypeVar("To")
 
 
 class DeferredBase:
-    # singleton type
+    # singleton type for class reference across deferred imports
     #
-    # slots on DEFERRED will be initialized when the api_object model is imported to some module
+    # for each attribute that must denote a class in the api_object
+    # module, such as to be available in the api_base module at
+    # runtime: The corresonding attributes on the singleton
+    # instance, DEFERRED, will be initialized when the api_object
+    # module is first imported to some module
+    #
     __slots__ = "__weakref__", "API_OBJECT", "MODEL_INTERFACE"
     if TYPE_CHECKING:
         from pynwsdata.api_object import ApiObject, ModelInterface
@@ -127,11 +132,11 @@ SeriesType: TypeAlias = Union[list, tuple, set, frozenset]
 
 JsonObject: TypeAlias = Union[int, float, bool, str, dict[str, Any], None]
 
+
 Tse = TypeVar("Tse")
 Tv = TypeVar("Tv", bound=ValueType)
 Ts = TypeVar("Ts", bound=SeriesType)
 Te = TypeVar("Te", bound=Enum)
-Tes = TypeVarTuple("Tes")  # ?? for the sinle enum union type in the server API
 
 
 def get_type_class(type_hint: Union[TypeAlias, type], label: str = "Unknown"):
@@ -204,10 +209,8 @@ def get_type_interface(type_hint: Any,
         return vtype(type_hint, tc, tc, **kw)
 
     if tc in SeriesTypeSet:
-        # assumption: series element type will not include 'None' here ...
-        #
-        # regardless, the original type_hint might be a union type containing NoneType
-        # as well as some series type, e.g list[str]
+        # assumption: any args to the series element type
+        # will not include NoneType
         optional = get_optional_type(type_hint)
         if optional is not None:
             type_hint = optional
@@ -286,7 +289,9 @@ class StrInterface(ValueInterface[str]):
     def to_json_parsed(self, instance: str) -> str:
         return instance
 
-##  unused in this API
+##
+# byte values for the model space: unused in this API
+##
 # class BytesInterface(TransportInterface[str, bytes]):
 #     def from_json_parsed(self, value: str) -> bytes:
 #         return value.encode()
@@ -361,13 +366,13 @@ class SeriesInterface(TransportInterface[Ts, Ts], Generic[Ts]):
         self.element_iface = element_iface
 
     def from_json_parsed(self, value: Ts) -> Ts:
-        ef = self.element_iface
-        gen = (ef.from_json_parsed(elt) for elt in value)
+        ei = self.element_iface
+        gen = (ei.from_json_parsed(elt) for elt in value)
         return self.interface_type(gen)
 
     def to_json_parsed(self, instance: Ts) -> Ts:
-        ef = self.element_iface
-        gen = (ef.to_json_parsed(elt) for elt in instance)
+        ei = self.element_iface
+        gen = (ei.to_json_parsed(elt) for elt in instance)
         return self.interface_type(gen)
 
 

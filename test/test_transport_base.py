@@ -1,6 +1,6 @@
 
 import ujson
-from pynwsdata.api_transport.transport_base import Enum, EnumInterface
+from pynwsdata.api_base import Enum, EnumInterface
 from pynwsdata.models.alert_certainty import AlertCertainty
 import pynwsdata.models.api
 

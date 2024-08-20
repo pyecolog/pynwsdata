@@ -1,7 +1,7 @@
 
 
 from typing import Any, ClassVar, Optional
-from pynwsdata.api_object import ApiObject, ApiField
+from pynwsdata.api_object import PagedApiObject, ApiField
 from pynwsdata.models.json_ld_context import JsonLdContext
 from pynwsdata.models.observation_station import ObservationStation
 from pynwsdata.models.pagination_info import PaginationInfo
@@ -10,7 +10,7 @@ from pynwsdata.api_object import ApiObject, ApiField
 from typing_extensions import Self
 
 
-class ObservationStationCollectionJsonLd(ApiObject):
+class ObservationStationCollectionJsonLd(PagedApiObject):
     """
     ObservationStationCollectionJsonLd
     """
