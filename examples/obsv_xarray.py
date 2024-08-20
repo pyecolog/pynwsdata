@@ -27,10 +27,6 @@ WmoUnit.initialize()
 # fields for each ObservationGeoJson.properties value
 OBSV_FIELDS: dict[str, ApiField] = Observation.fields
 
-
-# ^ FIXME similar for GridpointForecast as the type of GridpointForecastGeoJson.properties. This code can be reused in an application space, for both endpoints
-# ... including the FIXME paged response iterator
-
 ApiClient.set_verbose_logging()
 
 EMPTY_MAP = dict()
