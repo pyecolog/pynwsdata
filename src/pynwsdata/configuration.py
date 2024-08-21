@@ -6,9 +6,7 @@ from logging import FileHandler
 import ssl
 import sys
 from typing import TYPE_CHECKING, Optional, Union
-import urllib3
 
-import http.client as httplib
 
 JSON_SCHEMA_VALIDATION_KEYWORDS = {
     'multipleOf', 'maximum', 'exclusiveMaximum',
@@ -86,7 +84,6 @@ conf = pynwsdata.Configuration(
                  retries: Optional[int]=None,
                  timeout: int = 120,
                  max_thread_workers: Optional[int] = None,
-                 debug: Optional[bool] = None
                  ) -> None:
         """Constructor
         """
@@ -146,12 +143,6 @@ conf = pynwsdata.Configuration(
         """
         self.log_file = None
         """Debug file location
-        """
-        if debug is not None:
-            self.debug = debug
-        else:
-            self.__debug = False
-        """Debug switch
         """
 
         self.ssl_ca_cert = ssl_ca_cert
@@ -296,37 +287,6 @@ conf = pynwsdata.Configuration(
                 logger.addHandler(self.log_file_handler)
 
     @property
-    def debug(self):
-        """Debug status
-
-        :param value: The debug status, True or False.
-        :type: bool
-        """
-        return self.__debug
-
-    @debug.setter
-    def debug(self, value):
-        """Debug status
-
-        :param value: The debug status, True or False.
-        :type: bool
-        """
-        self.__debug = value
-        if self.__debug:
-            # if debug status is True, turn on debug logging
-            for _, logger in self.loggers.items():
-                logger.setLevel(logging.DEBUG)
-            # turn on httplib debug
-            httplib.HTTPConnection.debuglevel = 1
-        else:
-            # if debug status is False, turn off debug logging,
-            # setting log level to default `logging.WARNING`
-            for _, logger in self.loggers.items():
-                logger.setLevel(logging.WARNING)
-            # turn off httplib debug
-            httplib.HTTPConnection.debuglevel = 0
-
-    @property
     def logger_format(self):
         """The logger format.
 
@@ -366,21 +326,6 @@ conf = pynwsdata.Configuration(
             else:
                 return key
 
-    def get_basic_auth_token(self):
-        """Gets HTTP basic authentication header (string).
-
-        :return: The token for basic HTTP authentication.
-        """
-        username = ""
-        if self.username is not None:
-            username = self.username
-        password = ""
-        if self.password is not None:
-            password = self.password
-        return urllib3.util.make_headers(
-            basic_auth=username + ':' + password
-        ).get('authorization')
-
     def auth_settings(self):
         """Gets Auth Settings dict for api client.
 
@@ -398,7 +343,7 @@ conf = pynwsdata.Configuration(
             }
         return auth
 
-    def to_debug_report(self):
+    def get_platform_info(self) -> str:
         """Gets the essential information for debugging.
 
         :return: The report for debugging.
