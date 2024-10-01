@@ -1,6 +1,7 @@
 
 from functools import partial
 import concurrent.futures as cf
+from datetime import datetime, UTC
 import os
 import pandas as pd
 import sys
@@ -17,7 +18,7 @@ from ecolog.util.const import StrConst
 from ecolog.util.nputil import is_nan_all
 from pynwsdata.configuration import Configuration
 from pynwsdata.api_client import ApiClient
-from pynwsdata.api_object import ApiField
+from pynwsdata.api_object import ApiField, ApiObject
 from pynwsdata.api.geo_api import GeoApi
 from pynwsdata.exceptions import ApiException
 from pynwsdata.models.observation import Observation
@@ -30,7 +31,8 @@ WmoUnit.initialize()
 
 # fields for each ObservationGeoJson.properties value
 
-OBSV_PROPERTY_FIELDS: dict[str, ApiField] = Observation.fields
+OBSV_INDEX_FIELDS: frozenset[str] = frozenset({"timestamp"})
+OBSV_PROPERTY_FIELDS: dict[str, ApiField] = dict(Observation.fields)
 
 
 ApiClient.set_verbose_logging()
@@ -70,6 +72,7 @@ class Const(StrConst):
     GRID_Y = "grid_y"
     SOURCE_UNITS = "source_units"
     UNITS = "units"
+    TZ = "tz"
 
 
 def observation_callback(station: str, offset: int, units: dict[str, Any],
@@ -110,6 +113,11 @@ def observation_callback(station: str, offset: int, units: dict[str, Any],
         props = obsv.properties
         pcls = props.__class__
         for name, field in OBSV_PROPERTY_FIELDS.items():
+            try:
+                series = data[name]
+            except KeyError:
+                # assumption: field is being skipped for netcdf_compat
+                continue
             value = field.__get__(props, pcls)
             if isinstance(value, QuantitativeValue):
                 xv = value.value
@@ -129,9 +137,17 @@ def observation_callback(station: str, offset: int, units: dict[str, Any],
             else:
                 xv = np.nan
 
-            data[name][offset] = xv
+            if name == Const.TIMESTAMP and xv:
+                try:
+                    data[Const.TZ]
+                except KeyError:
+                    data[Const.TZ] = str(xv.tzinfo)
 
-def latest_observations(loc: Union[str, tuple[float, float]], config: Optional[Configuration] = None):
+            series[offset] = xv
+
+def latest_observations(loc: Union[str, tuple[float, float]], *,
+                        config: Optional[Configuration] = None,
+                        netcdf_compat: bool = False):
     # primary callback
     #
     # loc: either a tuple in DD format, encoding (latitude, longitude)
@@ -198,16 +214,21 @@ def latest_observations(loc: Union[str, tuple[float, float]], config: Optional[C
         stations_id = np.array(stations_id, "U5")
         n_stations = stations_id.size
 
-        data = dict()
         string_fields = set()
+        timestamps = np.full(n_stations, "NaT", "datetime64[s]")
+        data = {Const.TIMESTAMP: timestamps}
 
         for k, v in OBSV_PROPERTY_FIELDS.items():
+            if k in OBSV_INDEX_FIELDS:
+                continue
             tc = v.interface.interface_class
             if tc is QuantitativeValue:
                 data[k] = np.full(n_stations, np.nan, np.float64)
             elif tc is str:
                 data[k] = np.full(n_stations, EMPTY_STR, np.object_)
                 string_fields.add(k)
+            elif isinstance(tc, type) and (issubclass(tc, ApiObject) or issubclass(tc, list)) and netcdf_compat:
+                continue
             else:
                 data[k] = np.full(n_stations, np.nan, np.object_)
 
@@ -243,13 +264,14 @@ def latest_observations(loc: Union[str, tuple[float, float]], config: Optional[C
 
         # construct an Xarray Dataset from the observation series
 
-        timestamps = data.pop(Const.TIMESTAMP)
-        timestamps = pd.DatetimeIndex(timestamps, copy=False, name=Const.TIMESTAMP)
+        tz = data.pop(Const.TZ, UTC)
+        data.pop(Const.TIMESTAMP)
 
-        index = pd.MultiIndex.from_arrays(
-            (stations_id, timestamps, station_lat, station_lon),
-            names=(Const.STATION_ID, Const.TIMESTAMP, Const.LAT, Const.LON)
-            )
+        if not netcdf_compat:
+            index = pd.MultiIndex.from_arrays(
+                (stations_id, timestamps, station_lat, station_lon),
+                names=(Const.STATION_ID, Const.TIMESTAMP, Const.LAT, Const.LON)
+                )
 
 
         # calculate the relative_distance series
@@ -270,30 +292,45 @@ def latest_observations(loc: Union[str, tuple[float, float]], config: Optional[C
                     })
         }
 
-        # create coordinates for the multi-index
-        # and supplemental coordinate data
-        coords = xr.Coordinates.from_pandas_multiindex(index, Const.INDEX)
+
+        if netcdf_compat:
+            # index all data on station ID
+            coords = {
+                Const.INDEX: ([Const.INDEX], stations_id),
+                Const.TIMESTAMP: ([Const.INDEX], timestamps, {Const.TZ: str(tz)}),
+                Const.LAT: ([Const.INDEX], station_lat),
+                Const.LON: ([Const.INDEX], station_lon)
+            }
+        else:
+            # create coordinates for the multi-index
+            coords = xr.Coordinates.from_pandas_multiindex(index, Const.INDEX)
+            coords[Const.TIMESTAMP].attrs[Const.TZ]=str(tz)
+
+        # supplemental coordinate data
         coords.update({
             Const.STATION_NAME: ([Const.INDEX], np.array(station_names)),
-            Const.POINT: ([Const.INDEX], point_vals)
         })
+        if not netcdf_compat:
+            # include the series of Point objects in coords
+            coords[Const.POINT] = ([Const.INDEX], point_vals)
 
         # initialize the attribute map for the resulting dataset
         attrs.update({
+            Const.TZ: str(tz),
             Const.WFO: gid,
             Const.GRID_X: grid_x,
             Const.GRID_Y: grid_y,
-            Const.POINT_DATA: point_response,
-            Const.SOURCE_UNITS: unit_map,
-            Const.STATION_NAMES: dict(zip(stations_id_tuple, station_names)),
-            Const.STATION_DATA: {sys.intern(stn.properties.station_identifier): stn for stn in stations_response.features},
         })
 
+        if not netcdf_compat:
+            attrs.update({
+                Const.SOURCE_UNITS: unit_map,
+                Const.STATION_NAMES: dict(zip(stations_id_tuple, station_names)),
+                Const.POINT_DATA: point_response,
+                Const.STATION_DATA: {sys.intern(stn.properties.station_identifier): stn for stn in stations_response.features},
+            })
 
-
-        # coord_names = (Const.STATION_ID, Const.TIMESTAMP)
         coord_names = [Const.INDEX]
-
 
         other = data.pop(Const.NOT_FOUND, None)
         if other:
@@ -302,11 +339,13 @@ def latest_observations(loc: Union[str, tuple[float, float]], config: Optional[C
         if other:
             attrs[Const.ERRORS] = other
 
-
         for name, values in data.items():
             if is_nan_all(values) or not any(values):
                 continue
-            name = sys.intern(name)
+            try:
+                name = sys.intern(name)
+            except TypeError:
+                name = sys.intern(str(name))
             unit = unit_map.get(name, None)
             if unit:
                 mattrs = {Const.UNITS: unit}

@@ -7,6 +7,7 @@
 *.gz
 *.zip
 /tmp
+/env*/
 
 
 # Byte-compiled / optimized / DLL files
