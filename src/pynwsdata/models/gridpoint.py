@@ -23,7 +23,7 @@ class Gridpoint(ApiObject):
     id: Optional[str] = ApiField(default=None, alias="@id")
     type: Optional[str] = ApiField(default=None, alias="@type")
     update_time: Optional[datetime] = ApiField(default=None, alias="updateTime")
-    valid_times: Optional[ISO8601Interval] = ApiField(default=None, alias="validTimes")
+    valid_times: Optional[ISO8601Interval.storage_type] = ApiField(default=None, alias="validTimes", interface_type = ISO8601Interval)
     elevation: Optional[QuantitativeValue] = None
     forecast_office: Optional[str] = ApiField(default=None, alias="forecastOffice")
     grid_id: Optional[str] = ApiField(default=None, alias="gridId")

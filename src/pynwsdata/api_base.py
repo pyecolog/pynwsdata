@@ -195,7 +195,13 @@ def get_type_interface(type_hint: Any,
             raise
 
     if issubclass(tc, DEFERRED.API_OBJECT):
-        return DEFERRED.MODEL_INTERFACE(tc, **kw)
+        try:
+            icls = tc.interface_type
+        except AttributeError:
+            return DEFERRED.MODEL_INTERFACE(tc, **kw)
+        else:
+            return icls(tc, tc, **kw)
+
     elif issubclass(tc, Enum):
         return EnumInterface(tc, **kw)
 
@@ -218,7 +224,7 @@ def get_type_interface(type_hint: Any,
             type_hint = get_args(type_hint[0])
         first, *rest = get_args(type_hint)
         if rest:
-            warn(UserWarning("%s: Ambigous series element type" %
+            warn(UserWarning("%s: Ambiguous series element type" %
                              label, type_hint), stacklevel=3)
             return UnknownInterface(type_hint, tc, tc, **kw)
         else:

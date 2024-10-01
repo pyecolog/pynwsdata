@@ -14,7 +14,7 @@ class GridpointHazardsValuesInner(ApiObject):
     GridpointHazardsValuesInner
     """
 
-    valid_time: ISO8601Interval = ApiField(alias="validTime")
+    valid_time: ISO8601Interval.storage_type = ApiField(alias="validTime", interface_type=ISO8601Interval)
     value: list[GridpointHazardsValuesInnerValueInner]
 
 

@@ -73,24 +73,30 @@ class ApiField(NativeField, Generic[Tm, Ti, To]):
     # - field constraints from the generated sources have been retained,
     #   where present in the original generated sources
 
-    __slots__ = "alias", "constraints", "interface", "can_encode"
+    __slots__ = "alias", "constraints", "interface", "interface_type", "can_encode"
 
     if TYPE_CHECKING:
         alias: str
         constraints: Mapping[str, Any]
         interface: TransportInterface[Ti, To]
+        interface_type: Optional[type] # ? FIXME rename => parse_type
 
     def get_field_interface(self, type_hint: Any,
                             label: Optional[str] = None,
                             field: Union[Self, Symbols.UNKNOWN] = UNKNOWN) -> TransportInterface[Ti, To]:
-        # ApiField utility function
-        label = self.field_id if label is None else label
+        try:
+            # override the type hint if self.interface_type is bound
+            ityp = self.interface_type
+        except AttributeError:
+            ityp = type_hint
+
+        label: str = self.field_id if label is None else label
         if field is UNKNOWN:
             field = self
         elif field is EMPTY:
             field = None
 
-        return get_type_interface(type_hint, label, field=field)
+        return get_type_interface(ityp, label, field=field)
 
     def bind_interface(self) -> TransportInterface[Ti, To]:
         try:
@@ -118,6 +124,7 @@ class ApiField(NativeField, Generic[Tm, Ti, To]):
     def __init__(self, default: Union[To, Symbols.EMPTY] = EMPTY, *,
                  default_factory: Optional[Callable[[Tm], To]] = None,
                  type_hint: Any = EMPTY,
+                 interface_type: Optional[type] = None,
                  interface: Optional[TransportInterface[Ti, To]] = None,
                  can_encode: bool = True,
                  description: Optional[str] = None,
@@ -129,6 +136,8 @@ class ApiField(NativeField, Generic[Tm, Ti, To]):
                  ):
         super().__init__(default, default_factory, type_hint, UNKNOWN, description)
         self.can_encode = can_encode
+        if interface_type is not None:
+            self.interface_type = interface_type
         if interface is not None:
             self.interface = interface
         if alias is not None:
@@ -195,6 +204,12 @@ class ApiField(NativeField, Generic[Tm, Ti, To]):
         if th is None or th is EMPTY:
             warn(UserWarning("%s: No type hint" % self.field_id), stacklevel=3)
         else:
+            try:
+                icls = self.interface_type
+            except AttributeError:
+                icls = None
+            if icls is None and isinstance(th, type):
+                self.interface_type = th
             if __debug__:
                 origin = get_origin(th)
                 if origin is ClassVar:

@@ -24,7 +24,7 @@ class GridpointForecast(ApiObject):
     forecast_generator: Optional[str] = ApiField(default=None, description="""The internal generator class used to create the forecast text (used for NWS debugging).""", alias="forecastGenerator")
     generated_at: Optional[datetime] = ApiField(default=None, description="""The time this forecast data was generated.""", alias="generatedAt")
     update_time: Optional[datetime] = ApiField(default=None, description="""The last update time of the data this forecast was generated from.""", alias="updateTime")
-    valid_times: Optional[ISO8601Interval] = ApiField(default=None, alias="validTimes")
+    valid_times: Optional[ISO8601Interval.storage_type] = ApiField(default=None, alias="validTimes", interface_type=ISO8601Interval)
     elevation: Optional[QuantitativeValue] = None
     periods: Optional[list[GridpointForecastPeriod]] = ApiField(default=None, description="""An array of forecast periods.""")
 
